@@ -1,0 +1,35 @@
+---
+title: "Weibull"
+output: html_document
+date: "2023-10-31"
+---
+
+```{r}
+#| echo: false
+#| message: false
+
+library(ggplot2)
+```
+
+The Weibull is the limit disrtibution for a minimum of samples from a random variable bounded from below.
+
+```{r}
+niter = 10^4
+nsam = 10
+hist(replicate(niter,min(rlnorm(nsam))))
+```
+
+```{r}
+#| eval: false
+#| echo: false
+
+obj <- function(par){
+  (qweibull(0.1,shape=exp(par[1]), scale=exp(par[2]))-hel)^2 +
+  (qweibull(0.9,shape=exp(par[1]), scale=exp(par[2]))-heu)^2
+}
+
+val <- optim(par=c(1,0),fn = obj)
+
+he = rweibull(n = niter, shape=exp(val$par[1]), scale=exp(val$par[2]))
+
+```

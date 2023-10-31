@@ -1,0 +1,525 @@
+---
+title: "A tiered uncertainty analysis illustrated on food risk assessment"
+subtitle: "RiskHunt3r"
+author: "Ullrika Sahlin and Dawei Tang"
+format: 
+  html:
+    toc: true
+    echo: false
+    message: false
+    warning: false
+---
+
+```{r}
+#| echo: false
+#| message: false
+
+library(ggplot2)
+```
+
+## Background
+
+We can never be completely certain about the future, either in science, or in everyday life. Even when there is strong evidence that something will happen, there will almost always be uncertainty about the outcome. But by taking account of this uncertainty, we often can make better, more transparent decisions about things that may affect the outcome.
+
+The European Food Safety Authority (EFSA) has developed a guidance for uncertainty analysis in scientific assessment which requires all assessment to say
+
+-   what sources of uncertainty have been identified and contain
+-   a characterisation of their overall impact on the assessment conclusion.
+
+The reason is that uncertainty of scientific conclusions has important implications for decision making and it is important to communicate this uncertainty for the transparency of assessments.
+
+
+Here we perform a tiered uncertainty analysis, consisting of probability bound analysis followed by a fully probabilistic analysis.
+
+-   A human chemical risk assessment problem
+
+-   A probabilistic uncertainty analysis using input from expert judgement and Monte Carlo-simulation
+
+-   A probability bound analysis using probability intervals from the same distributions
+
+### References
+
+Tutorial videos on EFSA's topic page on uncertainty (examples in the chemical area) by Andy Hart. 
+
+[Key concepts](https://www.youtube.com/watch?v=SGIo_jQLuSM) (17 minutes) 
+
+[Methods and options for basic assessment of uncertainty](https://www.youtube.com/watch?v=bBQlJHhLPiY) (27 minutes)
+
+[Refined options for assessing uncertainty](https://www.youtube.com/watch?v=wqNBBOeH7WQ) (30 minutes).
+
+## Description of the assessment
+
+Consider a human health risk assessment of inorganic Arsenic (iAs). 
+
+```{r}
+## hazard
+bmd = 0.147
+bmdl = 0.062
+bmdu = 0.21
+## exposure
+ael = 0.03
+aeu = 0.15
+hel = 0.07
+heu = 0.33
+## MOE threshold
+th = 1
+```
+
+
+### Hazard assessment
+
+A Reference Point $RP$ of `r bmdl` μg iAs/kg bw per day was identified by the CONTAM Panel for skin cancer. This value is the BMDL from a model average of BMD modelling on skin cancer. 
+
+Model Averaged BMD model
+
+| BMDL   | BMD   | BMDU   |
+|--------|-------|--------|
+|`r bmdl`|`r bmd`|`r bmdu`|
+
+
+### Exposure assessment
+
+The range of the dietary exposure estimates for iAs was assessed as 
+
+- `r ael` - `r aeu` μg/kg bw per day for an average adult consumer and 
+
+- `r hel` - `r heu` μg/kg bw per day for a high-level adult consumers in Europe. 
+
+Let us denote an estimate of a high exposure as $HE$.
+
+### Risk characterisation 
+
+A Margin of Exposure (MOE) is defined as $$MOE=\frac{RP}{HE}$$
+
+In the risk assessment on iAs the derived MOEs range between 
+
+- `r round(bmdl/ael,1)` - `r round(bmdl/aeu,1)` for average adult and 
+
+- `r round(bmdl/hel,1)` - `r round(bmdl/heu,1)` for high level adult consumers, respectively.
+
+A MOE of 1 describes the exposure level that could be associated with a 5% increase relative to the background incidence for skin cancer. (Note that the value 5% comes from the BMD modelling). 
+
+A MOE greater than 1, implies that a High Exposure is not exceeding the Reference Point, and thereby a low risk. 
+
+Risk managers set what is an acceptable MOE. It can e.g. be 1, 10 or 1000. 
+
+The purpose of the assessment is to conclude if the MOE is above the threshold for the acceptable MOE. Here this threshold was set to `r th`. 
+
+## Uncertainty analysis
+
+The purpose of the uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the answer to the overall assessment question. 
+
+### Outcome of interest
+
+In this case it the outcome of interest is if the MOE is above the threshold of `r th`. 
+
+A quantitative uncertainty analysis can be specified to result in an expression of the expert's certainty in the outcome of interest as a % probability, i.e. $P(MOE > `r th`)$. 
+
+The risk managers has informed the risk assessors that they find a certainty of 90% or more as acceptable for decision making. 
+
+(@) Confirm to yourself that the following expressions are the same 
+
+- $P(MOE > `r th`)$ 
+
+- $P(HE < RP)$
+
+- $P(\frac{HE}{RP}< 1)$
+
+
+### Identify sources of uncertainty 
+
+Sources of uncertainty have been identified related to inputs and methods in the parts of the assessment, i.e. related to: 
+
+- Chemical characterization and analytical methods
+- Hazard identification and characterisation 
+- Exposure assessment 
+- Risk characterisation
+
+Further information about these sources can be found in the drafted assessment. 
+
+### Evaluate the combined impact of sources of uncertainty on the outcome of interest
+
+There are several options to evaluate the combined impact of all these sources of uncertainty on the conclusion whether the MOE is greater than `r th`. 
+
+A tiered uncertainty analysis is done in several steps steps: 
+
+#### Basic option
+
+The basic option for uncertainty analysis is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that the MOE is greater than `r th`, given that all identified (non-standard or standard) sources of uncertainty has been resolved.
+
+This can be done by reaching a consensus judgement (following procedures for expert knowledge elicitation using behavioural aggregation)
+
+This judgement requires expertise on both toxicity and exposure assessment. 
+
+This is a useful option when the Highest Exposure is far below the Reference Point.
+
+#### Refined option with probability bounds
+
+A refined approach is needed when there is a small difference between the Reference Point and the Highest Exposure. 
+
+A refined option is to assess uncertainties separately before combining them by calculations and assessing overall uncertainty. 
+
+First we explore how to do this with **probability bounds**. 
+
+In this example, the experts are asked to express their uncertainty in the Reference Point and in a High Exposure for adults in the EU.
+
+The experts judge that they are 95% certain that the Reference Point is above `r bmdl` μg iAs/kg bw per day.  
+
+$$P(RP > `r bmdl`) = 0.95$$
+
+| P below  | value   | P above |
+|----------|---------|---------|
+| 5%       | `r bmdl`| 95%     |
+
+In some situations, RP is the BMDL and then it is difficult to talk about RP as some other value. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on $RP/UF$ instead of $RP$. 
+
+
+The experts then judge that they are 90% certain that a High Exposure is below 0.33 μg iAs/kg bw per day.
+
+$$P( HE < `r heu`) = 0.90$$
+
+| P below  | value  | P above |
+|----------|--------|---------|
+| 90%      | `r heu`|   10%   |
+
+Then we use probability bounds analysis (and the rule of "lost probabilities" as described in the third video) to calculate that it is at least 
+$$ 100 - [(100-95)+(100-90)]=85\%$$ 
+probable that the ratio of the highest estimate of High Exposure to the Reference Point is less than or equal than `r heu`/`r bmdl` = `r round(heu/bmdl,2)`
+
+$$P(\frac{HE}{RP} < `r round(heu/bmdl,2)`) \geq 85\%$$
+
+| P below    | value                | P above   |
+|------------|----------------------|-----------|
+| $\leq 15\%$| `r round(heu/bmdl,2)`|$\geq 85\%$|
+
+
+(@) Go through the calculations for the lost probability rule and try to understand what it does. 
+
+Unfortunately, this result is not enough to reach a conclusion whether a High Exposure is below the Reference Point (i.e. that the MOE is greater than `r th`). See the callout box how the refined option with probability bounds can be designed to consider what level of certainty that is required. 
+
+::: {.callout-note
+
+The refined option with probability bounds can be modified to consider the probability threshold for a "firm conclusion" (also known as the level for practical certainty). In this example, the risk managers and the experts have agreed that experts must be at least 90% certain that a High Exposure $HE$ is below the Reference Point $RP$ in order for risk managers to make a decision. 
+
+This means that the assessment is conclusive when the experts are at least 90% certain that there is a health concern or that they are at least 90% certain that there is no a health concern.  
+
+
+1) Subtract the probability threshold from 100% to set an upper bound for the the sum of the lost probabilities. 
+
+E.g. $100\% - 90\% = 10\%$
+
+2) Divide this into two parts, one for exposure and one for hazard. 
+
+E.g. $5\%$ and $5\%$
+
+3) Subtract the lost probability for exposure from 100, to set the probability required for a conservative estimate of a High Exposure.
+
+E.g. $100\% - 5\% = 95\%$
+
+4) Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment).
+
+E.g. $P(HE < x) = 95\%$
+
+5) Subtract the lost probability for hazard from 100, to set the probability required for a conservative estimate of the Reference Point.
+
+E.g. $100\% - 5\% = 95\%$
+
+6) Elicit a conservative estimate of the Reference Point (or RP/UF) from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment).
+
+E.g. $P(RP < y) = 95\%$
+
+7) Divide the conservative estimate for the exposure with the conservative estimate for the hazard
+
+$\frac{x}{y}$
+
+9. If the ratio is less than the threshold on MOE, then there is sufficient certainty for a firm conclusion that exposure is below the hazardous concentration. 
+
+E.g. Is $\frac{x}{y} < `r th`$?
+:::
+
+If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider collecting more data. 
+
+#### Refined option with probability distributions 
+A refined option can alternatively be done with with probability distributions which are combined by Monte Carlo simulation.
+
+This is an option, when the outcome of a probability bound analysis was not conclusive. 
+
+It can also be an option when the assessors prefers to choose to justify probability distributions for uncertainty from available information, combine uncertainties by performing the probability calculations, and then ask the experts to make a judgement on the outcome of interest directly. Note that an explicit elicitation of the outcome of interest following the Monte Carlo simulation is a condition for this approach to result in a characterisation of the experts uncertainty considering the combined impact of all sources of uncertainty in the assessment. 
+
+A probability distribution representing uncertainty in the **Reference Point** can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling. 
+
+Here is an example of what it looks like when using the EFSA BMD software:
+
+![](../img/BMD_fig_iAs.png)
+
+We let the BMDL, the BMD, and the BMDU define the 5th percentile (P05), the median (P50), and the 95th percentile (P95) of the probability distribution for uncertainty in the RP.
+
+| BMDL   | BMD   | BMDU   |
+|--------|-------|--------|
+| P05    | P50   | P95    |
+|`r bmdl`|`r bmd`|`r bmdu`|
+
+
+(@) Go to the online elicitation app for one distribution [link to SHELF app](https://jeremy-oakley.shinyapps.io/SHELF-single/) and find a probability distribution that matches these quantiles. Note that you have to specify the lower and upper bound of the plausible range. You can get them from studying the previous graph from the EFSA BMD software.
+
+COMMENT: Ths approach ignores additional sources of uncertainty than those considered in the model, hence we need to draft how to consider those as well. e.g. by adjusting the specification of the quantiles. 
+
+(@) You can find the R-code to generate random numbers from the selected probability distribution in the report that is possible to download from SHELF 
+
+![](../img/download.png)
+
+As an example, the remaining instructions will use the distribution selected by me. You can replace the code with your own distribution or use mine. I used 0 and 0.23 as the plausible range and selected a generalised beta-distribution over the interval 0 and 0.23 for which random draws can be generated by
+
+```{r}
+#| echo: true 
+
+0.23 * rbeta(n = 10, shape1 = 3.15, shape2 = 1.92)
+```
+
+This beta-distribution is defined as 
+
+$\frac{RP}{0.23} \sim beta(3.15, 1.92)$
+
+(@) If you have a different distribution, specify it with a similar format RP ~ ... (ask for help)
+
+<!-- # ```{r} -->
+<!-- # library(ggplot2) -->
+<!-- #  -->
+<!-- # pp = ppoints(200) -->
+<!-- # qq = qbeta(pp,3.15,1.92) -->
+<!-- # dd = dbeta(qq,3.15,1.92) -->
+<!-- #  -->
+<!-- # ggplot(data.frame(RP = qq, density = dd), -->
+<!-- #        aes(x=RP, y=density)) +  -->
+<!-- #   geom_line() + -->
+<!-- #   ggtitle("Uncertainty in the Reference Point") -->
+<!-- #  -->
+<!-- # ``` -->
+
+
+(@) Generate 10 000 random numbers from the probability distribution for the RP and save it into an object named rp.
+
+```{r}
+niter = 10^4 
+rp = 0.23 * rbeta(n = niter, shape1 = 3.15, shape2 = 1.92)
+```
+
+Let us visualise the sample from the distribution in a histogram.
+
+```{r}
+library(ggplot2)
+ggplot(data.frame(RP=rp), aes(x=RP)) +
+  geom_histogram(binwidth = 0.01) +
+  ggtitle("Uncertainty in the Reference Point")
+
+```
+
+
+A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be specified by assuming that the range of the dietary exposure estimates corresponds to the bounds of an 80% probability interval.    
+
+| min HE | max HE |
+|--------|--------|
+| P10    | P90    |
+|`r hel` |`r heu` |
+
+
+
+One choice could be to use a normal distribution to represent uncertainty in a High Exposure. A normal distribution has two parameters, the mean ($\mu$) and the standard deviation ($\sigma$). 
+
+$$HE \sim N(\mu,\sigma)$$
+
+We derive the mean by taking the mid value in the range 
+
+$$ \mu = \frac{`r heu`+`r hel`}{2}= `r (heu + hel)/2`$$
+The standard deviation is specified by considering the formula for a 90% quantile in the normal distributions as a function of the parameters. 
+
+$$ P90 = \mu + `r round(qnorm(0.9),2)`\cdot \sigma$$
+
+and rearranging it to be a function of $\sigma$
+
+$$ \sigma = \frac{P90 - \mu}{`r round(qnorm(0.9),2)`} =  \frac{`r heu`-`r (heu - hel)/2`}{`r round(qnorm(0.9),2)`}=`r round((heu - hel)/2/qnorm(0.9),2)`$$
+
+Specification of the parameters and draw of random numbers from the normal distribution
+
+```{r}
+#| echo: true 
+
+m = (0.07+0.33)/2
+s = (0.33-m)/qnorm(0.9)
+
+he = rnorm(n = niter, mean = m, sd = s)
+he[he<0] = 0 # truncate
+```
+
+(@) At the end of the above chunck we truncate the values. What does that mean? Why is a normal distribution not an ideal choice in this case? 
+
+The distributions for High Exposure and the Reference Point overlap. 
+
+```{r}
+ggplot(data.frame(dose = c(rp,he), quantity = rep(c("Reference Point", "High Exposure"),each = niter)),aes(x=dose, fill = quantity)) +
+  geom_density(alpha=0.2) +
+  ggtitle("Uncertainty in a High Exposure and the Reference Point")
+```
+
+The calculated probability that the MOE is above 1 is `r round(mean(rp/he>1)*100)` %.
+
+(@) Calculate the proportion of random samples in your Monte Carlo simulation that corresponds to a MOE > 1.
+
+```{r}
+#| echo: true
+#| eval: false
+
+moe = rp/he
+mean(moe>1)
+```
+
+<!-- https://r-charts.com/distribution/fill-area-density/?utm_content=cmp-true -->
+
+```{r}
+#| eval: false
+#| echo: false
+
+den <- density(he/rp)
+
+plot(den)
+
+polygon(c(den$x[den$x <= 1 ], 1),
+        c(den$y[den$x <= 1 ], 0),
+        col = "slateblue1",
+        border = 1)
+```
+
+(@) Visualise the resulting distribution for uncertainty in MOE with your choice of distributions.
+
+
+```{r}
+df <- density(rp/he, from=0)
+df <- data.frame(x=df$x,y=df$y)
+ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
+  geom_line() +
+  geom_ribbon(data=subset(df,x>1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
+  xlab("MOE") +
+  ylab("density") +
+  ggtitle("Uncertainty in MOE", subtitle=paste0("P(MOE>1)=",round(mean(rp/he>1)*100),"%"))
+```
+
+In my analysis, the distribution for MOE looks weird. The reason is that the probability distribution for exposure generates values that are zero or close to zero, and when we divide by that the MOE is extremely large. 
+
+Uncertainty in the ratio HE over RP (i.e. 1/MOE) offers a better visualisation of the generated distribution. 
+
+(@) Consider, revising the visualisation but for 1/MOE using the code below.
+
+```{r}
+#| echo: true
+
+df <- density(he/rp, from=0)
+df <- data.frame(x=df$x,y=df$y)
+ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
+  geom_line() +
+  geom_ribbon(data=subset(df,x<1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
+  xlab("1/MOE") +
+  ylab("density") +
+  ggtitle("Uncertainty in 1/MOE", subtitle=paste0("P(MOE>1)=",round(mean(rp/he>1)*100),"%"))
+```
+
+The red area corresponds to a MOE greater than `r th`.
+
+As a final step, the experts are invited to adjust this probability upwards or downwards considering additional sources of uncertainty, not previously taken into account in the analysis.  
+
+For the purpose of this exercise we assume that the experts subsequently judged that any additional sources of uncertainty were small enough that there was no need to adjust the calculated % probability that the MOE is above 1. 
+
+An additional sources of uncertainty could e.g. be the choice of distributions used in the Monte Carlo simulation and any limitations in the quality of the exposure and toxicity data that are not taken into account in those distributions. 
+
+## Uncertainty in the conclusion
+
+In my analysis, the attempts to arrive at a high certainty that the MOE is acceptable (i.e. above `r th`) has failed. This is because the level of certainty for the outcome of interest is `r round(mean(rp/he>1)*100)`% which is not in the region of practical certainty (i.e. <10% or >90%). 
+
+|Health concern|Inconclusive|No health concern|
+|--------------|------------|-----------------|
+|<10%          |10 - 90%    |>90%             |
+
+At this point, the assessment should be reported as **inconclusive**. 
+
+The risk managers can decide to support generation of new studies to fill data gaps and perform a re-evaluation of the risk assessment. 
+
+
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+
+<!-- ggplot(data.frame(lb = c(0.062, 0.03, 0.07),  -->
+<!--                   ub = c(0.21, 0.15, 0.33), quantity=c("reference point", "average exposure", "high exposure"), y = 0:2),  -->
+<!--        aes()) +  -->
+<!--     geom_segment(aes(x=lb, xend = ub, y = y, yend = y ),color=c('red','lightgreen','lightblue'), size = 10) +  -->
+<!--   geom_point(aes(x=0.147, y = 0),  col = "darkblue") + -->
+<!--   geom_text(aes(x=0.147, y = 0, label = "D"), col = "white") + -->
+<!--   geom_text(aes(x=0.062, y = 0, label = "C")) + -->
+<!--   geom_text(aes(x=0.15, y = 1, label = "B")) + -->
+<!--   geom_text(aes(x=0.33, y = 2, label = "A")) + -->
+<!--   xlab('dose') + -->
+<!--   ylab('') + -->
+<!--   theme(axis.text.y=element_blank(),  -->
+<!--       axis.ticks.y=element_blank()) + -->
+<!--   theme(legend.position = NULL)  -->
+
+<!-- ``` -->
+
+
+## EXTRA 
+### Post scriptum 1
+
+An alternative choice for a probability distribution to represent uncertainty in a High Exposure would be a distribution that resonates properties of percentiles. 
+to be continued
+
+<!-- Consider the following simulation experiment where we draw samples from a lognormal distribution and derive the 95th percentile.  -->
+
+<!-- ```{r} -->
+<!-- #| warning: false -->
+<!-- #| message: false -->
+
+<!-- N = 10^4 -->
+<!-- n = 20 -->
+<!-- sim = replicate(N,quantile(rlnorm(n), probs=0.95)) -->
+
+<!-- summary(sim) -->
+
+<!-- ggplot(data.frame(sim=sim),aes(x=sim)) + -->
+<!--   geom_histogram() -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+
+<!-- obj <- function(par){ -->
+<!--   (qweibull(0.1,shape=exp(par[1]), scale=exp(par[2]))-hel)^2 + -->
+<!--   (qweibull(0.9,shape=exp(par[1]), scale=exp(par[2]))-heu)^2 -->
+<!-- } -->
+
+<!-- val <- optim(par=c(1,0),fn = obj) -->
+
+<!-- he = rweibull(n = niter, shape=exp(val$par[1]), scale=exp(val$par[2])) -->
+
+<!-- ``` -->
+
+
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- #| echo: false -->
+
+<!-- obj <- function(par){ -->
+<!--   (qweibull(0.1,shape=exp(par[1]), scale=exp(par[2]))-hel)^2 + -->
+<!--   (qweibull(0.9,shape=exp(par[1]), scale=exp(par[2]))-heu)^2 -->
+<!-- } -->
+
+<!-- val <- optim(par=c(1,0),fn = obj) -->
+
+<!-- he = rweibull(n = niter, shape=exp(val$par[1]), scale=exp(val$par[2])) -->
+
+<!-- ``` -->
+
+
+
+
