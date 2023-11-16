@@ -8,7 +8,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - weibull.qmd  
+
 
 format:
   html:
