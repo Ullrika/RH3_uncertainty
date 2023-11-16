@@ -1,8 +1,6 @@
 ---
-title: "RH3_uncertainty"
+title: "Uncertainty frameworks"
 ---
-
-
 
 # Uncertainty in a **fact-conclusion**
 
@@ -17,3 +15,8 @@ Includes risk assessment by combining assessed hazard and exposure
 # Uncertainty in an integrated assessment workflow 
 
 To come
+
+# Uncertainty in a **scientific hypothesis**
+
+To come 
+
