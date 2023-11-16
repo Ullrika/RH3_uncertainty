@@ -2,5 +2,18 @@
 title: "RH3_uncertainty"
 ---
 
-Explanation of a tiered approach for uncertainty analysis 
-[Page](uncertainty_analysis.qmd)
+
+
+# Uncertainty in a **fact-conclusion**
+
+To come
+
+# Uncertainty in a **number-conclusion** 
+
+Explanation of a tiered approach for uncertainty analysis [Page](uncertainty_number.qmd)
+
+Includes risk assessment by combining assessed hazard and exposure
+
+# Uncertainty in an integrated assessment workflow 
+
+To come

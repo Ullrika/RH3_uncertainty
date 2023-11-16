@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Ullrika Sahlin and Dawei Tang">
+<meta name="author" content="Ullrika Sahlin, Dawei Tang and Zheng Zhou">
 
-<title>RH3_uncertainty - A tiered uncertainty analysis illustrated on food risk assessment</title>
+<title>RH3_uncertainty - A tiered uncertainty analysis to assess uncertainty in a number</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,26 +142,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a>
-  <ul class="collapse">
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#description-of-the-assessment" id="toc-description-of-the-assessment" class="nav-link" data-scroll-target="#description-of-the-assessment">Description of the assessment</a>
   <ul class="collapse">
   <li><a href="#hazard-assessment" id="toc-hazard-assessment" class="nav-link" data-scroll-target="#hazard-assessment">Hazard assessment</a></li>
   <li><a href="#exposure-assessment" id="toc-exposure-assessment" class="nav-link" data-scroll-target="#exposure-assessment">Exposure assessment</a></li>
   <li><a href="#risk-characterisation" id="toc-risk-characterisation" class="nav-link" data-scroll-target="#risk-characterisation">Risk characterisation</a></li>
   </ul></li>
-  <li><a href="#uncertainty-analysis" id="toc-uncertainty-analysis" class="nav-link" data-scroll-target="#uncertainty-analysis">Uncertainty analysis</a>
+  <li><a href="#uncertainty-analysis-overview" id="toc-uncertainty-analysis-overview" class="nav-link" data-scroll-target="#uncertainty-analysis-overview">Uncertainty analysis overview</a>
   <ul class="collapse">
-  <li><a href="#outcome-of-interest" id="toc-outcome-of-interest" class="nav-link" data-scroll-target="#outcome-of-interest">Outcome of interest</a></li>
+  <li><a href="#expression-for-overall-uncertainty" id="toc-expression-for-overall-uncertainty" class="nav-link" data-scroll-target="#expression-for-overall-uncertainty">Expression for overall uncertainty</a></li>
+  <li><a href="#practical-certainty" id="toc-practical-certainty" class="nav-link" data-scroll-target="#practical-certainty">Practical certainty</a></li>
   <li><a href="#identify-sources-of-uncertainty" id="toc-identify-sources-of-uncertainty" class="nav-link" data-scroll-target="#identify-sources-of-uncertainty">Identify sources of uncertainty</a></li>
   <li><a href="#evaluate-the-combined-impact-of-sources-of-uncertainty-on-the-outcome-of-interest" id="toc-evaluate-the-combined-impact-of-sources-of-uncertainty-on-the-outcome-of-interest" class="nav-link" data-scroll-target="#evaluate-the-combined-impact-of-sources-of-uncertainty-on-the-outcome-of-interest">Evaluate the combined impact of sources of uncertainty on the outcome of interest</a></li>
   </ul></li>
-  <li><a href="#uncertainty-in-the-conclusion" id="toc-uncertainty-in-the-conclusion" class="nav-link" data-scroll-target="#uncertainty-in-the-conclusion">Uncertainty in the conclusion</a></li>
-  <li><a href="#extra" id="toc-extra" class="nav-link" data-scroll-target="#extra">EXTRA</a>
+  <li><a href="#basic-option" id="toc-basic-option" class="nav-link" data-scroll-target="#basic-option">Basic option</a></li>
+  <li><a href="#refined-option-with-probability-bounds" id="toc-refined-option-with-probability-bounds" class="nav-link" data-scroll-target="#refined-option-with-probability-bounds">Refined option with probability bounds</a></li>
+  <li><a href="#refined-option-with-probability-distributions" id="toc-refined-option-with-probability-distributions" class="nav-link" data-scroll-target="#refined-option-with-probability-distributions">Refined option with probability distributions</a>
   <ul class="collapse">
-  <li><a href="#post-scriptum-1" id="toc-post-scriptum-1" class="nav-link" data-scroll-target="#post-scriptum-1">Post scriptum 1</a></li>
+  <li><a href="#uncertainty-in-the-conclusion" id="toc-uncertainty-in-the-conclusion" class="nav-link" data-scroll-target="#uncertainty-in-the-conclusion">Uncertainty in the conclusion</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -171,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A tiered uncertainty analysis illustrated on food risk assessment</h1>
+<h1 class="title">A tiered uncertainty analysis to assess uncertainty in a number</h1>
 <p class="subtitle lead">RiskHunt3r</p>
 </div>
 
@@ -182,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Ullrika Sahlin and Dawei Tang </p>
+             <p>Ullrika Sahlin, Dawei Tang and Zheng Zhou </p>
           </div>
   </div>
     
@@ -193,35 +192,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>We can never be completely certain about the future, either in science, or in everyday life. Even when there is strong evidence that something will happen, there will almost always be uncertainty about the outcome. But by taking account of this uncertainty, we often can make better, more transparent decisions about things that may affect the outcome.</p>
-<p>The European Food Safety Authority (EFSA) has developed a guidance for uncertainty analysis in scientific assessment which requires all assessment to say</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in the outcome of interest.</p>
+<p>A tiered uncertainty analysis can be</p>
 <ul>
-<li>what sources of uncertainty have been identified and contain</li>
-<li>a characterisation of their overall impact on the assessment conclusion.</li>
+<li><p>direct expert judgement on the outcome of interest</p></li>
+<li><p>a probability bound analysis, where uncertainty associated with the hazard and exposure as assessed separately as probability bounds, which are then combined by probability bound analysis. The results feed into expert judgement on the outcome of interest taking into account additional sources of uncertainty than those considered in the hazard and exposure part.</p></li>
+<li><p>a full probabilistic analysis, where uncertainty associated with the hazard and exposure as assessed separately as probability distributions, which are then combined by Monte Carlo simulation. The results feed into expert judgement on the outcome of interest taking into account additional sources of uncertainty than those considered in the hazard and exposure part.</p></li>
 </ul>
-<p>The reason is that uncertainty of scientific conclusions has important implications for decision making and it is important to communicate this uncertainty for the transparency of assessments.</p>
-<p>Here we perform a tiered uncertainty analysis, consisting of probability bound analysis followed by a fully probabilistic analysis.</p>
-<ul>
-<li><p>A human chemical risk assessment problem</p></li>
-<li><p>A probabilistic uncertainty analysis using input from expert judgement and Monte Carlo-simulation</p></li>
-<li><p>A probability bound analysis using probability intervals from the same distributions</p></li>
-</ul>
-<section id="references" class="level3">
-<h3 class="anchored" data-anchor-id="references">References</h3>
-<p>Tutorial videos on EFSA’s topic page on uncertainty (examples in the chemical area) by Andy Hart.</p>
-<p><a href="https://www.youtube.com/watch?v=SGIo_jQLuSM">Key concepts</a> (17 minutes)</p>
-<p><a href="https://www.youtube.com/watch?v=bBQlJHhLPiY">Methods and options for basic assessment of uncertainty</a> (27 minutes)</p>
-<p><a href="https://www.youtube.com/watch?v=wqNBBOeH7WQ">Refined options for assessing uncertainty</a> (30 minutes).</p>
-</section>
 </section>
 <section id="description-of-the-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="description-of-the-assessment">Description of the assessment</h2>
-<p>Consider a human health risk assessment of inorganic Arsenic (iAs).</p>
+<p>Consider a human health risk assessment of chemical dixoin.</p>
 <section id="hazard-assessment" class="level3">
 <h3 class="anchored" data-anchor-id="hazard-assessment">Hazard assessment</h3>
-<p>A Reference Point <span class="math inline">\(RP\)</span> of 0.062 μg iAs/kg bw per day was identified by the CONTAM Panel for skin cancer. This value is the BMDL from a model average of BMD modelling on skin cancer.</p>
+<p>The quantity of interest for the hazard assessment is a Reference Point <span class="math inline">\(RP\)</span>.</p>
+<p>As an example, a <span class="math inline">\(RP\)</span> of 3 μg dixoin/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for skin cancer.</p>
 <p>Model Averaged BMD model</p>
 <table class="table">
 <thead>
@@ -233,52 +220,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>0.062</td>
-<td>0.147</td>
-<td>0.21</td>
+<td>3</td>
+<td>10</td>
+<td>15</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="exposure-assessment" class="level3">
 <h3 class="anchored" data-anchor-id="exposure-assessment">Exposure assessment</h3>
-<p>The range of the dietary exposure estimates for iAs was assessed as</p>
+<p>The quantity of interest for the exposure assessment is a high exposure <span class="math inline">\(HE\)</span>.</p>
+<p>The range of the exposure estimates for dixoin was assessed as</p>
 <ul>
-<li><p>0.03 - 0.15 μg/kg bw per day for an average adult consumer and</p></li>
-<li><p>0.07 - 0.33 μg/kg bw per day for a high-level adult consumers in Europe.</p></li>
+<li><p>1 - 2 μg/kg bw per day for an average exposure scenario and</p></li>
+<li><p>2 - 4 μg/kg bw per day for a high-level exposure scenario.</p></li>
 </ul>
-<p>Let us denote an estimate of a high exposure as <span class="math inline">\(HE\)</span>.</p>
 </section>
 <section id="risk-characterisation" class="level3">
 <h3 class="anchored" data-anchor-id="risk-characterisation">Risk characterisation</h3>
-<p>A Margin of Exposure (MOE) is defined as <span class="math display">\[MOE=\frac{RP}{HE}\]</span></p>
-<p>In the risk assessment on iAs the derived MOEs range between</p>
+<p>The outcome of interest is the event that the High Exposure is exceeding the Reference Point, i.e.&nbsp;</p>
+<p><span class="math display">\[HE &gt; RP\]</span> Another way of formulating this is as a Margin of Exposure (MOE) defined as <span class="math display">\[MOE=\frac{RP}{HE}\]</span></p>
+<p>In the risk assessment on dixoin the derived MOEs range between</p>
 <ul>
-<li><p>2.1 - 0.4 for average adult and</p></li>
-<li><p>0.9 - 0.2 for high level adult consumers, respectively.</p></li>
+<li><p>3 - 1.5 for the average exposure scenario and</p></li>
+<li><p>1.5 - 0.8 for high level exposure scenario, respectively.</p></li>
 </ul>
 <p>A MOE of 1 describes the exposure level that could be associated with a 5% increase relative to the background incidence for skin cancer. (Note that the value 5% comes from the BMD modelling).</p>
 <p>A MOE greater than 1, implies that a High Exposure is not exceeding the Reference Point, and thereby a low risk.</p>
 <p>Risk managers set what is an acceptable MOE. It can e.g.&nbsp;be 1, 10 or 1000.</p>
 <p>The purpose of the assessment is to conclude if the MOE is above the threshold for the acceptable MOE. Here this threshold was set to 1.</p>
+<p>The outcome of interest is then</p>
+<p><span class="math display">\[MOE &gt; 1\]</span></p>
+<p>which can be either true or false.</p>
 </section>
 </section>
-<section id="uncertainty-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="uncertainty-analysis">Uncertainty analysis</h2>
-<p>The purpose of the uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the answer to the overall assessment question.</p>
-<section id="outcome-of-interest" class="level3">
-<h3 class="anchored" data-anchor-id="outcome-of-interest">Outcome of interest</h3>
-<p>In this case it the outcome of interest is if the MOE is above the threshold of 1.</p>
-<p>A quantitative uncertainty analysis can be specified to result in an expression of the expert’s certainty in the outcome of interest as a % probability, i.e.&nbsp;<span class="math inline">\(P(MOE &gt; 1)\)</span>.</p>
-<p>The risk managers has informed the risk assessors that they find a certainty of 90% or more as acceptable for decision making.</p>
-<ol class="example" type="1">
-<li>Confirm to yourself that the following expressions are the same</li>
-</ol>
-<ul>
-<li><p><span class="math inline">\(P(MOE &gt; 1)\)</span></p></li>
-<li><p><span class="math inline">\(P(HE &lt; RP)\)</span></p></li>
-<li><p><span class="math inline">\(P(\frac{HE}{RP}&lt; 1)\)</span></p></li>
-</ul>
+<section id="uncertainty-analysis-overview" class="level2">
+<h2 class="anchored" data-anchor-id="uncertainty-analysis-overview">Uncertainty analysis overview</h2>
+<section id="expression-for-overall-uncertainty" class="level3">
+<h3 class="anchored" data-anchor-id="expression-for-overall-uncertainty">Expression for overall uncertainty</h3>
+<p>The aim is to express the expert’s uncertainty in the outcome of interest as a % probability, i.e.&nbsp;<span class="math inline">\(P(MOE &gt; 1)\)</span>.</p>
+</section>
+<section id="practical-certainty" class="level3">
+<h3 class="anchored" data-anchor-id="practical-certainty">Practical certainty</h3>
+<p>The risk managers has informed the risk assessors that they find a certainty of 90% or more as acceptable for decision making. This is know as practical certainty and it can be sufficient to conclude if overall uncertainty is above or below this limit.</p>
+<!-- (@) Confirm to yourself that the following expressions are the same  -->
+<!-- - $P(MOE > 1)$  -->
+<!-- - $P(HE < RP)$ -->
+<!-- - $P(\frac{HE}{RP}< 1)$ -->
 </section>
 <section id="identify-sources-of-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="identify-sources-of-uncertainty">Identify sources of uncertainty</h3>
@@ -289,27 +277,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Exposure assessment</li>
 <li>Risk characterisation</li>
 </ul>
-<p>Further information about these sources can be found in the drafted assessment.</p>
+<p>Sources of uncertainty can be summarised as tables with explanations and indications on their influence on the overall uncertainty (qualitative expressions).</p>
 </section>
 <section id="evaluate-the-combined-impact-of-sources-of-uncertainty-on-the-outcome-of-interest" class="level3">
 <h3 class="anchored" data-anchor-id="evaluate-the-combined-impact-of-sources-of-uncertainty-on-the-outcome-of-interest">Evaluate the combined impact of sources of uncertainty on the outcome of interest</h3>
 <p>There are several options to evaluate the combined impact of all these sources of uncertainty on the conclusion whether the MOE is greater than 1.</p>
-<p>A tiered uncertainty analysis is done in several steps steps:</p>
-<section id="basic-option" class="level4">
-<h4 class="anchored" data-anchor-id="basic-option">Basic option</h4>
-<p>The basic option for uncertainty analysis is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that the MOE is greater than 1, given that all identified (non-standard or standard) sources of uncertainty has been resolved.</p>
-<p>This can be done by reaching a consensus judgement (following procedures for expert knowledge elicitation using behavioural aggregation)</p>
-<p>This judgement requires expertise on both toxicity and exposure assessment.</p>
-<p>This is a useful option when the Highest Exposure is far below the Reference Point.</p>
+<p>A tiered uncertainty analysis is done in several steps</p>
+<ul>
+<li>Basic option</li>
+<li>Refined option with uncertainty expressed by probability bounds</li>
+<li>Refined options with uncertainty expressed by probability distributions</li>
+</ul>
 </section>
-<section id="refined-option-with-probability-bounds" class="level4">
-<h4 class="anchored" data-anchor-id="refined-option-with-probability-bounds">Refined option with probability bounds</h4>
+</section>
+<section id="basic-option" class="level1">
+<h1>Basic option</h1>
+<p>The basic option for uncertainty analysis is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that the MOE is greater than 1, given that all identified (non-standard or standard) sources of uncertainty has been resolved.</p>
+<p>This can be done by reaching a consensus judgement, following procedures for expert knowledge elicitation (using behavioural aggregation to allow for discussions). This judgement requires expertise on both toxicity and exposure assessment.</p>
+<p>This is a useful option when the Highest Exposure <span class="math inline">\(HE\)</span> is far below the Reference Point <span class="math inline">\(RP\)</span>.</p>
+</section>
+<section id="refined-option-with-probability-bounds" class="level1">
+<h1>Refined option with probability bounds</h1>
 <p>A refined approach is needed when there is a small difference between the Reference Point and the Highest Exposure.</p>
 <p>A refined option is to assess uncertainties separately before combining them by calculations and assessing overall uncertainty.</p>
-<p>First we explore how to do this with <strong>probability bounds</strong>.</p>
-<p>In this example, the experts are asked to express their uncertainty in the Reference Point and in a High Exposure for adults in the EU.</p>
-<p>The experts judge that they are 95% certain that the Reference Point is above 0.062 μg iAs/kg bw per day.</p>
-<p><span class="math display">\[P(RP &gt; 0.062) = 0.95\]</span></p>
+<p>First we explore how to do this with <strong>probability bound analysis</strong>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Numbers first</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Probabilities first</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Probability followed by number</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>In this example, the experts are asked to express their uncertainty in the Reference Point and in a High Exposure.</p>
+<ol type="1">
+<li>The experts judge that they are 95% certain that the Reference Point is above 3 μg dixoin/kg bw per day.</li>
+</ol>
+<p><span class="math display">\[P(RP &gt; 3) = 95\%\]</span></p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -321,98 +321,117 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>5%</td>
-<td>0.062</td>
+<td>3</td>
 <td>95%</td>
 </tr>
 </tbody>
 </table>
 <p>In some situations, RP is the BMDL and then it is difficult to talk about RP as some other value. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on <span class="math inline">\(RP/UF\)</span> instead of <span class="math inline">\(RP\)</span>.</p>
-<p>The experts then judge that they are 90% certain that a High Exposure is below 0.33 μg iAs/kg bw per day.</p>
-<p><span class="math display">\[P( HE &lt; 0.33) = 0.90\]</span></p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>P below</th>
-<th>value</th>
-<th>P above</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>90%</td>
-<td>0.33</td>
-<td>10%</td>
-</tr>
-</tbody>
-</table>
-<p>Then we use probability bounds analysis (and the rule of “lost probabilities” as described in the third video) to calculate that it is at least <span class="math display">\[ 100 - [(100-95)+(100-90)]=85\%\]</span> probable that the ratio of the highest estimate of High Exposure to the Reference Point is less than or equal than 0.33/0.062 = 5.32</p>
-<p><span class="math display">\[P(\frac{HE}{RP} &lt; 5.32) \geq 85\%\]</span></p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>P below</th>
-<th>value</th>
-<th>P above</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(\leq 15\%\)</span></td>
-<td>5.32</td>
-<td><span class="math inline">\(\geq 85\%\)</span></td>
-</tr>
-</tbody>
-</table>
-<ol start="2" class="example" type="1">
-<li>Go through the calculations for the lost probability rule and try to understand what it does.</li>
+<ol start="2" type="1">
+<li>The experts then judge that they are 95% certain that a High Exposure is below 4 μg dixoin/kg bw per day.</li>
 </ol>
-<p>Unfortunately, this result is not enough to reach a conclusion whether a High Exposure is below the Reference Point (i.e.&nbsp;that the MOE is greater than 1). See the callout box how the refined option with probability bounds can be designed to consider what level of certainty that is required.</p>
-<div class="{.callout-note">
+<p><span class="math display">\[P( HE &lt; 4) = 95\%\]</span></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>P below</th>
+<th>value</th>
+<th>P above</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>95%</td>
+<td>4</td>
+<td>5%</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="1">
+<li>Then we use probability bounds analysis (and the rule of “lost probabilities”) to calculate that it is at least <span class="math display">\[ 100 - [(100-95)+(100-95)]=90\%\]</span> probable that the ratio of the highest estimate of High Exposure to the Reference Point is less than or equal than 4/3 = 1.33</li>
+</ol>
+<p><span class="math display">\[P(\frac{HE}{RP} &lt; 1.33) \geq 90\%\]</span></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>P below</th>
+<th>value</th>
+<th>P above</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\leq 10\%\)</span></td>
+<td>1.33</td>
+<td><span class="math inline">\(\geq 90\%\)</span></td>
+</tr>
+</tbody>
+</table>
+<ol start="4" type="1">
+<li>See if a conclusion can be made. If the value 1.33 is less than 1 and the probability is above the practical certainty 90, then result is enough to reach a conclusion whether a High Exposure is below the Reference Point (i.e.&nbsp;that the MOE is greater than 1).</li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>The refined option with probability bounds can be modified to consider the probability threshold for a “firm conclusion” (also known as the level for practical certainty). In this example, the risk managers and the experts have agreed that experts must be at least 90% certain that a High Exposure <span class="math inline">\(HE\)</span> is below the Reference Point <span class="math inline">\(RP\)</span> in order for risk managers to make a decision.</p>
-<p>This means that the assessment is conclusive when the experts are at least 90% certain that there is a health concern or that they are at least 90% certain that there is no a health concern.</p>
+<p>This means that the assessment is conclusive when the experts are at least 90% certain that there is a health concern or that they are at least 90% certain that there is not a health concern.</p>
 <ol type="1">
 <li>Subtract the probability threshold from 100% to set an upper bound for the the sum of the lost probabilities.</li>
 </ol>
-<p>E.g. <span class="math inline">\(100\% - 90\% = 10\%\)</span></p>
+<p><span class="math display">\[100\% - 90\% = 10\%\]</span></p>
 <ol start="2" type="1">
-<li>Divide this into two parts, one for exposure and one for hazard.</li>
+<li><p>Divide this into two parts, one for hazard and one for exposure, here <span class="math inline">\(5\%\)</span> and <span class="math inline">\(5\%\)</span>.</p></li>
+<li><p>Subtract the lost probability for hazard from 100, to set the probability required for a conservative estimate of the Reference Point.</p></li>
 </ol>
-<p>E.g. <span class="math inline">\(5\%\)</span> and <span class="math inline">\(5\%\)</span></p>
-<ol start="3" type="1">
+<p><span class="math display">\[100\% - 5\% = 95\%\]</span></p>
+<ol start="4" type="1">
+<li>Elicit a conservative estimate of the Reference Point (or RP/UF) from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile <span class="math inline">\(y\)</span></li>
+</ol>
+<p><span class="math display">\[P(RP &lt; y) = 95\%\]</span></p>
+<ol start="5" type="1">
 <li>Subtract the lost probability for exposure from 100, to set the probability required for a conservative estimate of a High Exposure.</li>
 </ol>
-<p>E.g. <span class="math inline">\(100\% - 5\% = 95\%\)</span></p>
-<ol start="4" type="1">
-<li>Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment).</li>
-</ol>
-<p>E.g. <span class="math inline">\(P(HE &lt; x) = 95\%\)</span></p>
-<ol start="5" type="1">
-<li>Subtract the lost probability for hazard from 100, to set the probability required for a conservative estimate of the Reference Point.</li>
-</ol>
-<p>E.g. <span class="math inline">\(100\% - 5\% = 95\%\)</span></p>
+<p><span class="math display">\[100\% - 5\% = 95\%\]</span></p>
 <ol start="6" type="1">
-<li>Elicit a conservative estimate of the Reference Point (or RP/UF) from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment).</li>
+<li>Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment). Define the conservative estimate as the quantile <span class="math inline">\(x\)</span></li>
 </ol>
-<p>E.g. <span class="math inline">\(P(RP &lt; y) = 95\%\)</span></p>
+<p><span class="math display">\[P(HE &lt; x) = 95\%\]</span></p>
 <ol start="7" type="1">
-<li>Divide the conservative estimate for the exposure with the conservative estimate for the hazard</li>
+<li>Divide the conservative estimate for the exposure with the conservative estimate for the hazard <span class="math inline">\(\frac{x}{y}\)</span></li>
 </ol>
-<p><span class="math inline">\(\frac{x}{y}\)</span></p>
 <ol start="9" type="1">
-<li>If the ratio is less than the threshold on MOE, then there is sufficient certainty for a firm conclusion that exposure is below the hazardous concentration.</li>
+<li>If the ratio is less than the threshold on MOE, then there is sufficient certainty for a firm conclusion that exposure is below the hazardous concentration. I.e. is <span class="math inline">\(\frac{x}{y} &lt; 1\)</span>?</li>
 </ol>
-<p>E.g. Is <span class="math inline">\(\frac{x}{y} &lt; 1\)</span>?</p>
-</div>
 <p>If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider collecting more data.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>An alternative approach is to use the RP as starting point and derive the probability from that. Then set the lost probability for exposure and elicit the quantile for exposure.</p>
+<ol type="1">
+<li>Ask experts to judge their probability for a conservative estimate of hazard, e.g.&nbsp;the BMDL, <span class="math inline">\(y = 3\)</span></li>
+</ol>
+<p><span class="math display">\[P(RP &gt; y) = 95\%\]</span></p>
+<ol start="2" type="1">
+<li>Find a value on exposure on the critical threshold for the MOE</li>
+</ol>
+<p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
+<p><span class="math display">\[x = 1 \cdot y = 3\]</span></p>
+<ol start="3" type="1">
+<li>Ask expert to judge their probability that the exposure is less than <span class="math inline">\(x\)</span>.</li>
+</ol>
+<p><span class="math display">\[P(HE &lt; x) = 60\%\]</span></p>
+<ol start="4" type="1">
+<li>Check if practical certainty has been obtained, i.e.&nbsp;if <span class="math inline">\(100 - [(100-P(HE &lt; x)) + (100-P(RP &gt; y))] \geq 90\%\)</span></li>
+</ol>
+<p><span class="math display">\[100-[40+5]=100-45=55\]</span></p>
+</div>
+</div>
+</div>
 </section>
-<section id="refined-option-with-probability-distributions" class="level4">
-<h4 class="anchored" data-anchor-id="refined-option-with-probability-distributions">Refined option with probability distributions</h4>
+<section id="refined-option-with-probability-distributions" class="level1">
+<h1>Refined option with probability distributions</h1>
 <p>A refined option can alternatively be done with with probability distributions which are combined by Monte Carlo simulation.</p>
 <p>This is an option, when the outcome of a probability bound analysis was not conclusive.</p>
 <p>It can also be an option when the assessors prefers to choose to justify probability distributions for uncertainty from available information, combine uncertainties by performing the probability calculations, and then ask the experts to make a judgement on the outcome of interest directly. Note that an explicit elicitation of the outcome of interest following the Monte Carlo simulation is a condition for this approach to result in a characterisation of the experts uncertainty considering the combined impact of all sources of uncertainty in the assessment.</p>
 <p>A probability distribution representing uncertainty in the <strong>Reference Point</strong> can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling.</p>
-<p>Here is an example of what it looks like when using the EFSA BMD software:</p>
-<p><img src="../img/BMD_fig_iAs.png" class="img-fluid"></p>
 <p>We let the BMDL, the BMD, and the BMDU define the 5th percentile (P05), the median (P50), and the 95th percentile (P95) of the probability distribution for uncertainty in the RP.</p>
 <table class="table">
 <thead>
@@ -429,33 +448,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>P95</td>
 </tr>
 <tr class="even">
-<td>0.062</td>
-<td>0.147</td>
-<td>0.21</td>
+<td>3</td>
+<td>10</td>
+<td>15</td>
 </tr>
 </tbody>
 </table>
-<ol start="3" class="example" type="1">
-<li>Go to the online elicitation app for one distribution <a href="https://jeremy-oakley.shinyapps.io/SHELF-single/">link to SHELF app</a> and find a probability distribution that matches these quantiles. Note that you have to specify the lower and upper bound of the plausible range. You can get them from studying the previous graph from the EFSA BMD software.</li>
-</ol>
-<p>COMMENT: Ths approach ignores additional sources of uncertainty than those considered in the model, hence we need to draft how to consider those as well. e.g.&nbsp;by adjusting the specification of the quantiles.</p>
-<ol start="4" class="example" type="1">
-<li>You can find the R-code to generate random numbers from the selected probability distribution in the report that is possible to download from SHELF</li>
-</ol>
-<p><img src="../img/download.png" class="img-fluid"></p>
-<p>As an example, the remaining instructions will use the distribution selected by me. You can replace the code with your own distribution or use mine. I used 0 and 0.23 as the plausible range and selected a generalised beta-distribution over the interval 0 and 0.23 for which random draws can be generated by</p>
+<p>The lower bound is zero. Since the distribution is skewed to the right we set an upper plausible bound. Here we fit a lognormal distribution using the SHELF R-package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.23</span> <span class="sc">*</span> <span class="fu">rbeta</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">shape1 =</span> <span class="fl">3.15</span>, <span class="at">shape2 =</span> <span class="fl">1.92</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.19919128 0.13549717 0.19442549 0.17839767 0.21490435 0.13235737
- [7] 0.12290276 0.06970841 0.15147124 0.13973874</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> SHELF<span class="sc">::</span><span class="fu">fitdist</span>(<span class="at">vals =</span> <span class="fu">c</span>(bmdl,bmd,bmdu),<span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span>), <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper=</span> bmdu<span class="sc">*</span><span class="fl">1.2</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>SHELF<span class="sc">::</span><span class="fu">plotfit</span>(fit,<span class="at">d=</span><span class="st">"beta"</span>,<span class="at">xlab=</span><span class="st">"RP"</span>,<span class="at">ylab=</span><span class="st">"probability density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="uncertainty_number_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
+</div>
+<p>An alternative is to go to the online elicitation app for one distribution <a href="https://jeremy-oakley.shinyapps.io/SHELF-single/">link to SHELF app</a> and find a probability distribution that matches these quantiles. Note that you have to specify the lower and upper bound of the plausible range. You can get them from studying the sample from BMD modelling. You can find the R-code to generate random numbers from the selected probability distribution in the report that is possible to download from SHELF</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This approach ignores additional sources of uncertainty than those considered in the model, hence we need to draft how to consider those as well. e.g.&nbsp;by adjusting the specification of the quantiles.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_RP <span class="ot">&lt;-</span> <span class="cf">function</span>(niter){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  fit<span class="sc">$</span>limits<span class="sc">$</span>lower <span class="sc">+</span> (fit<span class="sc">$</span>limits<span class="sc">$</span>upper<span class="sc">-</span>fit<span class="sc">$</span>limits<span class="sc">$</span>lower) <span class="sc">*</span> <span class="fu">rbeta</span>(<span class="at">n =</span> niter, <span class="at">shape1 =</span> fit<span class="sc">$</span>Beta<span class="sc">$</span>shape1, <span class="at">shape2 =</span> fit<span class="sc">$</span>Beta<span class="sc">$</span>shape2)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This beta-distribution is defined as</p>
-<p><span class="math inline">\(\frac{RP}{0.23} \sim beta(3.15, 1.92)\)</span></p>
-<ol start="5" class="example" type="1">
-<li>If you have a different distribution, specify it with a similar format RP ~ … (ask for help)</li>
-</ol>
+<p><span class="math display">\[\frac{RP}{18} \sim beta(3.091494, 2.5815512)\]</span></p>
 <!-- # ```{r} -->
 <!-- # library(ggplot2) -->
 <!-- #  -->
@@ -469,15 +496,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- #   ggtitle("Uncertainty in the Reference Point") -->
 <!-- #  -->
 <!-- # ``` -->
-<ol start="6" class="example" type="1">
-<li>Generate 10 000 random numbers from the probability distribution for the RP and save it into an object named rp.</li>
-</ol>
-<p>Let us visualise the sample from the distribution in a histogram.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="uncertainty_analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 <p>A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be specified by assuming that the range of the dietary exposure estimates corresponds to the bounds of an 80% probability interval.</p>
 <table class="table">
 <thead>
@@ -492,80 +510,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>P90</td>
 </tr>
 <tr class="even">
-<td>0.07</td>
-<td>0.33</td>
+<td>2</td>
+<td>4</td>
 </tr>
 </tbody>
 </table>
 <p>One choice could be to use a normal distribution to represent uncertainty in a High Exposure. A normal distribution has two parameters, the mean (<span class="math inline">\(\mu\)</span>) and the standard deviation (<span class="math inline">\(\sigma\)</span>).</p>
 <p><span class="math display">\[HE \sim N(\mu,\sigma)\]</span></p>
 <p>We derive the mean by taking the mid value in the range</p>
-<p><span class="math display">\[ \mu = \frac{0.33+0.07}{2}= 0.2\]</span> The standard deviation is specified by considering the formula for a 90% quantile in the normal distributions as a function of the parameters.</p>
+<p><span class="math display">\[ \mu = \frac{4+2}{2}= 3\]</span> The standard deviation is specified by considering the formula for a 90% quantile in the normal distributions as a function of the parameters.</p>
 <p><span class="math display">\[ P90 = \mu + 1.28\cdot \sigma\]</span></p>
 <p>and rearranging it to be a function of <span class="math inline">\(\sigma\)</span></p>
-<p><span class="math display">\[ \sigma = \frac{P90 - \mu}{1.28} =  \frac{0.33-0.13}{1.28}=0.1\]</span></p>
+<p><span class="math display">\[ \sigma = \frac{P90 - \mu}{1.28} =  \frac{4-1}{1.28}=0.78\]</span></p>
 <p>Specification of the parameters and draw of random numbers from the normal distribution</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> (<span class="fl">0.07+0.33</span>)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> (<span class="fl">0.33</span><span class="sc">-</span>m)<span class="sc">/</span><span class="fu">qnorm</span>(<span class="fl">0.9</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>he <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> niter, <span class="at">mean =</span> m, <span class="at">sd =</span> s)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>he[he<span class="sc">&lt;</span><span class="dv">0</span>] <span class="ot">=</span> <span class="dv">0</span> <span class="co"># truncate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sample_HE <span class="ot">&lt;-</span> <span class="cf">function</span>(niter){</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> (hel<span class="sc">+</span>heu)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> (heu<span class="sc">-</span>m)<span class="sc">/</span><span class="fu">qnorm</span>(<span class="fl">0.9</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>he <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> niter, <span class="at">mean =</span> m, <span class="at">sd =</span> s)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>he[he<span class="sc">&lt;</span><span class="dv">0</span>] <span class="ot">=</span> <span class="dv">0</span> <span class="co"># truncate</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(he)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="7" class="example" type="1">
-<li>At the end of the above chunck we truncate the values. What does that mean? Why is a normal distribution not an ideal choice in this case?</li>
-</ol>
+<p>Evaluate the combined impact of the characterised uncertainty in <span class="math inline">\(RP\)</span> and <span class="math inline">\(HE\)</span> on the <span class="math inline">\(MOE\)</span> by Monte Carlo simulation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>niter <span class="ot">=</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">sample_RP</span>(niter)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>he <span class="ot">&lt;-</span> <span class="fu">sample_HE</span>(niter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>The distributions for High Exposure and the Reference Point overlap.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="uncertainty_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="uncertainty_number_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The calculated probability that the MOE is above 1 is 30 %.</p>
-<ol start="8" class="example" type="1">
+<p>The calculated probability that the MOE is above 1 is 97 %.</p>
+<ol class="example" type="1">
 <li>Calculate the proportion of random samples in your Monte Carlo simulation that corresponds to a MOE &gt; 1.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>moe <span class="ot">=</span> rp<span class="sc">/</span>he</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(moe<span class="sc">&gt;</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>moe <span class="ot">=</span> rp<span class="sc">/</span>he</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(moe<span class="sc">&gt;</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<!-- https://r-charts.com/distribution/fill-area-density/?utm_content=cmp-true -->
-<ol start="9" class="example" type="1">
-<li>Visualise the resulting distribution for uncertainty in MOE with your choice of distributions.</li>
-</ol>
+<p>Visualise the resulting distribution for uncertainty in MOE</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="uncertainty_analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>In my analysis, the distribution for MOE looks weird. The reason is that the probability distribution for exposure generates values that are zero or close to zero, and when we divide by that the MOE is extremely large.</p>
-<p>Uncertainty in the ratio HE over RP (i.e.&nbsp;1/MOE) offers a better visualisation of the generated distribution.</p>
-<ol start="10" class="example" type="1">
-<li>Consider, revising the visualisation but for 1/MOE using the code below.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">density</span>(he<span class="sc">/</span>rp, <span class="at">from=</span><span class="dv">0</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span>df<span class="sc">$</span>x,<span class="at">y=</span>df<span class="sc">$</span>y)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x=</span>df<span class="sc">$</span>x,<span class="at">y=</span>df<span class="sc">$</span>y),<span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span><span class="fu">subset</span>(df,x<span class="sc">&lt;</span><span class="dv">1</span>),  <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">ymax=</span>y),<span class="at">ymin=</span><span class="dv">0</span>,<span class="at">fill=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"1/MOE"</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"density"</span>) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Uncertainty in 1/MOE"</span>, <span class="at">subtitle=</span><span class="fu">paste0</span>(<span class="st">"P(MOE&gt;1)="</span>,<span class="fu">round</span>(<span class="fu">mean</span>(rp<span class="sc">/</span>he<span class="sc">&gt;</span><span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span>),<span class="st">"%"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="uncertainty_analysis_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="uncertainty_number_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The red area corresponds to a MOE greater than 1.</p>
 <p>As a final step, the experts are invited to adjust this probability upwards or downwards considering additional sources of uncertainty, not previously taken into account in the analysis.</p>
 <p>For the purpose of this exercise we assume that the experts subsequently judged that any additional sources of uncertainty were small enough that there was no need to adjust the calculated % probability that the MOE is above 1.</p>
 <p>An additional sources of uncertainty could e.g.&nbsp;be the choice of distributions used in the Monte Carlo simulation and any limitations in the quality of the exposure and toxicity data that are not taken into account in those distributions.</p>
-</section>
-</section>
-</section>
 <section id="uncertainty-in-the-conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="uncertainty-in-the-conclusion">Uncertainty in the conclusion</h2>
-<p>In my analysis, the attempts to arrive at a high certainty that the MOE is acceptable (i.e.&nbsp;above 1) has failed. This is because the level of certainty for the outcome of interest is 30% which is not in the region of practical certainty (i.e.&nbsp;&lt;10% or &gt;90%).</p>
+<p>Check if the level of certainty for the outcome of interest is 97% is in the region of practical certainty (i.e.&nbsp;&lt;10% or &gt;90%).</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -577,68 +577,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>&lt;10%</td>
-<td>10 - 90%</td>
+<td>10 - 90</td>
 <td>&gt;90%</td>
 </tr>
 </tbody>
 </table>
-<p>At this point, the assessment should be reported as <strong>inconclusive</strong>.</p>
-<p>The risk managers can decide to support generation of new studies to fill data gaps and perform a re-evaluation of the risk assessment.</p>
-<!-- ```{r} -->
-<!-- #| eval: false -->
-<!-- #| echo: false -->
-<!-- ggplot(data.frame(lb = c(0.062, 0.03, 0.07),  -->
-<!--                   ub = c(0.21, 0.15, 0.33), quantity=c("reference point", "average exposure", "high exposure"), y = 0:2),  -->
-<!--        aes()) +  -->
-<!--     geom_segment(aes(x=lb, xend = ub, y = y, yend = y ),color=c('red','lightgreen','lightblue'), size = 10) +  -->
-<!--   geom_point(aes(x=0.147, y = 0),  col = "darkblue") + -->
-<!--   geom_text(aes(x=0.147, y = 0, label = "D"), col = "white") + -->
-<!--   geom_text(aes(x=0.062, y = 0, label = "C")) + -->
-<!--   geom_text(aes(x=0.15, y = 1, label = "B")) + -->
-<!--   geom_text(aes(x=0.33, y = 2, label = "A")) + -->
-<!--   xlab('dose') + -->
-<!--   ylab('') + -->
-<!--   theme(axis.text.y=element_blank(),  -->
-<!--       axis.ticks.y=element_blank()) + -->
-<!--   theme(legend.position = NULL)  -->
-<!-- ``` -->
-</section>
-<section id="extra" class="level2">
-<h2 class="anchored" data-anchor-id="extra">EXTRA</h2>
-<section id="post-scriptum-1" class="level3">
-<h3 class="anchored" data-anchor-id="post-scriptum-1">Post scriptum 1</h3>
-<p>An alternative choice for a probability distribution to represent uncertainty in a High Exposure would be a distribution that resonates properties of percentiles. to be continued</p>
-<!-- Consider the following simulation experiment where we draw samples from a lognormal distribution and derive the 95th percentile.  -->
-<!-- ```{r} -->
-<!-- #| warning: false -->
-<!-- #| message: false -->
-<!-- N = 10^4 -->
-<!-- n = 20 -->
-<!-- sim = replicate(N,quantile(rlnorm(n), probs=0.95)) -->
-<!-- summary(sim) -->
-<!-- ggplot(data.frame(sim=sim),aes(x=sim)) + -->
-<!--   geom_histogram() -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- #| eval: false -->
-<!-- #| echo: false -->
-<!-- obj <- function(par){ -->
-<!--   (qweibull(0.1,shape=exp(par[1]), scale=exp(par[2]))-hel)^2 + -->
-<!--   (qweibull(0.9,shape=exp(par[1]), scale=exp(par[2]))-heu)^2 -->
-<!-- } -->
-<!-- val <- optim(par=c(1,0),fn = obj) -->
-<!-- he = rweibull(n = niter, shape=exp(val$par[1]), scale=exp(val$par[2])) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- #| eval: false -->
-<!-- #| echo: false -->
-<!-- obj <- function(par){ -->
-<!--   (qweibull(0.1,shape=exp(par[1]), scale=exp(par[2]))-hel)^2 + -->
-<!--   (qweibull(0.9,shape=exp(par[1]), scale=exp(par[2]))-heu)^2 -->
-<!-- } -->
-<!-- val <- optim(par=c(1,0),fn = obj) -->
-<!-- he = rweibull(n = niter, shape=exp(val$par[1]), scale=exp(val$par[2])) -->
-<!-- ``` -->
+<p>If not, the assessment should be reported as <strong>inconclusive</strong>. The risk managers can decide to support generation of new studies to fill data gaps and perform a re-evaluation of the risk assessment.</p>
 
 
 </section>

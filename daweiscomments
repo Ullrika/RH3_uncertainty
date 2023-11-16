@@ -1,0 +1,20 @@
+Comment 1:
+
+In the first "tier", one of the difficulty is to make HE/RP = 1 so that the probability bound analysis can be used. To do this, we need to specify a number for expert to judge what probability it is that a HE or RP is below that number. For example, if we "fix" P(RP>0.062) = 0.95 (according to BMDL definition), we can ask experts that what is the probability of HE < 0.062 (instead of 0.33 as 0.33 won't make HE/RP=1) given the information below:
+ 
+By doing this, we can "force" HE/RP=1, and expert also have some information to think for them to judge P(HE<0.062) based on the information above. 
+
+Let's say expert think P(HE<0.062) = X, we can then use probability bound theory to do the following calculation: 100-[(100-95) + (100-X)]. Let's say the result is Y. If the risk manager think Y (for example 95%) is enough certain to them to make decision, we stop, otherwise, we go to the next step in your script.
+
+-----------------------------------------------------
+We can also "fix" P(HE<0.33)=0.9 and ask expert to judge P(RP>0.062) given the information below and follow similar process as above.
+ 
+---------------------------------------------------
+
+Comment 2:
+
+Next step is ask x and y in your script and to see whether x/y<1 in this example. To ask expert to judge the value of x and y is quite tricky, as it seems more difficult than ask expert to judge the probability of a variable is larger/smaller than a fixed number, which is already not easy for them. To make their judgment easier, we might need to be careful on choose that "fixed probability". In this example, as BMDL is given and it is defined as the 5% percentile of BMD, it would be easier to ask the expert what is the value of x so that (RP<x) =0.95, which is quite consistent with the definition of BMD (so the expert may easily choose that BMDL for x). When this 0.95 is determined, the probability for HE is also determined as 95% according to the probability bound theory as we want the sum of them being 10%. So the expert has to judge the value of y so that P(HE>y) =5% (they can use the high level consumption as a reference point, but this is more tricker than specify x as above, as x could be specified by the BMDL definition - they can also adjust the value of x of course to accommodate other uncertainty, but with the BMDL definition, it would not be so tricky to do so). My point of this whole paragraph is that, if we have 10% of room to allocate, we need think carefully about how to allocate it according to the information on hand (for example, if BMDL's definition is 2% percentile, we might to allocate 2% to RP, and leave 8% to HE, as it will make it easier for expert for at least one judgement; equally, if there is a clear definition on HE about a certain percentage based on the available information, we can allocate part of 10% to HE according to that definition, and give the rest to RP).
+
+Comment 3:
+
+As for the last step of Monte Carlo simulation, the distribution of RP doesn't have to exactly follow the definition of BMDL/BMDU, expert can adjust the value or percentile as long as they have justification based on the BMD information, and then SHELF can generate fitted distribution according to the percentile and the corresponding value. Also, for HE, its distribution also could be elicited from experts by not anchoring them saying 0.07 is corresponding to 10% percentile and 0.33 is about 90% percentile. As long as they can provide their judgement on the value of certain percentile based on the information they have and provide a justification for it, it would be enough. 
