@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ullrika Sahlin, Dawei Tang, …">
 
-<title>RH3_uncertainty - Uncertainty frameworks</title>
+<title>RH3_uncertainty - A tiered uncertainty analysis to assess uncertainty in a fact</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -101,10 +102,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#uncertainty-in-a-categorical-conclusion" id="toc-uncertainty-in-a-categorical-conclusion" class="nav-link active" data-scroll-target="#uncertainty-in-a-categorical-conclusion">Uncertainty in a <strong>categorical-conclusion</strong></a></li>
-  <li><a href="#uncertainty-in-a-number-conclusion" id="toc-uncertainty-in-a-number-conclusion" class="nav-link" data-scroll-target="#uncertainty-in-a-number-conclusion">Uncertainty in a <strong>number-conclusion</strong></a></li>
-  <li><a href="#uncertainty-in-an-integrated-assessment-workflow" id="toc-uncertainty-in-an-integrated-assessment-workflow" class="nav-link" data-scroll-target="#uncertainty-in-an-integrated-assessment-workflow">Uncertainty in an integrated assessment workflow</a></li>
-  <li><a href="#uncertainty-in-a-scientific-hypothesis" id="toc-uncertainty-in-a-scientific-hypothesis" class="nav-link" data-scroll-target="#uncertainty-in-a-scientific-hypothesis">Uncertainty in a <strong>scientific hypothesis</strong></a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#qualitative-approaches" id="toc-qualitative-approaches" class="nav-link" data-scroll-target="#qualitative-approaches">Qualitative approaches</a></li>
+  <li><a href="#qualitative---quantitative" id="toc-qualitative---quantitative" class="nav-link" data-scroll-target="#qualitative---quantitative">Qualitative -&gt; Quantitative</a>
+  <ul class="collapse">
+  <li><a href="#starting-with-50-probability" id="toc-starting-with-50-probability" class="nav-link" data-scroll-target="#starting-with-50-probability">Starting with 50% probability</a></li>
+  <li><a href="#starting-with-0-100-probability" id="toc-starting-with-0-100-probability" class="nav-link" data-scroll-target="#starting-with-0-100-probability">Starting with 0-100% probability</a></li>
+  </ul></li>
+  <li><a href="#fully-quantitative" id="toc-fully-quantitative" class="nav-link" data-scroll-target="#fully-quantitative">Fully quantitative</a></li>
   </ul>
 </nav>
     </div>
@@ -113,13 +118,20 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Uncertainty frameworks</h1>
+<h1 class="title">A tiered uncertainty analysis to assess uncertainty in a fact</h1>
+<p class="subtitle lead">Work in progress RiskHunt3r</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ullrika Sahlin, Dawei Tang, … </p>
+          </div>
+  </div>
     
   
     
@@ -128,23 +140,38 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="uncertainty-in-a-categorical-conclusion" class="level1">
-<h1>Uncertainty in a <strong>categorical-conclusion</strong></h1>
-<p>Approaches for uncertainty analysis when making a categorical conclusion, e.g.&nbsp;there is a causal association to adverse health effect or not <a href="./uncertainty_fact.html">Page</a></p>
-<p>Includes an hazard identification, considering multiple streams of evidence.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in a categorical outcome of interest.</p>
+<p>This page describe an approach to quantify uncertainty examplified by hazard identification.</p>
+<p>A tiered uncertainty analysis can be</p>
+<ul>
+<li><p>an expert judgement on the outcome of interest directly</p></li>
+<li><p>an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed qualitatively with rules how to combine them)</p></li>
+<li><p>an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed quantitatively and a model how to combine them)</p></li>
+</ul>
 </section>
-<section id="uncertainty-in-a-number-conclusion" class="level1">
-<h1>Uncertainty in a <strong>number-conclusion</strong></h1>
-<p>A proposed tiered approach for uncertainty analysis <a href="./uncertainty_number.html">Page</a></p>
-<p>Includes a risk assessment combining assessed hazard and exposure.</p>
+<section id="qualitative-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="qualitative-approaches">Qualitative approaches</h2>
+<p>Approaches resulting in a qualitative expression of uncertainty in hazard identification exists. These are also based on expert judgement, but where uncertainty is expressed qualitatively.</p>
+<p>A qualitative expression for uncertainty is more open for different interpretations compared to a quantitative expression on a well-defined scale.</p>
+<p>Qualitative expressions for uncertainty are helpful when making a judgement on the combined impact of sources to uncertainty.</p>
+<p>A qualitative expression of uncertainty in the hazard identification can be sufficient if this goes into a continued assessment, but if hazard identification is the only assessment or there is a conclusion to be made on the hazard identification before proceeding to the next step, then a quantitative expression of uncertainty is to recommend.</p>
 </section>
-<section id="uncertainty-in-an-integrated-assessment-workflow" class="level1">
-<h1>Uncertainty in an integrated assessment workflow</h1>
-<p>To come</p>
+<section id="qualitative---quantitative" class="level2">
+<h2 class="anchored" data-anchor-id="qualitative---quantitative">Qualitative -&gt; Quantitative</h2>
+<section id="starting-with-50-probability" class="level3">
+<h3 class="anchored" data-anchor-id="starting-with-50-probability">Starting with 50% probability</h3>
 </section>
-<section id="uncertainty-in-a-scientific-hypothesis" class="level1">
-<h1>Uncertainty in a <strong>scientific hypothesis</strong></h1>
-<p>To come.</p>
+<section id="starting-with-0-100-probability" class="level3">
+<h3 class="anchored" data-anchor-id="starting-with-0-100-probability">Starting with 0-100% probability</h3>
+<p>Practical certainty</p>
+</section>
+</section>
+<section id="fully-quantitative" class="level2">
+<h2 class="anchored" data-anchor-id="fully-quantitative">Fully quantitative</h2>
+<p>Quality of evidence -&gt; Quantitative likelihood function</p>
+<p>Proceed with prior + likelihood -&gt; Posterior</p>
 
 
 </section>

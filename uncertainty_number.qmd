@@ -1,7 +1,7 @@
 ---
 title: "A tiered uncertainty analysis to assess uncertainty in a number"
 subtitle: "Work in progress RiskHunt3r"
-author: "Ullrika Sahlin, Dawei Tang, N N"
+author: "Ullrika Sahlin, Dawei Tang, ..."
 format: 
   html:
     toc: true
@@ -19,13 +19,15 @@ library(SHELF)
 ```
 
 ```{r}
-cm = "dioxin"
+cm = "X"
 ```
 
 
 ## Overview
 
 The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in the outcome of interest. 
+
+This page describe an approach to quantify uncertainty when risk is assessed by combining contious quantities on hazard and exposure. 
 
 A tiered uncertainty analysis can be
 

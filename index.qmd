@@ -2,21 +2,23 @@
 title: "Uncertainty frameworks"
 ---
 
-# Uncertainty in a **fact-conclusion**
+# Uncertainty in a **categorical-conclusion**
 
-To come
+Approaches for uncertainty analysis when making a categorical conclusion, e.g. there is a causal association to adverse health effect or not
+[Page](uncertainty_fact.qmd)
 
-# Uncertainty in a **number-conclusion** 
+Includes an hazard identification, considering multiple streams of evidence. 
 
-Explanation of a tiered approach for uncertainty analysis [Page](uncertainty_number.qmd)
+# Uncertainty in a **number-conclusion**
 
-Includes risk assessment by combining assessed hazard and exposure
+A proposed tiered approach for uncertainty analysis [Page](uncertainty_number.qmd)
 
-# Uncertainty in an integrated assessment workflow 
+Includes a risk assessment combining assessed hazard and exposure. 
+
+# Uncertainty in an integrated assessment workflow
 
 To come
 
 # Uncertainty in a **scientific hypothesis**
 
-To come 
-
+To come. 

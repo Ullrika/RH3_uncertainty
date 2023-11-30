@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Ullrika Sahlin, Dawei Tang, N N">
+<meta name="author" content="Ullrika Sahlin, Dawei Tang, …">
 
 <title>RH3_uncertainty - A tiered uncertainty analysis to assess uncertainty in a number</title>
 <style>
@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Ullrika Sahlin, Dawei Tang, N N </p>
+             <p>Ullrika Sahlin, Dawei Tang, … </p>
           </div>
   </div>
     
@@ -193,6 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in the outcome of interest.</p>
+<p>This page describe an approach to quantify uncertainty when risk is assessed by combining contious quantities on hazard and exposure.</p>
 <p>A tiered uncertainty analysis can be</p>
 <ul>
 <li><p>an expert judgement on the outcome of interest directly</p></li>
@@ -202,11 +203,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="description-of-the-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="description-of-the-assessment">Description of the assessment</h2>
-<p>Consider a human health risk assessment of chemical dioxin.</p>
+<p>Consider a human health risk assessment of chemical X.</p>
 <section id="hazard-assessment" class="level3">
 <h3 class="anchored" data-anchor-id="hazard-assessment">Hazard assessment</h3>
 <p>The quantity of interest for the hazard assessment is the Reference Point, <strong>RP</strong>.</p>
-<p>As an example, a RP of 3 μg dioxin/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.</p>
+<p>As an example, a RP of 3 μg X/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.</p>
 <p>Model Averaged BMD model</p>
 <table class="table">
 <thead>
@@ -228,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exposure-assessment" class="level3">
 <h3 class="anchored" data-anchor-id="exposure-assessment">Exposure assessment</h3>
 <p>The quantity of interest for the exposure assessment is a High Exposure, <strong>HE</strong>.</p>
-<p>The range (seen over different populations and data sets) of the exposure estimates for dioxin was assessed as</p>
+<p>The range (seen over different populations and data sets) of the exposure estimates for X was assessed as</p>
 <ul>
 <li><p>1 - 2 μg/kg bw per day for an average exposure scenario and</p></li>
 <li><p>2 - 4 μg/kg bw per day for a high-level exposure scenario.</p></li>
@@ -238,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="risk-characterisation">Risk characterisation</h3>
 <p>The outcome of interest is the event that the High Exposure is exceeding the Reference Point, i.e.&nbsp;</p>
 <p><span class="math display">\[HE &gt; RP\]</span> Another way of formulating this is as a Margin of Exposure <strong>MOE</strong> defined as <span class="math display">\[MOE=\frac{RP}{HE}\]</span></p>
-<p>In the risk assessment on dioxin the derived MOEs range between</p>
+<p>In the risk assessment on X the derived MOEs range between</p>
 <ul>
 <li><p>3 - 1.5 for the average exposure scenario and</p></li>
 <li><p>1.5 - 0.8 for high level exposure scenario, respectively.</p></li>
@@ -356,7 +357,7 @@ Comment
 <p>Use a conservative estimate for RP as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.</p>
 <p>Ask experts to judge their probability expressing their uncertainty about a conservative estimate of hazard, e.g.&nbsp;the BMDL,</p>
 <p><span class="math display">\[y = 3\]</span></p>
-<p>The experts judge that they are 95% certain that the Reference Point is above 3 μg dioxin/kg bw per day.</p>
+<p>The experts judge that they are 95% certain that the Reference Point is above 3 μg X/kg bw per day.</p>
 <p><span class="math display">\[P(RP &gt; y) = 95\%\]</span></p>
 <table class="table">
 <thead>
@@ -379,7 +380,7 @@ Comment
 <p>Find a value on a High Exposure where the MOE is at the critical threshold set by risk managers</p>
 <p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
 <p><span class="math display">\[x = 1 \cdot y = 3\]</span></p>
-<p>Ask the experts to judge their probability that a High Exposure is below 3 μg dioxin/kg bw per day.</p>
+<p>Ask the experts to judge their probability that a High Exposure is below 3 μg X/kg bw per day.</p>
 <p><span class="math display">\[P( HE &lt; x) = 95\%\]</span></p>
 <table class="table">
 <thead>

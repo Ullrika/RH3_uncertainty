@@ -1,0 +1,65 @@
+---
+title: "A tiered uncertainty analysis to assess uncertainty in a fact"
+subtitle: "Work in progress RiskHunt3r"
+author: "Ullrika Sahlin, Dawei Tang, ..."
+format: 
+  html:
+    toc: true
+    echo: false
+    message: false
+    warning: false
+---
+
+```{r}
+#| echo: false
+#| message: false
+
+library(ggplot2)
+library(SHELF)
+```
+
+```{r}
+cm = "X"
+```
+
+
+## Overview
+
+The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in a categorical outcome of interest. 
+
+This page describe an approach to quantify uncertainty examplified by hazard identification. 
+
+A tiered uncertainty analysis can be
+
+- an expert judgement on the outcome of interest directly
+
+- an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed qualitatively with rules how to combine them)
+
+- an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed quantitatively and a model how to combine them)
+
+## Qualitative approaches 
+
+Approaches resulting in a qualitative expression of uncertainty in hazard identification exists. These are also based on expert judgement, but where uncertainty is expressed qualitatively. 
+
+A qualitative expression for uncertainty is more open for different interpretations compared to a quantitative expression on a well-defined scale. 
+
+Qualitative expressions for uncertainty are helpful when making a judgement on the combined impact of sources to uncertainty. 
+
+A qualitative expression of uncertainty in the hazard identification can be sufficient if this goes into a continued assessment, but if hazard identification is the only assessment or there is a conclusion to be made on the hazard identification before proceeding to the next step, then a quantitative expression of uncertainty is to recommend. 
+
+## Qualitative -> Quantitative 
+
+### Starting with 50% probability 
+
+
+
+###  Starting with 0-100% probability 
+
+Practical certainty 
+
+## Fully quantitative 
+
+Quality of evidence -> Quantitative likelihood function 
+
+Proceed with prior + likelihood -> Posterior 
+
