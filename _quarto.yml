@@ -8,6 +8,10 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: uncertainty_fact.qmd
+        text: Fact
+      - href: uncertainty_number.qmd
+        text: Number
 
 
 format:

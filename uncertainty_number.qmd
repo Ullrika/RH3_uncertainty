@@ -1,7 +1,7 @@
 ---
 title: "A tiered uncertainty analysis to assess uncertainty in a number"
 subtitle: "Work in progress RiskHunt3r"
-author: "Ullrika Sahlin, Dawei Tang, ..."
+#author: "Ullrika Sahlin, Dawei Tang, ..."
 format: 
   html:
     toc: true
@@ -94,15 +94,17 @@ In the risk assessment on `r cm` the derived MOEs range between
 
 - `r round(bmdl/hel,1)` - `r round(bmdl/heu,1)` for high level exposure scenario, respectively.
 
-A MOE of 1 describes the exposure level that could be associated with a 5% increase relative to the background incidence for skin cancer. (Note that the value 5% comes from the BMD modelling). 
+A MOE of 1 describes the exposure level that could be associated with a 5% increase relative to the background incidence for skin cancer.
+
+:::{.callout-note}
+Note that the value 5% comes from the BMD modelling). 
+:::
 
 A MOE greater than 1, implies that a High Exposure is not exceeding the Reference Point, and thereby a low risk. 
 
 Risk managers set what is an acceptable MOE. It can e.g. be 1, 10 or 1000. 
 
-:::{.callout-warning}
-# Comment 
-
+:::{.callout-note}
 These levels can be seen to represent uncertainty factors for specific sources of uncertainty. If so, these sources of uncertainty should not be taken into account when experts make their judgement of uncertainty in the MOE. The challenge might be smaller (but not absent) by considering these uncertainty factors in the assessment (e.g. RP/UF instead of RP).
 
 A high acceptable MOE would correspond to a high level for practical certainty
@@ -318,7 +320,7 @@ An alternative is to go to the online elicitation app for one distribution [link
 
 The beta-distribution is defined as 
 
-$$\frac{RP}{`r fit$limits$upper-fit$limits$lower`} \sim beta(`r fit$Beta$shape1`, `r fit$Beta$shape2`)$$
+$$\frac{RP}{`r fit$limits$upper-fit$limits$lower`} \sim beta(`r round(fit$Beta$shape1,2)`, `r round(fit$Beta$shape2,2)`)$$
 
 We sample from it using this function
 
@@ -395,6 +397,11 @@ return(he)
 }
 ```
 
+
+### Risk
+
+#### Combine sources of uncertainty by calculations
+
 Evaluate the combined impact of the characterised uncertainty in RP and HE on the MOE by Monte Carlo simulation. 
 
 ```{r}
@@ -416,7 +423,7 @@ ggplot(data.frame(dose = c(rp,he), quantity = rep(c("Reference Point", "High Exp
 
 The calculated probability that the MOE is above 1 is `r round(mean(rp/he>1)*100)` %.
 
-(@) Calculate the proportion of random samples in your Monte Carlo simulation that corresponds to a MOE > 1.
+This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a MOE > 1.
 
 ```{r}
 #| echo: true
@@ -426,7 +433,7 @@ moe = rp/he
 mean(moe>1)
 ```
 
-Visualise the resulting distribution for uncertainty in MOE.
+One way to visualise the resulting distribution for uncertainty in MOE is
 
 
 ```{r}
@@ -440,9 +447,40 @@ ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   ggtitle("Uncertainty in MOE", subtitle=paste0("P(MOE>1)=",round(mean(rp/he>1)*100),"%"))
 ```
 
-The red area corresponds to a MOE greater than `r th`.
+where the red area corresponds to a MOE greater than `r th`.
 
-As a final step, the experts are invited to adjust this probability upwards or downwards considering additional sources of uncertainty, not previously taken into account in the analysis.  
+:::{.callout-note}
+Alternative way to summarise when not using MOE
+
+If risk is evaluated based on the outcome that the High Exposure is exceeding the Reference Point, then the probability to be calculated is  
+
+$$P(\frac{HE}{RP}>1)$$
+
+```{r}
+#| echo: true
+#| eval: false
+
+risk_ratio = he/rp
+mean(risk_ratio > 1)
+```
+
+```{r}
+df <- density(he/rp, from=0)
+df <- data.frame(x=df$x,y=df$y)
+ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
+  geom_line() +
+  geom_ribbon(data=subset(df,x>1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
+  xlab("HE/RP") +
+  ylab("density") +
+  ggtitle("Uncertainty in HE/RP", subtitle=paste0("P(HE>RP)=",round(mean(he>rp)*100),"%"))
+```
+
+In this visualisation, the red area corresponds to a High Exposure greater than the Reference Point.
+:::
+
+#### Consider additional sources of uncertainty 
+
+As a final step, the experts are invited to adjust this probability upwards or downwards considering **additional sources of uncertainty**, not previously taken into account in the analysis.  
 
 For the purpose of this exercise we assume that the experts subsequently judged that any additional sources of uncertainty were small enough that there was no need to adjust the calculated % probability that the MOE is above 1. 
 

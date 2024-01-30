@@ -1,7 +1,7 @@
 ---
 title: "A tiered uncertainty analysis to assess uncertainty in a fact"
 subtitle: "Work in progress RiskHunt3r"
-author: "Ullrika Sahlin, Dawei Tang, ..."
+#author: "Ullrika Sahlin, Dawei Tang, ..."
 format: 
   html:
     toc: true
@@ -22,44 +22,90 @@ library(SHELF)
 cm = "X"
 ```
 
-
 ## Overview
 
-The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in a categorical outcome of interest. 
+The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in a categorical outcome of interest (a fact according to the terminology by van de Bles et al. 2019).
 
-This page describe an approach to quantify uncertainty examplified by hazard identification. 
+This page describe an approach to quantify uncertainty exemplified by hazard identification.
 
 A tiered uncertainty analysis can be
 
-- an expert judgement on the outcome of interest directly
+-   an expert judgement on the outcome of interest directly
 
-- an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed qualitatively with rules how to combine them)
+-   an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed qualitatively with rules how to combine them)
 
-- an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed quantitatively and a model how to combine them)
+-   an expert judgement on the outcome of interest considering uncertainties in streams of evidence (expressed quantitatively and a model how to combine them)
 
-## Qualitative approaches 
+## Qualitative approaches
 
-Approaches resulting in a qualitative expression of uncertainty in hazard identification exists. These are also based on expert judgement, but where uncertainty is expressed qualitatively. 
+Approaches resulting in a qualitative expression of uncertainty in hazard identification exists. These are also based on expert judgement, but where uncertainty is expressed qualitatively.
 
-A qualitative expression for uncertainty is more open for different interpretations compared to a quantitative expression on a well-defined scale. 
+A qualitative expression for uncertainty is more open for different interpretations compared to a quantitative expression on a well-defined scale.
 
-Qualitative expressions for uncertainty are helpful when making a judgement on the combined impact of sources to uncertainty. 
+Qualitative expressions for uncertainty are helpful when making a judgement on the combined impact of sources to uncertainty.
 
-A qualitative expression of uncertainty in the hazard identification can be sufficient if this goes into a continued assessment, but if hazard identification is the only assessment or there is a conclusion to be made on the hazard identification before proceeding to the next step, then a quantitative expression of uncertainty is to recommend. 
+A qualitative expression of uncertainty in the hazard identification can be sufficient if this goes into a continued assessment, but if hazard identification is the only assessment or there is a conclusion to be made on the hazard identification before proceeding to the next step, then a quantitative expression of uncertainty is to recommend.
 
-## Qualitative -> Quantitative 
+## Practical certainty
 
-### Starting with 50% probability 
+```{r}
+p_DM = 90
+```
 
+The risk managers has informed the risk assessors that they find a certainty of `r p_DM`% or more as acceptable for decision making. This is know as **practical certainty**. It can be sufficient to conclude if overall uncertainty is in the range of practical certainty.
 
+| No association  | Inconclusive            | Association |
+|-----------------|-------------------------|-------------|
+| \<`r 100-p_DM`% | `r 100-p_DM` - `r p_DM` | \>`r p_DM`% |
 
-###  Starting with 0-100% probability 
+If not, the assessment should be reported as **inconclusive**. The risk managers can then decide to support generation of new studies to fill data gaps and perform a re-evaluation of the risk assessment.
 
-Practical certainty 
+A probability threshold for a "firm conclusion" opens up to communicate conclusion as a health concern or no health concern, or inconclusive.
 
-## Fully quantitative 
+## Outcome Qualitative -\> Qualitative
 
-Quality of evidence -> Quantitative likelihood function 
+***Hazard Identification Conclusion*** is a conclusion on evidence linking an exposure to a health outcome: (1) known to be a hazard to humans (2) presumed to be a hazard to humans (3) suspected to be a hazard to humans (4) not classifiable as a hazard to humans (5) not identified as a hazard to humans
 
-Proceed with prior + likelihood -> Posterior 
+After screening for relevant studies the conclusions is reach in a step-wise procedure:
 
+Source of evidence (individual studies) are evaluated individually by critical appraisal on a qualitative scale (Very Low, Low, Moderate to High confidence in the body of evidence).
+
+The sources are synthesised and the quality in the body of evidence is evaluated on a qualitative scale (Very Low, Low, Moderate and High confidence in the body of evidence).
+
+![From the OHAT handbook](\img\bodyofevidence.png)
+
+The confidence ratings are translated into level of evidence of health effects (Inadequate, Low, Moderate and High for a health effect or no health effect)
+
+![From the OHAT handbook](\img\translate.png)
+
+This is done for the Level of Evidence for Health Effects in Human Studies and Level of Evidence for Health Effects in Non-Human Animal Studies separately.
+
+![Hazard identification scheme from the OHAT handbook](\img\fig8.png)
+
+## Qualitative and quantitative
+
+Turn qualitative judgement on the body of evidence into a quantitative judgement on the certainty of a Health effect
+
+### Starting with 50% probability for a Health effect
+
+UK framework -- Could result in precise or approximate
+
+### Starting with 0-100% probability of a Health effect
+
+Shrink the approximate probability
+
+## Fully quantitative
+
+Quality of evidence -\> Quantitative likelihood function
+
+Proceed with prior + likelihood -\> Posterior
+
+How to assign a certain number to a category - need be careful
+
+How to combine likelihoods from different studies
+
+Translate Very Low - High into likelihood
+
+If categorical evidence
+
+If continuous quantity from meta analysis (effect size)

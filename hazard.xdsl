@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network1" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="endpoint">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="qsar1">
+			<state id="pos" />
+			<state id="neg" />
+			<parents>endpoint</parents>
+			<probabilities>0.8 0.2 0.3 0.7</probabilities>
+		</cpt>
+		<cpt id="qsar2">
+			<state id="pos" />
+			<state id="neg" />
+			<parents>endpoint</parents>
+			<probabilities>0.75 0.25 0.1 0.9</probabilities>
+		</cpt>
+		<cpt id="qsar3">
+			<state id="pos" />
+			<state id="neg" />
+			<parents>endpoint</parents>
+			<probabilities>0.5 0.5 0.3 0.7</probabilities>
+		</cpt>
+		<cpt id="endpoint_tier1">
+			<state id="yes" />
+			<state id="no" />
+			<probabilities>0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="qsar1_tier1">
+			<state id="pos" />
+			<state id="neg" />
+			<parents>endpoint_tier1</parents>
+			<probabilities>0.8 0.2 0.3 0.7</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 4.0.3005.0 ACADEMIC" name="Network1">
+			<node id="qsar1">
+				<name>qsar1</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>533 246 579 274</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="endpoint">
+				<name>endpoint</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>643 67 699 102</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="qsar2">
+				<name>qsar2</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>662 244 708 272</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="qsar3">
+				<name>qsar3</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>797 243 843 271</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="qsar1_tier1">
+				<name>qsar1_tier1</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>148 247 194 275</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="endpoint_tier1">
+				<name>endpoint_tier1</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>250 60 306 95</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+		</genie>
+	</extensions>
+</smile>

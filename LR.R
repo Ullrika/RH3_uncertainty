@@ -42,7 +42,8 @@ ggplot(df,aes(x=p_low,y=y,col=what)) +
 geom_segment(aes(xend=p_high,yend=y))
 
 
-
+## likelihood ratio only
+#  log(lik_evid_pos/lik_evid_neg)
 
   prior_A = 0.5
   prior_A_imp = seq(0.01,0.99,by=0.01)

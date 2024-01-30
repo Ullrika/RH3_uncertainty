@@ -1,7 +1,7 @@
 ---
 title: "A tiered uncertainty analysis illustrated on food risk assessment"
 subtitle: "RiskHunt3r"
-author: "Ullrika Sahlin and Dawei Tang"
+author: "Ullrika Sahlin, Dawei Tang, ..."
 format: 
   html:
     toc: true
