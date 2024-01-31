@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ullrika Sahlin, Zheng Zhou, Dawei Tang">
+
+<title>RH3_uncertainty - Tiered approaches to characterise uncertainty in NGRA examplified with an hazard identification</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">RH3_uncertainty</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./hazard example.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Hazard</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./risk example.html" rel="" target="">
+ <span class="menu-text">Risk</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#settings" id="toc-settings" class="nav-link" data-scroll-target="#settings">Settings</a>
+  <ul class="collapse">
+  <li><a href="#assessment-question" id="toc-assessment-question" class="nav-link" data-scroll-target="#assessment-question">Assessment question</a></li>
+  <li><a href="#uncertainty-in-the-conclusion" id="toc-uncertainty-in-the-conclusion" class="nav-link" data-scroll-target="#uncertainty-in-the-conclusion">Uncertainty in the conclusion</a></li>
+  <li><a href="#practical-certainty" id="toc-practical-certainty" class="nav-link" data-scroll-target="#practical-certainty">Practical certainty</a></li>
+  </ul></li>
+  <li><a href="#a-tiered-approach-with-uncertainty-expressed-by-precise-probability-combined-with-bayesian-reasoning" id="toc-a-tiered-approach-with-uncertainty-expressed-by-precise-probability-combined-with-bayesian-reasoning" class="nav-link" data-scroll-target="#a-tiered-approach-with-uncertainty-expressed-by-precise-probability-combined-with-bayesian-reasoning">A tiered approach with uncertainty expressed by precise probability combined with Bayesian reasoning</a>
+  <ul class="collapse">
+  <li><a href="#step-1.1" id="toc-step-1.1" class="nav-link" data-scroll-target="#step-1.1">Step 1.1</a></li>
+  <li><a href="#step-1.2" id="toc-step-1.2" class="nav-link" data-scroll-target="#step-1.2">Step 1.2</a></li>
+  </ul></li>
+  <li><a href="#a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-bayesian-reasoning" id="toc-a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-bayesian-reasoning" class="nav-link" data-scroll-target="#a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-bayesian-reasoning">A tiered approach with uncertainty expressed by bounded probability combined with Bayesian reasoning</a>
+  <ul class="collapse">
+  <li><a href="#step-2.1" id="toc-step-2.1" class="nav-link" data-scroll-target="#step-2.1">Step 2.1</a></li>
+  <li><a href="#step-2.2" id="toc-step-2.2" class="nav-link" data-scroll-target="#step-2.2">Step 2.2</a></li>
+  <li><a href="#step-2.3" id="toc-step-2.3" class="nav-link" data-scroll-target="#step-2.3">Step 2.3</a></li>
+  </ul></li>
+  <li><a href="#a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-dempster-shafer-theory" id="toc-a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-dempster-shafer-theory" class="nav-link" data-scroll-target="#a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-dempster-shafer-theory">A tiered approach with uncertainty expressed by bounded probability combined with Dempster-Shafer theory</a>
+  <ul class="collapse">
+  <li><a href="#dempster-shafer-theory" id="toc-dempster-shafer-theory" class="nav-link" data-scroll-target="#dempster-shafer-theory">Dempster-Shafer theory</a></li>
+  <li><a href="#step-3.1" id="toc-step-3.1" class="nav-link" data-scroll-target="#step-3.1">Step 3.1</a></li>
+  <li><a href="#step-3.2" id="toc-step-3.2" class="nav-link" data-scroll-target="#step-3.2">Step 3.2</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Tiered approaches to characterise uncertainty in NGRA examplified with an hazard identification</h1>
+<p class="subtitle lead">Work in progress RiskHunt3R</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ullrika Sahlin, Zheng Zhou, Dawei Tang </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Tiered approach to reduce uncertainty</p>
+<ul>
+<li><p>If practical certainty is not obtained, collect more data</p></li>
+<li><p>Follow integrated testing strategies such as the ASPIS framework</p></li>
+</ul>
+<p>Tiered approach to refine uncertainty</p>
+<ul>
+<li><p>If practical certainty is not obtained, and it is not justified to collect more data, refine the characterisation of uncertainty</p></li>
+<li><p>Follow options for increased refinement until practical certainty is obtained or stop with an inconclusive assessment</p></li>
+</ul>
+<p>Options to refine the procedure:</p>
+<ul>
+<li><p>Use worst case assumptions and characterise uncertainty in conclusion directly by expert judgement</p></li>
+<li><p>Break down the assessment into parts, characterise uncertainty in each part, combine by calculations, and make expert judgement considering additional sources of uncertainty</p></li>
+</ul>
+<p>Options to refine the precision:</p>
+<ul>
+<li><p>Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or DST).</p></li>
+<li><p>Proceed with reducing bounds (FACTs) probabilistic modelling</p></li>
+</ul>
+</section>
+<section id="settings" class="level1">
+<h1>Settings</h1>
+<section id="assessment-question" class="level2">
+<h2 class="anchored" data-anchor-id="assessment-question">Assessment question</h2>
+<p>For this hazard identification the question is if exposure to compound <span class="math inline">\(X\)</span> can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.</p>
+</section>
+<section id="uncertainty-in-the-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="uncertainty-in-the-conclusion">Uncertainty in the conclusion</h2>
+<p>The goal of uncertainty characterisation is to summarise uncertainty in the conclusion in a quantitative expression. Here we use (subjective or personal) probability (or degree of belief) as the quantitative expression of uncertainty.</p>
+<p>In these examples, we sometimes use % certainty instead of % probability for the more probable outcome. This is also a way to remind ourselves that the probability is should be interpreted as someone’s uncertainty and not a frequency.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are several reasons to aim for a quantitative expression of uncertainty. Qualitative expressions of uncertainty are still useful. You can read more about it on <a href="https://multimedia.efsa.europa.eu/uncertainty-tutorial/principles-and-methods/uncertainty-analysis-expressions.html">EFSAs tutorial on uncertainty</a></p>
+</div>
+</div>
+</section>
+<section id="practical-certainty" class="level2">
+<h2 class="anchored" data-anchor-id="practical-certainty">Practical certainty</h2>
+<p>The practical certainty is by risk managers set to be 66% probability for a YES and 80% probability for a NO. The assessment is <em>inconclusive</em> for any uncertainty in between the limits.</p>
+<table class="table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 45%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">NO</th>
+<th style="text-align: center;">Inconclusive</th>
+<th style="text-align: center;">YES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">&lt;20%</td>
+<td style="text-align: center;">20 - 66</td>
+<td style="text-align: center;">&gt;66%</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="a-tiered-approach-with-uncertainty-expressed-by-precise-probability-combined-with-bayesian-reasoning" class="level1">
+<h1>A tiered approach with uncertainty expressed by precise probability combined with Bayesian reasoning</h1>
+<section id="step-1.1" class="level2">
+<h2 class="anchored" data-anchor-id="step-1.1">Step 1.1</h2>
+<p>Evidence is a QSAR with sensitivity (TPR=80%) and specificity (TNR=70%) with a negative prediction for the endpoint.</p>
+<blockquote class="blockquote">
+<p>Sensitivity (true positive rate) is the probability of a positive test result, conditioned on the individual truly being positive.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Specificity (true negative rate) is the probability of a negative test result, conditioned on the individual truly being negative.</p>
+</blockquote>
+<p>These statistical performance measures can be calculated from data or derived by expert judgement.</p>
+<p>We (the assessors) apply Bayesian reasoning with a prior probability of 50% (<em>As likely as not</em>) that the answer is YES to the assessment question.</p>
+<p><span class="math display">\[ P(YES|-)=\frac{P(-|YES)P(YES)}{P(-|YES)P(YES)+P(-|NO)P(NO)} = \]</span> <span class="math display">\[= \frac{(1-TPR)\cdot 0.5}{(1-TPR)\cdot 0.5 + TNR \cdot 0.5}\]</span></p>
+<p>Thus, given the evidence (and what we know about the accuracy of the QSAR prediction) we are 22% certain that <span class="math inline">\(X\)</span> is an hazard.</p>
+<p>This is the same thing as saying that we are 78% certain that the answer is NO.</p>
+<p>Is practical certainty obtained?</p>
+<p>No, because the % certainty is not larger than 80%.</p>
+<p>We proceed by <strong>reducing</strong> uncertainty by collecting more information.</p>
+</section>
+<section id="step-1.2" class="level2">
+<h2 class="anchored" data-anchor-id="step-1.2">Step 1.2</h2>
+<p>Evidence now consists of two more QSARs with sensitivities and specificities</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">TPR</th>
+<th style="text-align: center;">TNR</th>
+<th style="text-align: center;">Prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">80%</td>
+<td style="text-align: center;">70%</td>
+<td style="text-align: center;">negative</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">75%</td>
+<td style="text-align: center;">90%</td>
+<td style="text-align: center;">negative</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;">70%</td>
+<td style="text-align: center;">positive</td>
+</tr>
+</tbody>
+</table>
+<p>We apply again Bayesian reasoning with a prior probability of 50% that the answer is YES to the assessment question.</p>
+<p><span class="math display">\[ P(YES|-,-,+)=\]</span> <span class="math display">\[=\frac{P(-,-,+|YES)P(YES)}{P(-,-,+|YES)P(YES)+P(-,-,+|NO)P(NO)}\]</span></p>
+<p>The probability of YES given the evidence is 12%</p>
+<p>This is the same thing as saying that we are 88% certain that the answer is NO.</p>
+<p>Is practical certainty obtained?</p>
+<p>Yes, there is sufficient certainty that <span class="math inline">\(X\)</span> is not a hazard. Proceed with the decision.</p>
+</section>
+</section>
+<section id="a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-bayesian-reasoning" class="level1">
+<h1>A tiered approach with uncertainty expressed by bounded probability combined with Bayesian reasoning</h1>
+<section id="step-2.1" class="level2">
+<h2 class="anchored" data-anchor-id="step-2.1">Step 2.1</h2>
+<p>Same evidence as above, but start with a prior for a YES bounded in the range of inconclusiveness i.e.&nbsp;between 20 and 66% probability.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The principle is that the experts can put a rough bound on their prior instead of specifying a precise probability. The inconclusive range is here taken as a default option to bound the prior with the purpose to reduce the occasions for formal expert knowledge elicitation.</p>
+<p>It is is reasonable that, under certain circumstances, their prior falls within the inconclusive region, otherwise there would have been practical certainty. <em>We have to think more about this</em></p>
+<p>The experts have the opportunity to reduce the range bounded the prior, but it is difficult to justify why they would be allowed to enlarge it. The latter would imply that they specified the wrong bounds from the beginning.</p>
+</div>
+</div>
+<p>The probability of YES given the evidence is between 7 and 36%.</p>
+<p>This is the same thing as saying that we are between 64 to 93% certain that the answer is NO.</p>
+<p>Is practical certainty obtained?</p>
+<p>No, because (the lower bound of) <span class="math inline">\(\underline{P}(NO|-,-,+)&lt;80\%\)</span></p>
+<p>The prior probability must be less than 46% instead of less than 66% for the conclusion to reach practical certainty.</p>
+<p>A way to illustrate this is to use an unit-less measure for second order uncertainty (or robustness) that maps the prior to the posterior.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="hazard-example_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let us proceed by <strong>reducing</strong> uncertainty by collecting more information.</p>
+</section>
+<section id="step-2.2" class="level2">
+<h2 class="anchored" data-anchor-id="step-2.2">Step 2.2</h2>
+<p>Same as above for step 2 with three QSARs.</p>
+<p>The probability of YES given the evidence is between 7 and 36%.</p>
+<p>Is practical certainty obtained?</p>
+<p>No, but it is close.</p>
+<p>The prior probability for a YES must be less than 65% instead of less than 66% for the conclusion to reach practical certainty.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="hazard-example_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let us proceed by <strong>refining</strong> the characterisation of uncertainty.</p>
+</section>
+<section id="step-2.3" class="level2">
+<h2 class="anchored" data-anchor-id="step-2.3">Step 2.3</h2>
+<p>The assessors agree that prior for a YES could have been less than 60% instead of 66% probability.</p>
+<p>Practical certainty is obtained under any prior in this range.</p>
+<p>Risk managers agree that the conclusion is NO with sufficient certainty. In other words, there is sufficient certainty that <span class="math inline">\(X\)</span> is not a hazard. Proceed with the decision.</p>
+</section>
+</section>
+<section id="a-tiered-approach-with-uncertainty-expressed-by-bounded-probability-combined-with-dempster-shafer-theory" class="level1">
+<h1>A tiered approach with uncertainty expressed by bounded probability combined with Dempster-Shafer theory</h1>
+<section id="dempster-shafer-theory" class="level2">
+<h2 class="anchored" data-anchor-id="dempster-shafer-theory">Dempster-Shafer theory</h2>
+<blockquote class="blockquote">
+<p>The Dempster-Shafer theory is based on two ideas: the idea of obtaining degrees of belief for one question from subjective probabilities for a related question, and Dempster’s rule for combining such degrees of belief when they are based on independent items of evidence.</p>
+</blockquote>
+<p>Uncertainty in the answer to the assessment question is expressed by a mass function over YES, NO or “either of these”. The mass function should sum to one. The mass function can be interpreted as bounds on the probabilities for YES and NO. A large overlap between the probability for YES and NO indicates that a larger uncertainty.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ullrika finds it challenging to express her uncertainty by a mass function and do not know how to do this consider the sensitivity and specificity of the QSAR.</p>
+</div>
+</div>
+</section>
+<section id="step-3.1" class="level2">
+<h2 class="anchored" data-anchor-id="step-3.1">Step 3.1</h2>
+<p>The evidence is combing from a QSAR with a prediction stating that compound <span class="math inline">\(X\)</span> can cause an effect on the endpoint with a probability between 0 and 30 and it does not cause an effect with probability between 70 and 100%.</p>
+<p>Is practical certainty obtained?</p>
+<p>No.&nbsp;The probability for the answer to be NO is can be less than 70%.</p>
+<p>Let us proceed by <strong>reducing</strong> uncertainty by collecting more information.</p>
+</section>
+<section id="step-3.2" class="level2">
+<h2 class="anchored" data-anchor-id="step-3.2">Step 3.2</h2>
+<p>We now have three lines of evidence and make a conclusion from each of them separately. Our uncertainty is expressed by the mass function.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">NO</th>
+<th style="text-align: center;">YES</th>
+<th style="text-align: center;">Empty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">70%</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">30%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">90%</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">10%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;">50%</td>
+</tr>
+</tbody>
+</table>
+<p>Our uncertainty in the answer to the assessment question from each line of evidence are combined using the DS rule. This results in the mass function:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">NO</th>
+<th style="text-align: center;">YES</th>
+<th style="text-align: center;">Empty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">94%</td>
+<td style="text-align: center;">3%</td>
+<td style="text-align: center;">3%</td>
+</tr>
+</tbody>
+</table>
+<p>If we assign a probability interpretation to the mass function, we can say that the compound <span class="math inline">\(X\)</span> can cause an effect on the endpoint with a probability between 3 and 6%.</p>
+<p>We also conclude we are betwee 94 and 97% certain that it does not cause the effect.</p>
+<p>Is practical certainty obtained?</p>
+<p>Yes, there is sufficient certainty that <span class="math inline">\(X\)</span> is not a hazard. Proceed with the decision.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ullrika here again. Note that there are differences between the Probability Bounds Analysis and DST in the characterisation of uncertainty associated with each line of evidence and the method to combine uncertainties. The experts, assessors and decision makers understand what the expression of uncertainty mean. The procedure to characterise uncertainty is well documented, transparent and justified. An aim is that experts should be willing to take the characterisation as their uncertainty as a group.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Reduce by considering more evidence/data.</p>
+<p>Adding evidence/data does not necessarily reduce uncertainty. Uncertainty can increase when considering diverging evidence.</p>
+<p>Refine by increasing precision in the characterisation of uncertainty.</p>
+<p>A tiered approach should avoid reducing precision in the characterisation of uncertainty, and therefore it is best to start with a rough characterisation.</p>
+<p>The concept practical certainty is a key to go through a tiered approach.</p>
+<p>We demonstrate tiered approaches with</p>
+<ul>
+<li><p>Bayesian reasoning with precise probabilities</p></li>
+<li><p>Bayesian reasoning with bounded probabilities</p></li>
+<li><p>Dempster Shafer Theory (DST)</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -8,11 +8,15 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: uncertainty_fact.qmd
-        text: Fact
-      - href: uncertainty_number.qmd
-        text: Number
-
+      - href: hazard example.qmd
+        text: Hazard
+      - href: risk example.qmd
+        text: Risk
+#- href: uncertainty_fact.qmd
+      #  text: Fact
+      #- href: uncertainty_number.qmd
+      #  text: Number
+      
 
 format:
   html:

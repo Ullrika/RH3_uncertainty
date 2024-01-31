@@ -1,0 +1,408 @@
+---
+title: "Tiered approaches to characterise uncertainty in NGRA examplified with an hazard identification"
+subtitle: "Work in progress RiskHunt3R"
+author: "Ullrika Sahlin, Zheng Zhou, Dawei Tang"
+format: 
+  html:
+    toc: true
+    echo: false
+    message: false
+    warning: false
+---
+
+```{r}
+library(ggplot2)
+```
+
+# Introduction
+
+Tiered approach to reduce uncertainty
+
+- If practical certainty is not obtained, collect more data 
+
+- Follow integrated testing strategies such as the ASPIS framework 
+
+
+Tiered approach to refine uncertainty
+
+- If practical certainty is not obtained, and it is not justified to collect more data, refine the characterisation of uncertainty
+
+- Follow options for increased refinement until practical certainty is obtained or stop with an inconclusive assessment
+
+Options to refine the procedure:
+
+- Use worst case assumptions and characterise uncertainty in conclusion directly by expert judgement
+
+- Break down the assessment into parts, characterise uncertainty in each part, combine by calculations, and make expert judgement considering additional sources of uncertainty
+
+Options to refine the precision:
+
+- Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or DST). 
+
+- Proceed with reducing bounds (FACTs) probabilistic modelling
+
+
+# Settings
+
+## Assessment question
+
+For this hazard identification the question is if exposure to compound $X$ can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.
+
+## Uncertainty in the conclusion
+
+The goal of uncertainty characterisation is to summarise uncertainty in the conclusion in a quantitative expression. Here we use (subjective or personal) probability (or degree of belief) as the quantitative expression of uncertainty.
+
+In these examples, we sometimes use % certainty instead of % probability for the more probable outcome. This is also a way to remind ourselves that the probability is should be interpreted as someone's uncertainty and not a frequency.
+
+::: callout-note
+There are several reasons to aim for a quantitative expression of uncertainty. Qualitative expressions of uncertainty are still useful. You can read more about it on [EFSAs tutorial on uncertainty](https://multimedia.efsa.europa.eu/uncertainty-tutorial/principles-and-methods/uncertainty-analysis-expressions.html)
+:::
+
+## Practical certainty
+
+```{r}
+pc_yes = 0.66
+pc_no = 0.8
+```
+
+The practical certainty is by risk managers set to be `r pc_yes*100`% probability for a YES and `r pc_no*100`% probability for a NO. The assessment is *inconclusive* for any uncertainty in between the limits.
+
+|          NO          |            Inconclusive            |        YES        |
+|:-------------------:|:-------------------------------:|:----------------:|
+| \<`r 100*(1-pc_no)`% | `r 100*(1-pc_no)` - `r 100*pc_yes` | \>`r 100*pc_yes`% |
+
+# A tiered approach with uncertainty expressed by precise probability combined with Bayesian reasoning
+
+## Step 1.1
+
+Evidence is a QSAR with sensitivity (TPR=80%) and specificity (TNR=70%) with a negative prediction for the endpoint.
+
+> Sensitivity (true positive rate) is the probability of a positive test result, conditioned on the individual truly being positive.
+
+> Specificity (true negative rate) is the probability of a negative test result, conditioned on the individual truly being negative.
+
+These statistical performance measures can be calculated from data or derived by expert judgement.
+
+```{r}
+tpr = 0.8 
+tnr = 0.7 
+```
+
+We (the assessors) apply Bayesian reasoning with a prior probability of 50% (*As likely as not*) that the answer is YES to the assessment question.
+
+```{r}
+#prior
+p_yes = 0.5 
+
+#likelihood
+lik_evid_yes = (1-tpr[1]) 
+lik_evid_no = tnr[1] 
+
+#posterior for yes
+post_yes =  lik_evid_yes*p_yes / (lik_evid_yes*p_yes + lik_evid_no*(1-p_yes)) #Bayes rule
+  
+```
+
+$$ P(YES|-)=\frac{P(-|YES)P(YES)}{P(-|YES)P(YES)+P(-|NO)P(NO)} = $$ $$= \frac{(1-TPR)\cdot 0.5}{(1-TPR)\cdot 0.5 + TNR \cdot 0.5}$$
+
+Thus, given the evidence (and what we know about the accuracy of the QSAR prediction) we are `r round(post_yes*100,0)`% certain that $X$ is an hazard.
+
+This is the same thing as saying that we are `r round((1-post_yes)*100,0)`% certain that the answer is NO.
+
+Is practical certainty obtained?
+
+No, because the \% certainty is not larger than `r 100*pc_no`%.
+
+We proceed by **reducing** uncertainty by collecting more information.
+
+## Step 1.2
+
+Evidence now consists of two more QSARs with sensitivities and specificities
+
+| TPR | TNR | Prediction |
+|:---:|:---:|:----------:|
+| 80% | 70% |  negative  |
+| 75% | 90% |  negative  |
+| 50% | 70% |  positive  |
+
+```{r}
+tpr = c(0.8,0.75,0.5) 
+tnr = c(0.7,0.9,0.7) 
+```
+
+We apply again Bayesian reasoning with a prior probability of 50% that the answer is YES to the assessment question.
+
+$$ P(YES|-,-,+)=$$
+$$=\frac{P(-,-,+|YES)P(YES)}{P(-,-,+|YES)P(YES)+P(-,-,+|NO)P(NO)}$$
+
+```{r}
+# data
+evid = c("neg","neg","pos")
+
+# likelihood
+lik_evid_yes_step2 = (1-tpr[1])*(1-tpr[2])*tpr[3]
+lik_evid_no_step2 = (tnr[1])*(tnr[2])*(1-tnr[3])
+  
+#posterior for yes
+post_yes_step2 =  lik_evid_yes_step2*p_yes / (lik_evid_yes_step2*p_yes + lik_evid_no_step2*(1-p_yes)) #Bayes rule
+```
+
+The probability of YES given the evidence is `r round(post_yes_step2*100,0)`%
+
+This is the same thing as saying that we are `r round((1-post_yes_step2)*100,0)`% certain that the answer is NO.
+
+Is practical certainty obtained?
+
+Yes, there is sufficient certainty that $X$ is not a hazard. Proceed with the decision.
+
+# A tiered approach with uncertainty expressed by bounded probability combined with Bayesian reasoning
+
+## Step 2.1
+
+Same evidence as above, but start with a prior for a YES bounded in the range of inconclusiveness i.e. between `r (1-pc_no)*100` and `r pc_yes*100`% probability.
+
+::: callout-note
+The principle is that the experts can put a rough bound on their prior instead of specifying a precise probability. The inconclusive range is here taken as a default option to bound the prior with the purpose to reduce the occasions for formal expert knowledge elicitation.
+
+It is is reasonable that, under certain circumstances, their prior falls within the inconclusive region, otherwise there would have been practical certainty. *We have to think more about this*
+
+The experts have the opportunity to reduce the range bounded the prior, but it is difficult to justify why they would be allowed to enlarge it. The latter would imply that they specified the wrong bounds from the beginning.
+:::
+
+```{r}
+prior_yes_imp = seq(1-pc_no,pc_yes,by=0.01)
+
+post_yes_imp =  lik_evid_yes*prior_yes_imp / (lik_evid_yes*prior_yes_imp + lik_evid_no*(1-prior_yes_imp))
+```
+
+The probability of YES given the evidence is between `r round(min(post_yes_imp)*100,0)` and `r round(max(post_yes_imp)*100,0)`%.
+
+This is the same thing as saying that we are between `r round(min(1-post_yes_imp)*100,0)`  to `r round(max(1-post_yes_imp)*100,0)`% certain that the answer is NO.
+
+Is practical certainty obtained?
+
+No, because (the lower bound of)  $\underline{P}(NO|-,-,+)<`r pc_no*100`\%$
+
+```{r, echo = FALSE}
+  
+mm = range(dnorm(qnorm(prior_yes_imp)))
+dist_to_50 = (mm[1]-dnorm(qnorm(prior_yes_imp)))/(mm[2]-mm[1])*10+10
+df <- data.frame(p_YES = c(prior_yes_imp,post_yes_imp), a = rep(dist_to_50,2), type = rep(c("prior","posterior"),each=length(prior_yes_imp)))
+
+ind_low = min(which(post_yes_imp >= pc_yes),0)
+ind_high = max(which(post_yes_imp <= (1-pc_no)),0)
+
+#prior_yes_imp[ind_low]
+#prior_yes_imp[ind_high]
+```
+
+The prior probability must be less than `r round(100*prior_yes_imp[ind_high],0)`% instead of less than `r round(100*max(prior_yes_imp),0)`% for the conclusion to reach practical certainty.
+
+A way to illustrate this is to use an unit-less measure for second order uncertainty (or robustness) that maps the prior to the posterior.
+
+```{r, echo = FALSE}
+
+ggplot2::ggplot(df,aes(x=p_YES,y=a, colour = type)) +
+  geom_hline(
+    aes(yintercept = y), 
+    data.frame(y = c(2.5,5,7.5)),
+    color = "lightgrey"
+  ) +
+  geom_vline(
+    aes(xintercept = x), 
+    data.frame(x = c(1-pc_no,pc_yes)),
+    color = c("#269C2E","darkred")
+  ) +
+geom_line(aes(linetype=type)) + 
+  scale_colour_manual(values = c("#2B308B", "#57B4ED")) +
+  ylab("2nd order uncertainty") +
+  xlab("% probability YES") +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  scale_y_continuous(name="distance to \n almost likely as not", breaks=c(2.5,5,7.5), labels = c("","",""), limits = c(0,11)) +
+  xlim(0,1) + 
+  annotate(geom="text", x=(1-pc_no)/2, y=11, label="NO",
+              color="#269C2E") +
+  annotate(geom="text", x=(pc_yes + 1)/2, y=11, label="YES",
+              color="darkred") +
+  annotate(geom="text", x=(pc_yes + (1-pc_no))/2, y=11, label="INCONLUSIVE",
+              color="black")  
+
+```
+
+Let us proceed by **reducing** uncertainty by collecting more information.
+
+## Step 2.2
+
+Same as above for step 2 with three QSARs.
+
+```{r}
+post_yes_imp_step2 =  lik_evid_yes_step2*prior_yes_imp / (lik_evid_yes_step2*prior_yes_imp + lik_evid_no_step2*(1-prior_yes_imp))
+```
+
+The probability of YES given the evidence is between `r round(min(post_yes_imp)*100,0)` and `r round(max(post_yes_imp)*100,0)`%.
+
+Is practical certainty obtained?
+
+No, but it is close.
+
+```{r, echo = FALSE}
+df_step2 <- data.frame(p_YES = c(prior_yes_imp,post_yes_imp_step2), a = rep(dist_to_50,2), type = rep(c("prior","posterior"),each=length(prior_yes_imp)))
+
+ind_low = min(which(post_yes_imp_step2 >= pc_yes),0)
+ind_high = max(which(post_yes_imp_step2 <= (1-pc_no)),0)
+
+#prior_yes_imp[ind_low]
+#prior_yes_imp[ind_high]
+```
+
+The prior probability for a YES must be less than `r round(100*prior_yes_imp[ind_high],0)`% instead of less than `r round(100*max(prior_yes_imp),0)`% for the conclusion to reach practical certainty.
+
+```{r, echo = FALSE}
+
+ggplot2::ggplot(df_step2,aes(x=p_YES,y=a, colour = type)) +
+  geom_hline(
+    aes(yintercept = y), 
+    data.frame(y = c(2.5,5,7.5)),
+    color = "lightgrey"
+  ) +
+  geom_vline(
+    aes(xintercept = x), 
+    data.frame(x = c(1-pc_no,pc_yes)),
+    color = c("#269C2E","darkred")
+  ) +
+geom_line(aes(linetype=type)) + 
+  scale_colour_manual(values = c("#2B308B", "#57B4ED")) +
+  ylab("2nd order uncertainty") +
+  xlab("% probability YES") +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  scale_y_continuous(name="distance to \n almost likely as not", breaks=c(2.5,5,7.5), labels = c("","",""), limits = c(0,11)) +
+  xlim(0,1) + 
+  annotate(geom="text", x=(1-pc_no)/2, y=11, label="NO",
+              color="#269C2E") +
+  annotate(geom="text", x=(pc_yes + 1)/2, y=11, label="YES",
+              color="darkred") +
+  annotate(geom="text", x=(pc_yes + (1-pc_no))/2, y=11, label="INCONLUSIVE",
+              color="black")  
+
+```
+
+Let us proceed by **refining** the characterisation of uncertainty.
+
+## Step 2.3
+
+The assessors agree that prior for a YES could have been less than 60% instead of 66% probability.
+
+Practical certainty is obtained under any prior in this range.
+
+Risk managers agree that the conclusion is NO with sufficient certainty. In other words, there is sufficient certainty that $X$ is not a hazard. Proceed with the decision.
+
+# A tiered approach with uncertainty expressed by bounded probability combined with Dempster-Shafer theory
+
+## Dempster-Shafer theory
+
+> The Dempster-Shafer theory is based on two ideas: the idea of obtaining degrees of belief for one question from subjective probabilities for a related question, and Dempster's rule for combining such degrees of belief when they are based on independent items of evidence.
+
+Uncertainty in the answer to the assessment question is expressed by a mass function over YES, NO or "either of these". The mass function should sum to one. The mass function can be interpreted as bounds on the probabilities for YES and NO. A large overlap between the probability for YES and NO indicates that a larger uncertainty.
+
+::: callout-note
+Ullrika finds it challenging to express her uncertainty by a mass function and do not know how to do this consider the sensitivity and specificity of the QSAR.
+:::
+
+## Step 3.1
+
+```{r}
+# Space: (Yes, No)
+
+# Mass function for Yes, No and Inconclusive
+E1 <- c(0, 0.7, 0.3) ## need to sum up to one
+E2 <- c(0, 0.9, 0.1)
+E3 <- c(0.5, 0, 0.5)
+```
+
+The evidence is combing from a QSAR with a prediction stating that compound $X$ can cause an effect on the endpoint with a probability between `r round(E1[1]*100)` and `r round((E1[1] + E1[3])*100)` and it does not cause an effect with probability between `r round(E1[2]*100)` and `r round((E1[2] + E1[3])*100)`%.
+
+Is practical certainty obtained?
+
+No. The probability for the answer to be NO is can be less than `r round(E1[2]*100)`%.
+
+Let us proceed by **reducing** uncertainty by collecting more information.
+
+## Step 3.2
+
+We now have three lines of evidence and make a conclusion from each of them separately. Our uncertainty is expressed by the mass function.
+
+| NO  | YES | Empty | 
+|:---:|:---:|:-----:|
+| 70% | 0%  |  30%  |
+| 90% | 0%  |  10%  |
+| 0%  | 50% |  50%  |
+
+```{r}
+DST_combine_2_state = function(E1,E2){
+  # State 1
+  P = E1[1]*E2[1]+E1[1]*E2[3]+E2[1]*E1[3]
+ 
+  # State 2
+  N = E1[2]*E2[2]+E1[2]*E2[3]+E2[2]*E1[3]
+ 
+  # All
+  A = E1[3]*E2[3]
+ 
+  # Empty
+  E = E1[1]*E2[2]+E1[2]*E2[1]
+ 
+  # Normalize
+  P_Norm = P/(1-E)
+  N_Norm = N/(1-E)
+  All_Norm = A/(1-E)
+ 
+  return( list("P_Norm"=P_Norm, "N_Norm"=N_Norm, "All_Norm" = All_Norm))
+}
+
+E12 <- DST_combine_2_state(E1,E2)
+
+E123 <- DST_combine_2_state(as.numeric(unlist(E12)), E3)
+
+E123 <- as.numeric(unlist(E123))
+```
+
+Our uncertainty in the answer to the assessment question from each line of evidence are combined using the DS rule. This results in the mass function:
+
+| NO  | YES | Empty |
+|:---:|:---:|:-----:|
+| 94% | 3%  |  3%   |
+
+If we assign a probability interpretation to the mass function, we can say that the compound $X$ can cause an effect on the endpoint with a probability between `r round(E123[1]*100)` and `r round((E123[1] + E123[3])*100)`%. 
+
+We also conclude we are betwee `r round(E123[2]*100)` and `r round((E123[2] + E123[3])*100)`% certain that it does not cause the effect.
+
+Is practical certainty obtained?
+
+Yes, there is sufficient certainty that $X$ is not a hazard. Proceed with the decision.
+
+::: callout-note
+Ullrika here again. Note that there are differences between the Probability Bounds Analysis and DST in the characterisation of uncertainty associated with each line of evidence and the method to combine uncertainties. The experts, assessors and decision makers understand what the expression of uncertainty mean. The procedure to characterise uncertainty is well documented, transparent and justified. An aim is that experts should be willing to take the characterisation as their uncertainty as a group.
+:::
+
+# Conclusion
+
+Reduce by considering more evidence/data. 
+
+Adding evidence/data does not necessarily reduce uncertainty. Uncertainty can increase when considering diverging evidence. 
+
+Refine by increasing precision in the characterisation of uncertainty. 
+
+A tiered approach should avoid reducing precision in the characterisation of uncertainty, and therefore it is best to start with a rough characterisation. 
+
+The concept practical certainty is a key to go through a tiered approach. 
+
+We demonstrate tiered approaches with 
+
+- Bayesian reasoning with precise probabilities
+
+- Bayesian reasoning with bounded probabilities 
+
+- Dempster Shafer Theory (DST)
+

@@ -1,7 +1,7 @@
 ---
-title: "A tiered uncertainty analysis to assess uncertainty in a number"
-subtitle: "Work in progress RiskHunt3r"
-#author: "Ullrika Sahlin, Dawei Tang, ..."
+title: "Tiered approaches to characterise uncertainty in NGRA examplified with a risk assessment"
+subtitle: "Work in progress RiskHunt3R"
+author: "Ullrika Sahlin, Zheng Zhou, Dawei Tang"
 format: 
   html:
     toc: true
@@ -18,13 +18,9 @@ library(ggplot2)
 library(SHELF)
 ```
 
-```{r}
-cm = "X"
-```
+# Overview
 
-## Overview
-
-The purpose of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in the outcome of interest.
+The aim of an uncertainty analysis is to identify sources of uncertainty and evaluate their combined impact on the experts uncertainty in the outcome of interest.
 
 This page describe an approach to quantify uncertainty when risk is assessed by combining continuous quantities on hazard and exposure.
 
@@ -36,9 +32,9 @@ A tiered uncertainty analysis can be
 
 -   a full probabilistic analysis, where uncertainty associated with the hazard and exposure as assessed separately as probability distributions, which are then combined by Monte Carlo simulation. The results feed into expert judgement on the outcome of interest taking into account additional sources of uncertainty than those considered in the hazard and exposure part.
 
-## Description of the assessment
+# Assessment
 
-Consider a human health risk assessment of chemical `r cm`.
+Consider a human health risk assessment of chemical $X$.
 
 ```{r}
 ## hazard
@@ -54,11 +50,11 @@ heu = 4
 th = 1
 ```
 
-### Hazard assessment
+## Hazard assessment
 
-The quantity of interest for the hazard assessment is the Reference Point, **RP**.
+The quantity of interest for the hazard assessment is the Point of Departure, **PoD**.
 
-As an example, a RP of `r bmdl` μg `r cm`/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.
+As an example, a PoD of `r bmdl` μg $X$/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.
 
 Model Averaged BMD model
 
@@ -66,73 +62,46 @@ Model Averaged BMD model
 |----------|---------|----------|
 | `r bmdl` | `r bmd` | `r bmdu` |
 
-### Exposure assessment
+## Exposure assessment
 
-The quantity of interest for the exposure assessment is a High Exposure, **HE**.
+The quantity of interest for the exposure assessment is a High Exposure in the target population, **HE**.
 
-The range (seen over different populations and data sets) of the exposure estimates for `r cm` was assessed as
-
--   `r ael` - `r aeu` μg/kg bw per day for an average exposure scenario and
+The range (seen over different populations and data sets) of the exposure estimates for $X$ was assessed as
 
 -   `r hel` - `r heu` μg/kg bw per day for a high-level exposure scenario.
 
-### Risk characterisation
+## Risk characterisation
 
-The outcome of interest is the event that the High Exposure is exceeding the Reference Point, i.e.
+The question for the risk assessment is if the High Exposure is exceeding the Reference Point, i.e.
 
-$$HE > RP$$ Another way of formulating this is as a Margin of Exposure **MOE** defined as $$MOE=\frac{RP}{HE}$$
+$$HE > PoD$$ 
 
-In the risk assessment on `r cm` the derived MOEs range between
+A ratio $\frac{HE}{PoD}$ less than 1 implies a low risk.
 
--   `r round(bmdl/ael,1)` - `r round(bmdl/aeu,1)` for the average exposure scenario and
-
--   `r round(bmdl/hel,1)` - `r round(bmdl/heu,1)` for high level exposure scenario, respectively.
-
-A MOE of 1 describes the exposure level that could be associated with a 5% increase relative to the background incidence for skin cancer.
-
-::: callout-note
-Note that the value 5% comes from the BMD modelling.
+::: {.callout-note}
+When the PoD is derived from BMD modelling, a ratio greater than 1 implies that the exposure can be associated with a 5% increase relative to the background incidence for the effect. Note that the value 5% comes from the BMD modelling.
 :::
 
-A MOE greater than 1, implies that a High Exposure is not exceeding the Reference Point, and thereby a low risk.
-
-Risk managers set what is an acceptable MOE. It can e.g. be 1, 10 or 1000.
-
-::: callout-note
-These levels can be seen to represent uncertainty factors for specific sources of uncertainty. If so, these sources of uncertainty should not be taken into account when experts make their judgement of uncertainty in the MOE. The challenge might be smaller (but not absent) by considering these uncertainty factors in the assessment (e.g. RP/UF instead of RP).
-
-A high acceptable MOE would correspond to a high level for practical certainty
-:::
-
-The purpose of the assessment is to conclude if the MOE is above the threshold for the acceptable MOE. Here this threshold was set to `r th`.
-
-The outcome of interest is then
-
-$$MOE > `r th`$$
-
-which can be either true or false.
-
-## Uncertainty analysis overview
-
-### Expression for overall uncertainty
-
-The aim is to express the expert's uncertainty in the outcome of interest as a % probability, i.e. $P(MOE > `r th`)$.
-
-### Practical certainty
+# Practical certainty
 
 ```{r}
-p_DM = 90
+pc_yes = 0.66
+pc_no = 0.8
 ```
 
-The risk managers has informed the risk assessors that they find a certainty of `r p_DM`% or more as acceptable for decision making. This is know as **practical certainty**. It can be sufficient to conclude if overall uncertainty is in the range of practical certainty.
+The practical certainty is by risk managers set to be `r pc_yes*100`% probability to conclude that compound $X$ is a risk and `r pc_no*100`% probability to conclude that compound $X$ is not a risk. The assessment is *inconclusive* for any uncertainty in between the limits.
 
-| Health concern  | Inconclusive            | No health concern |
-|-----------------|-------------------------|-------------------|
-| \<`r 100-p_DM`% | `r 100-p_DM` - `r p_DM` | \>`r p_DM`%       |
+It can be sufficient to conclude if uncertainty the conclusion is in the range of practical certainty.
 
-If not, the assessment should be reported as **inconclusive**. The risk managers can then decide to support generation of new studies to fill data gaps and perform a re-evaluation of the risk assessment.
+| Health concern       | Inconclusive                   | No health concern |
+|----------------------|--------------------------------|-------------------|
+| \<`r 100*(1-pc_no)`% | `r 100*(1-pc_no)` - `r pc_yes` | \>`r pc_yes`%     |
 
-A probability threshold for a "firm conclusion" opens up to communicate conclusion as a health concern or no health concern, or inconclusive.
+If not, the assessment should be reported as **inconclusive**. The risk managers can then decide to support generation of new studies to **reduce** uncertainty by collecting more data or perform a re-evaluation of the risk assessment with a more **refined** characterisation of uncertainty.
+
+# A tiered approach with uncertainty analysis
+
+## Step 1.1
 
 ### Identify sources of uncertainty
 
@@ -159,7 +128,7 @@ A tiered uncertainty analysis is done in several steps
 
 Formulate the conclusion as % certainty for the more probable outcome.
 
-Check if the % certainty for the more probable outcome is in the region of practical certainty (i.e. \<`r 100-p_DM`% or \>`r p_DM`%).
+Check if the % certainty for the more probable outcome is in the region of practical certainty.
 
 # Basic option
 
@@ -181,27 +150,27 @@ First we explore how to do this with **probability bound analysis**.
 ## Probabilities first
 
 ```{r}
-p_lost_RP = 5
-p_lost_HE = 100-p_DM-p_lost_RP
+p_lost_PoD = 5
+p_lost_HE = 100-pc_yes-p_lost_PoD
 ```
 
-The refined option with probability bounds can be modified to consider practical certainty. In this example, the risk managers and the experts have agreed that experts must be at least `r p_DM`% certain that a High Exposure $HE$ is below the Reference Point $RP$ in order for risk managers to make a decision.
+The refined option with probability bounds can be modified to consider practical certainty. In this example, the risk managers and the experts have agreed that experts must be at least `r pc_yes`% certain that a High Exposure $HE$ is below the Reference Point $PoD$ in order for risk managers to make a decision.
 
-This means that the assessment is conclusive when the experts are at least `r p_DM`% certain that there is a health concern or that they are at least `r p_DM`% certain that there is not a health concern.
+This means that the assessment is conclusive when the experts are at least `r pc_yes`% certain that there is a health concern or that they are at least `r pc_yes`% certain that there is not a health concern.
 
 Subtract the probability threshold for practical certainty from 100% to set an upper bound for the the sum of the lost probabilities.
 
-$$100\% - `r p_DM`\% = `r 100-p_DM`\%$$
+$$100\% - `r pc_yes`\% = `r 100-pc_yes`\%$$
 
-Divide the resulting probability into two parts, one for hazard and one for exposure, here $`r p_lost_RP`\%$ and $100-`r p_DM` - `r p_lost_RP` = `r p_lost_HE`\%$.
+Divide the resulting probability into two parts, one for hazard and one for exposure, here $`r p_lost_PoD`\%$ and $100-`r pc_yes` - `r p_lost_PoD` = `r p_lost_HE`\%$.
 
 Subtract the lost probability for hazard from 100, to set the probability required for a conservative estimate of the Reference Point.
 
-$$100\% - `r p_lost_RP`\% = `r 100-p_lost_RP`\%$$
+$$100\% - `r p_lost_PoD`\% = `r 100-p_lost_PoD`\%$$
 
-Elicit a conservative estimate of the Reference Point (or RP/UF) from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile $y$
+Elicit a conservative estimate of the Reference Point (or PoD/UF) from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile $y$
 
-$$P(RP < y) = `r 100-p_lost_RP`\%$$
+$$P(PoD < y) = `r 100-p_lost_PoD`\%$$
 
 Subtract the lost probability for exposure from 100, to set the probability required for a conservative estimate of a High Exposure.
 
@@ -218,28 +187,28 @@ If the ratio is less than the threshold on MOE, then there is sufficient certain
 ## Numbers first
 
 ```{r}
-p_RP = 95
+p_PoD = 95
 p_HE = 95
-p_lost = (100-p_HE)+(100-p_RP)
+p_lost = (100-p_HE)+(100-p_PoD)
 ```
 
-Use a conservative estimate for RP as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.
+Use a conservative estimate for PoD as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.
 
 Ask experts to judge their probability expressing their uncertainty about a conservative estimate of hazard, e.g. the BMDL,
 
 $$y = `r bmdl`$$
 
-The experts judge that they are `r p_RP`% certain that the Reference Point is above `r bmdl` μg `r cm`/kg bw per day.
+The experts judge that they are `r p_PoD`% certain that the Reference Point is above `r bmdl` μg $X$/kg bw per day.
 
-$$P(RP > y) = `r p_RP`\%$$
+$$P(PoD > y) = `r p_PoD`\%$$
 
-| P below       | value | P above   |
-|---------------|-------|-----------|
-| `r 100-p_RP`% | y     | `r p_RP`% |
+| P below        | value | P above    |
+|----------------|-------|------------|
+| `r 100-p_PoD`% | y     | `r p_PoD`% |
 
-In some situations, the RP is the BMDL and then it is difficult to talk about uncertainty about the RP. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on RP/UF instead of RP.
+In some situations, the PoD is the BMDL and then it is difficult to talk about uncertainty about the PoD. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on PoD/UF instead of PoD.
 
-$$P(RP > y) = `r p_RP`\%$$
+$$P(PoD > y) = `r p_PoD`\%$$
 
 Find a value on a High Exposure where the MOE is at the critical threshold set by risk managers
 
@@ -247,7 +216,7 @@ $$\frac{x}{y} = `r th`$$
 
 $$x = `r th` \cdot y = `r th*bmdl`$$
 
-Ask the experts to judge their probability that a High Exposure is below `r th*bmdl` μg `r cm`/kg bw per day.
+Ask the experts to judge their probability that a High Exposure is below `r th*bmdl` μg $X$/kg bw per day.
 
 $$P( HE < x) = `r p_HE`\%$$
 
@@ -255,17 +224,17 @@ $$P( HE < x) = `r p_HE`\%$$
 |-----------|-------|---------------|
 | `r p_HE`% | x     | `r 100-p_HE`% |
 
-Check if practical certainty has been obtained, i.e. if $100 - [(100-P(HE < x)) + (100-P(RP > y))] \geq `r p_DM`\%$
+Check if practical certainty has been obtained, i.e. if $100 - [(100-P(HE < x)) + (100-P(PoD > y))] \geq `r pc_yes`\%$
 
-$$100-[`r 100-p_RP`+`r 100-p_HE`]=100-`r 100-p_RP + 100-p_HE`=`r 100-(100-p_RP + 100-p_HE)`$$
+$$100-[`r 100-p_PoD`+`r 100-p_HE`]=100-`r 100-p_PoD + 100-p_HE`=`r 100-(100-p_PoD + 100-p_HE)`$$
 
 <!-- Probability bounds analysis (and the rule of "lost probabilities") allows us to calculate that it is at least  -->
 
-<!-- $$ 100 - [(100-`r p_RP`)+(100-`r p_HE`)]=`r 100-p_lost`\%$$  -->
+<!-- $$ 100 - [(100-`r p_PoD`)+(100-`r p_HE`)]=`r 100-p_lost`\%$$  -->
 
 <!-- probable that the ratio of the highest estimate of High Exposure to the Reference Point is less than or equal than `r heu`/`r bmdl` = `r round(heu/bmdl,2)` -->
 
-<!-- $$P(\frac{HE}{RP} < `r round(heu/bmdl,2)`) \geq `r 100-p_lost`\%$$ -->
+<!-- $$P(\frac{HE}{PoD} < `r round(heu/bmdl,2)`) \geq `r 100-p_lost`\%$$ -->
 
 <!-- | P below            | value                | P above               | -->
 
@@ -273,7 +242,7 @@ $$100-[`r 100-p_RP`+`r 100-p_HE`]=100-`r 100-p_RP + 100-p_HE`=`r 100-(100-p_RP +
 
 <!-- | $\leq `r p_lost`\%$| `r round(heu/bmdl,2)`|$\geq `r 100-p_lost`\%$| -->
 
-<!-- See if a conclusion can be made. If the value `r round(heu/bmdl,2)` is less than `r th` and the probability is above the practical certainty `r p_DM`, then result is enough to reach a conclusion whether a High Exposure is below the Reference Point (i.e. that the MOE is greater than `r th`).  -->
+<!-- See if a conclusion can be made. If the value `r round(heu/bmdl,2)` is less than `r th` and the probability is above the practical certainty `r pc_yes`, then result is enough to reach a conclusion whether a High Exposure is below the Reference Point (i.e. that the MOE is greater than `r th`).  -->
 :::
 
 If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider collecting more data.
@@ -290,7 +259,7 @@ It can also be an option when the assessors prefers to choose to justify probabi
 
 A probability distribution representing uncertainty in the **Reference Point** can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling.
 
-We let the BMDL, the BMD, and the BMDU define the 5th percentile (P05), the median (P50), and the 95th percentile (P95) of the probability distribution for uncertainty in the RP.
+We let the BMDL, the BMD, and the BMDU define the 5th percentile (P05), the median (P50), and the 95th percentile (P95) of the probability distribution for uncertainty in the PoD.
 
 | BMDL     | BMD     | BMDU     |
 |----------|---------|----------|
@@ -303,7 +272,7 @@ The lower bound is zero. Since the distribution is skewed to the right we set an
 #| echo: true 
   
 fit <- SHELF::fitdist(vals = c(bmdl,bmd,bmdu),probs = c(0.05, 0.5, 0.95), lower = 0, upper= bmdu*1.2)
-SHELF::plotfit(fit,d="beta",xlab="RP",ylab="probability density")
+SHELF::plotfit(fit,d="beta",xlab="PoD",ylab="probability density")
 ```
 
 ::: callout-tip
@@ -312,14 +281,14 @@ An alternative is to go to the online elicitation app for one distribution [link
 
 The beta-distribution is defined as
 
-$$\frac{RP}{`r fit$limits$upper-fit$limits$lower`} \sim beta(`r round(fit$Beta$shape1,2)`, `r round(fit$Beta$shape2,2)`)$$
+$$\frac{PoD}{`r fit$limits$upper-fit$limits$lower`} \sim beta(`r round(fit$Beta$shape1,2)`, `r round(fit$Beta$shape2,2)`)$$
 
 We sample from it using this function
 
 ```{r}
 #| echo: true 
 
-sample_RP <- function(niter){
+sample_PoD <- function(niter){
   fit$limits$lower + (fit$limits$upper-fit$limits$lower) * rbeta(n = niter, shape1 = fit$Beta$shape1, shape2 = fit$Beta$shape2)
 }
 ```
@@ -338,9 +307,9 @@ sample_RP <- function(niter){
 
 <!-- #  -->
 
-<!-- # ggplot(data.frame(RP = qq, density = dd), -->
+<!-- # ggplot(data.frame(PoD = qq, density = dd), -->
 
-<!-- #        aes(x=RP, y=density)) +  -->
+<!-- #        aes(x=PoD, y=density)) +  -->
 
 <!-- #   geom_line() + -->
 
@@ -402,12 +371,12 @@ return(he)
 
 #### Combine sources of uncertainty by calculations
 
-Evaluate the combined impact of the characterised uncertainty in RP and HE on the MOE by Monte Carlo simulation.
+Evaluate the combined impact of the characterised uncertainty in PoD and HE on the MOE by Monte Carlo simulation.
 
 ```{r}
 #| echo: true 
 niter = 10^4
-rp <- sample_RP(niter)
+pod <- sample_PoD(niter)
 he <- sample_HE(niter)
 
 ```
@@ -415,12 +384,12 @@ he <- sample_HE(niter)
 The distributions for High Exposure and the Reference Point overlap.
 
 ```{r}
-ggplot(data.frame(dose = c(rp,he), quantity = rep(c("Reference Point", "High Exposure"),each = niter)),aes(x=dose, fill = quantity)) +
+ggplot(data.frame(dose = c(pod,he), quantity = rep(c("Reference Point", "High Exposure"),each = niter)),aes(x=dose, fill = quantity)) +
   geom_density(alpha=0.2) +
   ggtitle("Uncertainty in a High Exposure and the Reference Point")
 ```
 
-The calculated probability that the MOE is above 1 is `r round(mean(rp/he>1)*100)` %.
+The calculated probability that the MOE is above 1 is `r round(mean(pod/he>1)*100)` %.
 
 This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a MOE \> 1.
 
@@ -428,49 +397,49 @@ This value was derived by calculating the proportion of random samples in your M
 #| echo: true
 #| eval: false
 
-moe = rp/he
+moe = pod/he
 mean(moe>1)
 ```
 
 One way to visualise the resulting distribution for uncertainty in MOE is
 
 ```{r}
-df <- density(rp/he, from=0)
+df <- density(pod/he, from=0)
 df <- data.frame(x=df$x,y=df$y)
 ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   geom_line() +
   geom_ribbon(data=subset(df,x>1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
   xlab("MOE") +
   ylab("density") +
-  ggtitle("Uncertainty in MOE", subtitle=paste0("P(MOE>1)=",round(mean(rp/he>1)*100),"%"))
+  ggtitle("Uncertainty in MOE", subtitle=paste0("P(MOE>1)=",round(mean(pod/he>1)*100),"%"))
 ```
 
 where the red area corresponds to a MOE greater than `r th`.
 
-
+::: callout-note
 Alternative way to summarise when not using MOE
 
 If risk is evaluated based on the outcome that the High Exposure is exceeding the Reference Point, then the probability to be calculated is
 
-$$P(\frac{HE}{RP}>1)$$
+$$P(\frac{HE}{PoD}>1)$$
 
 ```{r}
 #| echo: true
 #| eval: false
 
-risk_ratio = he/rp
+risk_ratio = he/pod
 mean(risk_ratio > 1)
 ```
 
 ```{r}
-df <- density(he/rp, from=0)
+df <- density(he/pod, from=0)
 df <- data.frame(x=df$x,y=df$y)
 ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   geom_line() +
   geom_ribbon(data=subset(df,x>1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
-  xlab("HE/RP") +
+  xlab("HE/PoD") +
   ylab("density") +
-  ggtitle("Uncertainty in HE/RP", subtitle=paste0("P(HE>RP)=",round(mean(he>rp)*100),"%"))
+  ggtitle("Uncertainty in HE/PoD", subtitle=paste0("P(HE>PoD)=",round(mean(he>pod)*100),"%"))
 ```
 
 In this visualisation, the red area corresponds to a High Exposure greater than the Reference Point.
@@ -484,4 +453,8 @@ For the purpose of this exercise we assume that the experts subsequently judged 
 
 An additional sources of uncertainty could e.g. be the choice of distributions used in the Monte Carlo simulation and any limitations in the quality of the exposure and toxicity data that are not taken into account in those distributions.
 
-The % certainty for the more probable outcome is `r round(mean(rp/he>1)*100)`%. Check if it is in the region of practical certainty (i.e. \<`r 100-p_DM`% or \>`r p_DM`%).
+The % certainty for the more probable outcome is `r round(mean(pod/he>1)*100)`%. Check if it is in the region of practical certainty (i.e. \<`r 100-pc_yes`% or \>`r pc_yes`%).
+
+# Conclusions
+
+Bayesian reasoning combined with Probability bounds analysis can be used for categorical as well as contiuous quantities. 
