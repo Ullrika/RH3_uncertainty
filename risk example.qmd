@@ -1,5 +1,5 @@
 ---
-title: "Tiered approaches to characterise uncertainty in NGRA examplified with a risk assessment"
+title: "Tiered approaches to characterise uncertainty in NGRA exemplified with a risk assessment"
 subtitle: "Work in progress RiskHunt3R"
 author: "Ullrika Sahlin, Zheng Zhou, Dawei Tang"
 format: 
@@ -74,11 +74,11 @@ The range (seen over different populations and data sets) of the exposure estima
 
 The question for the risk assessment is if the High Exposure is exceeding the Reference Point, i.e.
 
-$$HE > PoD$$ 
+$$HE > PoD$$
 
 A ratio $\frac{HE}{PoD}$ less than 1 implies a low risk.
 
-::: {.callout-note}
+::: callout-note
 When the PoD is derived from BMD modelling, a ratio greater than 1 implies that the exposure can be associated with a 5% increase relative to the background incidence for the effect. Note that the value 5% comes from the BMD modelling.
 :::
 
@@ -457,4 +457,4 @@ The % certainty for the more probable outcome is `r round(mean(pod/he>1)*100)`%.
 
 # Conclusions
 
-Bayesian reasoning combined with Probability bounds analysis can be used for categorical as well as contiuous quantities. 
+Bayesian reasoning combined with Probability bounds analysis can be used for categorical as well as contiuous quantities.

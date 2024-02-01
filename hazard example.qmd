@@ -1,5 +1,5 @@
 ---
-title: "Tiered approaches to characterise uncertainty in NGRA examplified with an hazard identification"
+title: "Tiered approaches to characterise uncertainty in NGRA exemplified with an hazard identification"
 subtitle: "Work in progress RiskHunt3R"
 author: "Ullrika Sahlin, Zheng Zhou, Dawei Tang"
 format: 
@@ -18,29 +18,27 @@ library(ggplot2)
 
 Tiered approach to reduce uncertainty
 
-- If practical certainty is not obtained, collect more data 
+-   If practical certainty is not obtained, collect more data
 
-- Follow integrated testing strategies such as the ASPIS framework 
-
+-   Follow integrated testing strategies such as the ASPIS framework
 
 Tiered approach to refine uncertainty
 
-- If practical certainty is not obtained, and it is not justified to collect more data, refine the characterisation of uncertainty
+-   If practical certainty is not obtained, and it is not justified to collect more data, refine the characterisation of uncertainty
 
-- Follow options for increased refinement until practical certainty is obtained or stop with an inconclusive assessment
+-   Follow options for increased refinement until practical certainty is obtained or stop with an inconclusive assessment
 
 Options to refine the procedure:
 
-- Use worst case assumptions and characterise uncertainty in conclusion directly by expert judgement
+-   Use worst case assumptions and characterise uncertainty in conclusion directly by expert judgement
 
-- Break down the assessment into parts, characterise uncertainty in each part, combine by calculations, and make expert judgement considering additional sources of uncertainty
+-   Break down the assessment into parts, characterise uncertainty in each part, combine by calculations, and make expert judgement considering additional sources of uncertainty
 
 Options to refine the precision:
 
-- Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or DST). 
+-   Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or DST).
 
-- Proceed with reducing bounds (FACTs) probabilistic modelling
-
+-   Proceed with reducing bounds (FACTs) probabilistic modelling
 
 # Settings
 
@@ -111,7 +109,7 @@ This is the same thing as saying that we are `r round((1-post_yes)*100,0)`% cert
 
 Is practical certainty obtained?
 
-No, because the \% certainty is not larger than `r 100*pc_no`%.
+No, because the % certainty is not larger than `r 100*pc_no`%.
 
 We proceed by **reducing** uncertainty by collecting more information.
 
@@ -132,8 +130,7 @@ tnr = c(0.7,0.9,0.7)
 
 We apply again Bayesian reasoning with a prior probability of 50% that the answer is YES to the assessment question.
 
-$$ P(YES|-,-,+)=$$
-$$=\frac{P(-,-,+|YES)P(YES)}{P(-,-,+|YES)P(YES)+P(-,-,+|NO)P(NO)}$$
+$$ P(YES|-,-,+)=$$ $$=\frac{P(-,-,+|YES)P(YES)}{P(-,-,+|YES)P(YES)+P(-,-,+|NO)P(NO)}$$
 
 ```{r}
 # data
@@ -177,11 +174,11 @@ post_yes_imp =  lik_evid_yes*prior_yes_imp / (lik_evid_yes*prior_yes_imp + lik_e
 
 The probability of YES given the evidence is between `r round(min(post_yes_imp)*100,0)` and `r round(max(post_yes_imp)*100,0)`%.
 
-This is the same thing as saying that we are between `r round(min(1-post_yes_imp)*100,0)`  to `r round(max(1-post_yes_imp)*100,0)`% certain that the answer is NO.
+This is the same thing as saying that we are between `r round(min(1-post_yes_imp)*100,0)` to `r round(max(1-post_yes_imp)*100,0)`% certain that the answer is NO.
 
 Is practical certainty obtained?
 
-No, because (the lower bound of)  $\underline{P}(NO|-,-,+)<`r pc_no*100`\%$
+No, because (the lower bound of) $\underline{P}(NO|-,-,+)<`r pc_no*100`\%$
 
 ```{r, echo = FALSE}
   
@@ -333,7 +330,7 @@ Let us proceed by **reducing** uncertainty by collecting more information.
 
 We now have three lines of evidence and make a conclusion from each of them separately. Our uncertainty is expressed by the mass function.
 
-| NO  | YES | Empty | 
+| NO  | YES | Empty |
 |:---:|:---:|:-----:|
 | 70% | 0%  |  30%  |
 | 90% | 0%  |  10%  |
@@ -374,7 +371,7 @@ Our uncertainty in the answer to the assessment question from each line of evide
 |:---:|:---:|:-----:|
 | 94% | 3%  |  3%   |
 
-If we assign a probability interpretation to the mass function, we can say that the compound $X$ can cause an effect on the endpoint with a probability between `r round(E123[1]*100)` and `r round((E123[1] + E123[3])*100)`%. 
+If we assign a probability interpretation to the mass function, we can say that the compound $X$ can cause an effect on the endpoint with a probability between `r round(E123[1]*100)` and `r round((E123[1] + E123[3])*100)`%.
 
 We also conclude we are betwee `r round(E123[2]*100)` and `r round((E123[2] + E123[3])*100)`% certain that it does not cause the effect.
 
@@ -388,21 +385,20 @@ Ullrika here again. Note that there are differences between the Probability Boun
 
 # Conclusion
 
-Reduce by considering more evidence/data. 
+Reduce by considering more evidence/data.
 
-Adding evidence/data does not necessarily reduce uncertainty. Uncertainty can increase when considering diverging evidence. 
+Adding evidence/data does not necessarily reduce uncertainty. Uncertainty can increase when considering diverging evidence.
 
-Refine by increasing precision in the characterisation of uncertainty. 
+Refine by increasing precision in the characterisation of uncertainty.
 
-A tiered approach should avoid reducing precision in the characterisation of uncertainty, and therefore it is best to start with a rough characterisation. 
+A tiered approach should avoid reducing precision in the characterisation of uncertainty, and therefore it is best to start with a rough characterisation.
 
-The concept practical certainty is a key to go through a tiered approach. 
+The concept practical certainty is a key to go through a tiered approach.
 
-We demonstrate tiered approaches with 
+We demonstrate tiered approaches with
 
-- Bayesian reasoning with precise probabilities
+-   Bayesian reasoning with precise probabilities
 
-- Bayesian reasoning with bounded probabilities 
+-   Bayesian reasoning with bounded probabilities
 
-- Dempster Shafer Theory (DST)
-
+-   Dempster Shafer Theory (DST)

@@ -4,9 +4,9 @@ title: "Uncertainty frameworks"
 
 Examples for the poster at Egmond February 2024
 
-[Tiered approaches to reduce and refine uncertainty in an hazard identification example](hazard example.qmd)
+[Tiered approaches to reduce and refine uncertainty in an hazard identification example](hazard%20example.qmd)
 
-[Tiered approaches to reduce and refine uncertainty in a risk assessment example](risk example.qmd)
+[Tiered approaches to reduce and refine uncertainty in a risk assessment example](risk%20example.qmd)
 
 <!-- # Uncertainty in a **fact-conclusion** -->
 
