@@ -172,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Tiered approach to reduce uncertainty</p>
 <ul>
 <li><p>If practical certainty is not obtained, collect more data</p></li>
-<li><p>Follow integrated testing strategies such as the ASPIS framework</p></li>
+<li><p>Follow integrated testing strategies such as the ASPA framework</p></li>
 </ul>
 <p>Tiered approach to refine uncertainty</p>
 <ul>
@@ -186,20 +186,48 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>Options to refine the precision:</p>
 <ul>
-<li><p>Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or DST).</p></li>
-<li><p>Proceed with reducing bounds (FACTs) probabilistic modelling</p></li>
+<li><p>Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or if suitable DST).</p></li>
+<li><p>Proceed with reducing bounds on probabilities</p></li>
+<li><p>Alternatively for Numbers, proceed with specifying full probability distributions instead of probability bounds and combine by probability calculations or Monte Carlo simulation.</p></li>
 </ul>
+<blockquote class="blockquote">
+<p>A <strong>bounded probability</strong> is a subjective probability with a lower and upper bound. For example, P is a probability that is greater than 60%, P &gt; 60% (can also be written as <span class="math inline">\(\underline{P} = 60\%).\)</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>A <strong>probability bound</strong> is a quantile for a continuous quantity associated with a probability (or bounded probability). For example, <span class="math inline">\(q_{05}\)</span> is the 5th quantile for the number <span class="math inline">\(X\)</span> if <span class="math inline">\(P(X&lt;q_{05}) = 5%\)</span>. An example of a bounded probability bound (horrible terminology) can be <span class="math inline">\(q_{\leq 05}\)</span> is a bounded quantile for the number <span class="math inline">\(X\)</span> if <span class="math inline">\(P(X&lt;q_{\leq 05}) \leq 5%\)</span>.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>A <strong>probability distribution</strong> is a full specification of the probability for any value or combinations of values that a random variable <span class="math inline">\(X\)</span> can take. For example, it can be a function that for a given x-value calculates the probability that <span class="math inline">\(X\)</span> is below this value, <span class="math inline">\(P(X \leq x)\)</span>.</p>
+</blockquote>
 </section>
 <section id="settings" class="level1">
 <h1>Settings</h1>
 <section id="assessment-question" class="level2">
 <h2 class="anchored" data-anchor-id="assessment-question">Assessment question</h2>
-<p>For this hazard identification the question is if exposure to compound <span class="math inline">\(X\)</span> can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.</p>
+<p>For this hazard identification the question is if exposure at a given dose to compound <span class="math inline">\(X\)</span> can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.</p>
 </section>
 <section id="uncertainty-in-the-conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="uncertainty-in-the-conclusion">Uncertainty in the conclusion</h2>
-<p>The goal of uncertainty characterisation is to summarise uncertainty in the conclusion in a quantitative expression. Here we use (subjective or personal) probability (or degree of belief) as the quantitative expression of uncertainty.</p>
+<p>The goal of uncertainty characterisation is to summarise uncertainty in the conclusion in a quantitative expression. Here we use <strong>subjective</strong> (or personal) probability (or degree of belief) as the quantitative expression of uncertainty.</p>
 <p>In these examples, we sometimes use % certainty instead of % probability for the more probable outcome. This is also a way to remind ourselves that the probability is should be interpreted as someone’s uncertainty and not a frequency.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A probability is a single number quantifying the likelihood of either:</p>
+<ul>
+<li>A specified answer to a question (e.g.&nbsp;a ‘yes’ answer to a ‘yes/no’ question)</li>
+<li>A specified quantity lying in a specified range of values, or above or below a specified value</li>
+</ul>
+<p>Probability theory is agnostic to the interpretation of probability, but the interpretation matters when using probability to express uncertainty. Learn more about <a href="https://multimedia.efsa.europa.eu/uncertainty-tutorial/uncertainty-communication/expressions-precise.html">Probability in EFSAs tutorial on uncertainty</a></p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -244,7 +272,7 @@ Note
 <h1>A tiered approach with uncertainty expressed by precise probability combined with Bayesian reasoning</h1>
 <section id="step-1.1" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.1">Step 1.1</h2>
-<p>Evidence is a QSAR with sensitivity (TPR=80%) and specificity (TNR=70%) with a negative prediction for the endpoint.</p>
+<p>Evidence for the assessment question is here a NAM with sensitivity (TPR=80%) and specificity (TNR=70%) with a negative prediction for the endpoint.</p>
 <blockquote class="blockquote">
 <p>Sensitivity (true positive rate) is the probability of a positive test result, conditioned on the individual truly being positive.</p>
 </blockquote>
@@ -252,9 +280,9 @@ Note
 <p>Specificity (true negative rate) is the probability of a negative test result, conditioned on the individual truly being negative.</p>
 </blockquote>
 <p>These statistical performance measures can be calculated from data or derived by expert judgement.</p>
-<p>We (the assessors) apply Bayesian reasoning with a prior probability of 50% (<em>As likely as not</em>) that the answer is YES to the assessment question.</p>
+<p>We (the assessors) apply Bayesian reasoning with a prior probability for the answer to be YES on the assessment question of 50% (<em>As likely as not</em>).</p>
 <p><span class="math display">\[ P(YES|-)=\frac{P(-|YES)P(YES)}{P(-|YES)P(YES)+P(-|NO)P(NO)} = \]</span> <span class="math display">\[= \frac{(1-TPR)\cdot 0.5}{(1-TPR)\cdot 0.5 + TNR \cdot 0.5}\]</span></p>
-<p>Thus, given the evidence (and what we know about the accuracy of the QSAR prediction) we are 22% certain that <span class="math inline">\(X\)</span> is an hazard.</p>
+<p>Thus, given the evidence (and what we know about the accuracy of the NAM prediction) we are 22% certain that <span class="math inline">\(X\)</span> is an hazard.</p>
 <p>This is the same thing as saying that we are 78% certain that the answer is NO.</p>
 <p>Is practical certainty obtained?</p>
 <p>No, because the % certainty is not larger than 80%.</p>
@@ -262,7 +290,7 @@ Note
 </section>
 <section id="step-1.2" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.2">Step 1.2</h2>
-<p>Evidence now consists of two more QSARs with sensitivities and specificities</p>
+<p>Evidence now consists of two more NAMs with sensitivities and specificities</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -332,8 +360,8 @@ Note
 </section>
 <section id="step-2.2" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.2">Step 2.2</h2>
-<p>Same as above for step 2 with three QSARs.</p>
-<p>The probability of YES given the evidence is between 7 and 36%.</p>
+<p>Same as above for step 2, but with three NAMs.</p>
+<p>The probability of YES given the evidence is between 3 and 20%.</p>
 <p>Is practical certainty obtained?</p>
 <p>No, but it is close.</p>
 <p>The prior probability for a YES must be less than 65% instead of less than 66% for the conclusion to reach practical certainty.</p>
@@ -358,7 +386,7 @@ Note
 <blockquote class="blockquote">
 <p>The Dempster-Shafer theory is based on two ideas: the idea of obtaining degrees of belief for one question from subjective probabilities for a related question, and Dempster’s rule for combining such degrees of belief when they are based on independent items of evidence.</p>
 </blockquote>
-<p>Uncertainty in the answer to the assessment question is expressed by a mass function over YES, NO or “either of these”. The mass function should sum to one. The mass function can be interpreted as bounds on the probabilities for YES and NO. A large overlap between the probability for YES and NO indicates that a larger uncertainty.</p>
+<p>Uncertainty in the answer to the assessment question is expressed by a mass function over YES, NO or “either YES or NO”. The mass function should sum to one. The mass of YES and “either YES or NO” can be interpreted as bounds on the probabilities for YES. A large mass to “either YES or NO” corresponds to an overlap between the probability for YES and NO, and can be seen as an indication of a larger uncertainty.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -369,13 +397,13 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ullrika finds it challenging to express her uncertainty by a mass function and do not know how to do this consider the sensitivity and specificity of the QSAR.</p>
+<p>Ullrika finds it challenging to express her uncertainty by a mass function and do not know how to do this consider the sensitivity and specificity of the NAM.</p>
 </div>
 </div>
 </section>
 <section id="step-3.1" class="level2">
 <h2 class="anchored" data-anchor-id="step-3.1">Step 3.1</h2>
-<p>The evidence is combing from a QSAR with a prediction stating that compound <span class="math inline">\(X\)</span> can cause an effect on the endpoint with a probability between 0 and 30 and it does not cause an effect with probability between 70 and 100%.</p>
+<p>The evidence is combing from a NAM with a prediction stating that compound <span class="math inline">\(X\)</span> can cause an effect on the endpoint with a probability between 0 and 30 and it does not cause an effect with probability between 70 and 100%.</p>
 <p>Is practical certainty obtained?</p>
 <p>No.&nbsp;The probability for the answer to be NO is can be less than 70%.</p>
 <p>Let us proceed by <strong>reducing</strong> uncertainty by collecting more information.</p>
@@ -388,7 +416,7 @@ Note
 <tr class="header">
 <th style="text-align: center;">NO</th>
 <th style="text-align: center;">YES</th>
-<th style="text-align: center;">Empty</th>
+<th style="text-align: center;">either YES or NO</th>
 </tr>
 </thead>
 <tbody>

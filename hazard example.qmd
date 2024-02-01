@@ -20,7 +20,7 @@ Tiered approach to reduce uncertainty
 
 -   If practical certainty is not obtained, collect more data
 
--   Follow integrated testing strategies such as the ASPIS framework
+-   Follow integrated testing strategies such as the ASPA framework
 
 Tiered approach to refine uncertainty
 
@@ -36,23 +36,42 @@ Options to refine the procedure:
 
 Options to refine the precision:
 
--   Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or DST).
+-   Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or if suitable DST).
 
--   Proceed with reducing bounds (FACTs) probabilistic modelling
+-   Proceed with reducing bounds on probabilities
+
+- Alternatively for Numbers, proceed with specifying full probability distributions instead of probability bounds and combine by probability calculations or Monte Carlo simulation. 
+
+
+> A **bounded probability** is a subjective probability with a lower and upper bound. For example, P is a probability that is greater than 60\%, P > 60\% (can also be written as $\underline{P} = 60\%).$
+
+> A **probability bound** is a quantile for a continuous quantity associated with a probability (or bounded probability). For example, $q_{05}$ is the 5th quantile for the number $X$ if $P(X<q_{05}) = 5%$.
+An example of a bounded probability bound (horrible terminology) can be $q_{\leq 05}$ is a bounded quantile for the number $X$ if $P(X<q_{\leq 05}) \leq 5%$. 
+
+> A **probability distribution** is a full specification of the probability for any value or combinations of values that a random variable $X$ can take. For example, it can be a function that for a given x-value calculates the probability that $X$ is below this value, $P(X \leq x)$.  
 
 # Settings
 
 ## Assessment question
 
-For this hazard identification the question is if exposure to compound $X$ can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.
+For this hazard identification the question is if exposure  at a given dose to compound $X$ can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.
 
 ## Uncertainty in the conclusion
 
-The goal of uncertainty characterisation is to summarise uncertainty in the conclusion in a quantitative expression. Here we use (subjective or personal) probability (or degree of belief) as the quantitative expression of uncertainty.
+The goal of uncertainty characterisation is to summarise uncertainty in the conclusion in a quantitative expression. Here we use **subjective** (or personal) probability (or degree of belief) as the quantitative expression of uncertainty.
 
-In these examples, we sometimes use % certainty instead of % probability for the more probable outcome. This is also a way to remind ourselves that the probability is should be interpreted as someone's uncertainty and not a frequency.
+In these examples, we sometimes use \% certainty instead of \% probability for the more probable outcome. This is also a way to remind ourselves that the probability is should be interpreted as someone's uncertainty and not a frequency.
 
-::: callout-note
+:::{.callout-note}
+A probability is a single number quantifying the likelihood of either:
+
+- A specified answer to a question (e.g. a ‘yes’ answer to a ‘yes/no’ question)
+- A specified quantity lying in a specified range of values, or above or below a specified value
+
+Probability theory is agnostic to the interpretation of probability, but the interpretation matters when using probability to express uncertainty. Learn more about [Probability in EFSAs tutorial on uncertainty](https://multimedia.efsa.europa.eu/uncertainty-tutorial/uncertainty-communication/expressions-precise.html)
+:::
+
+:::{.callout-note}
 There are several reasons to aim for a quantitative expression of uncertainty. Qualitative expressions of uncertainty are still useful. You can read more about it on [EFSAs tutorial on uncertainty](https://multimedia.efsa.europa.eu/uncertainty-tutorial/principles-and-methods/uncertainty-analysis-expressions.html)
 :::
 
@@ -73,7 +92,7 @@ The practical certainty is by risk managers set to be `r pc_yes*100`% probabilit
 
 ## Step 1.1
 
-Evidence is a QSAR with sensitivity (TPR=80%) and specificity (TNR=70%) with a negative prediction for the endpoint.
+Evidence for the assessment question is here a NAM with sensitivity (TPR=80%) and specificity (TNR=70%) with a negative prediction for the endpoint.
 
 > Sensitivity (true positive rate) is the probability of a positive test result, conditioned on the individual truly being positive.
 
@@ -86,7 +105,7 @@ tpr = 0.8
 tnr = 0.7 
 ```
 
-We (the assessors) apply Bayesian reasoning with a prior probability of 50% (*As likely as not*) that the answer is YES to the assessment question.
+We (the assessors) apply Bayesian reasoning with a prior probability for the answer to be YES on the assessment question of 50% (*As likely as not*).
 
 ```{r}
 #prior
@@ -103,7 +122,7 @@ post_yes =  lik_evid_yes*p_yes / (lik_evid_yes*p_yes + lik_evid_no*(1-p_yes)) #B
 
 $$ P(YES|-)=\frac{P(-|YES)P(YES)}{P(-|YES)P(YES)+P(-|NO)P(NO)} = $$ $$= \frac{(1-TPR)\cdot 0.5}{(1-TPR)\cdot 0.5 + TNR \cdot 0.5}$$
 
-Thus, given the evidence (and what we know about the accuracy of the QSAR prediction) we are `r round(post_yes*100,0)`% certain that $X$ is an hazard.
+Thus, given the evidence (and what we know about the accuracy of the NAM prediction) we are `r round(post_yes*100,0)`% certain that $X$ is an hazard.
 
 This is the same thing as saying that we are `r round((1-post_yes)*100,0)`% certain that the answer is NO.
 
@@ -115,7 +134,7 @@ We proceed by **reducing** uncertainty by collecting more information.
 
 ## Step 1.2
 
-Evidence now consists of two more QSARs with sensitivities and specificities
+Evidence now consists of two more NAMs with sensitivities and specificities
 
 | TPR | TNR | Prediction |
 |:---:|:---:|:----------:|
@@ -184,10 +203,14 @@ No, because (the lower bound of) $\underline{P}(NO|-,-,+)<`r pc_no*100`\%$
   
 mm = range(dnorm(qnorm(prior_yes_imp)))
 dist_to_50 = (mm[1]-dnorm(qnorm(prior_yes_imp)))/(mm[2]-mm[1])*10+10
-df <- data.frame(p_YES = c(prior_yes_imp,post_yes_imp), a = rep(dist_to_50,2), type = rep(c("prior","posterior"),each=length(prior_yes_imp)))
+df <- data.frame(p_yes = c(prior_yes_imp,post_yes_imp), a = rep(dist_to_50,2), type = rep(c("prior","posterior"),each=length(prior_yes_imp)))
 
 ind_low = min(which(post_yes_imp >= pc_yes),0)
 ind_high = max(which(post_yes_imp <= (1-pc_no)),0)
+
+ind_pcno = max(which(post_yes_imp <= (1-pc_no)))
+
+df_point=data.frame(y=rep(dist_to_50[ind_pcno],2),x=c(prior_yes_imp[ind_pcno],post_yes_imp[ind_pcno]),type=c("prior","posterior"))
 
 #prior_yes_imp[ind_low]
 #prior_yes_imp[ind_high]
@@ -198,8 +221,7 @@ The prior probability must be less than `r round(100*prior_yes_imp[ind_high],0)`
 A way to illustrate this is to use an unit-less measure for second order uncertainty (or robustness) that maps the prior to the posterior.
 
 ```{r, echo = FALSE}
-
-ggplot2::ggplot(df,aes(x=p_YES,y=a, colour = type)) +
+ggplot2::ggplot(df,aes(x=p_yes,y=a, colour = type)) +
   geom_hline(
     aes(yintercept = y), 
     data.frame(y = c(2.5,5,7.5)),
@@ -218,6 +240,7 @@ geom_line(aes(linetype=type)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   scale_y_continuous(name="distance to \n almost likely as not", breaks=c(2.5,5,7.5), labels = c("","",""), limits = c(0,11)) +
   xlim(0,1) + 
+  geom_point(data=df_point,aes(x,y)) +
   annotate(geom="text", x=(1-pc_no)/2, y=11, label="NO",
               color="#269C2E") +
   annotate(geom="text", x=(pc_yes + 1)/2, y=11, label="YES",
@@ -231,23 +254,28 @@ Let us proceed by **reducing** uncertainty by collecting more information.
 
 ## Step 2.2
 
-Same as above for step 2 with three QSARs.
+Same as above for step 2, but with three NAMs.
 
 ```{r}
 post_yes_imp_step2 =  lik_evid_yes_step2*prior_yes_imp / (lik_evid_yes_step2*prior_yes_imp + lik_evid_no_step2*(1-prior_yes_imp))
 ```
 
-The probability of YES given the evidence is between `r round(min(post_yes_imp)*100,0)` and `r round(max(post_yes_imp)*100,0)`%.
+The probability of YES given the evidence is between `r round(min(post_yes_imp_step2)*100,0)` and `r round(max(post_yes_imp_step2)*100,0)`%.
 
 Is practical certainty obtained?
 
 No, but it is close.
 
 ```{r, echo = FALSE}
-df_step2 <- data.frame(p_YES = c(prior_yes_imp,post_yes_imp_step2), a = rep(dist_to_50,2), type = rep(c("prior","posterior"),each=length(prior_yes_imp)))
+df_step2 <- data.frame(p_yes = c(prior_yes_imp,post_yes_imp_step2), a = rep(dist_to_50,2), type = rep(c("prior","posterior"),each=length(prior_yes_imp)))
 
 ind_low = min(which(post_yes_imp_step2 >= pc_yes),0)
 ind_high = max(which(post_yes_imp_step2 <= (1-pc_no)),0)
+
+ind_pcno = max(which(post_yes_imp_step2 <= (1-pc_no)))
+
+df_point=data.frame(y=rep(dist_to_50[ind_pcno],2),x=c(prior_yes_imp[ind_pcno],post_yes_imp_step2[ind_pcno]),type=c("prior","posterior"))
+
 
 #prior_yes_imp[ind_low]
 #prior_yes_imp[ind_high]
@@ -257,7 +285,7 @@ The prior probability for a YES must be less than `r round(100*prior_yes_imp[ind
 
 ```{r, echo = FALSE}
 
-ggplot2::ggplot(df_step2,aes(x=p_YES,y=a, colour = type)) +
+ggplot2::ggplot(df_step2,aes(x=p_yes,y=a, colour = type)) +
   geom_hline(
     aes(yintercept = y), 
     data.frame(y = c(2.5,5,7.5)),
@@ -276,6 +304,8 @@ geom_line(aes(linetype=type)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   scale_y_continuous(name="distance to \n almost likely as not", breaks=c(2.5,5,7.5), labels = c("","",""), limits = c(0,11)) +
   xlim(0,1) + 
+  geom_point(data=df_point,aes(x,y)) +
+ 
   annotate(geom="text", x=(1-pc_no)/2, y=11, label="NO",
               color="#269C2E") +
   annotate(geom="text", x=(pc_yes + 1)/2, y=11, label="YES",
@@ -301,10 +331,10 @@ Risk managers agree that the conclusion is NO with sufficient certainty. In othe
 
 > The Dempster-Shafer theory is based on two ideas: the idea of obtaining degrees of belief for one question from subjective probabilities for a related question, and Dempster's rule for combining such degrees of belief when they are based on independent items of evidence.
 
-Uncertainty in the answer to the assessment question is expressed by a mass function over YES, NO or "either of these". The mass function should sum to one. The mass function can be interpreted as bounds on the probabilities for YES and NO. A large overlap between the probability for YES and NO indicates that a larger uncertainty.
+Uncertainty in the answer to the assessment question is expressed by a mass function over YES, NO or "either YES or NO". The mass function should sum to one. The mass of YES and "either YES or NO" can be interpreted as bounds on the probabilities for YES. A large mass to "either YES or NO" corresponds to an overlap between the probability for YES and NO, and can be seen as an indication of a larger uncertainty.
 
 ::: callout-note
-Ullrika finds it challenging to express her uncertainty by a mass function and do not know how to do this consider the sensitivity and specificity of the QSAR.
+Ullrika finds it challenging to express her uncertainty by a mass function and do not know how to do this consider the sensitivity and specificity of the NAM.
 :::
 
 ## Step 3.1
@@ -318,7 +348,7 @@ E2 <- c(0, 0.9, 0.1)
 E3 <- c(0.5, 0, 0.5)
 ```
 
-The evidence is combing from a QSAR with a prediction stating that compound $X$ can cause an effect on the endpoint with a probability between `r round(E1[1]*100)` and `r round((E1[1] + E1[3])*100)` and it does not cause an effect with probability between `r round(E1[2]*100)` and `r round((E1[2] + E1[3])*100)`%.
+The evidence is combing from a NAM with a prediction stating that compound $X$ can cause an effect on the endpoint with a probability between `r round(E1[1]*100)` and `r round((E1[1] + E1[3])*100)` and it does not cause an effect with probability between `r round(E1[2]*100)` and `r round((E1[2] + E1[3])*100)`%.
 
 Is practical certainty obtained?
 
@@ -330,11 +360,11 @@ Let us proceed by **reducing** uncertainty by collecting more information.
 
 We now have three lines of evidence and make a conclusion from each of them separately. Our uncertainty is expressed by the mass function.
 
-| NO  | YES | Empty |
-|:---:|:---:|:-----:|
-| 70% | 0%  |  30%  |
-| 90% | 0%  |  10%  |
-| 0%  | 50% |  50%  |
+| NO  | YES | either YES or NO |
+|:---:|:---:|:----------------:|
+| 70% | 0%  |  30%             |
+| 90% | 0%  |  10%             |
+| 0%  | 50% |  50%             |
 
 ```{r}
 DST_combine_2_state = function(E1,E2){
