@@ -419,7 +419,7 @@ The distributions for High Exposure and the Point of Departure overlap.
 ```{r}
 pp1 <- ggplot(data.frame(dose = c(pod,he), quantity = rep(c("Point of Departure", "High Exposure"),each = niter)),aes(x=dose, fill = quantity)) +
   geom_density(alpha=0.2) +
-  ggtitle("Uncertainty in a High Exposure and the Point of Departure")
+  ggtitle("Uncertainty in High Exposure \n and the Point of Departure")
 
 pp1 
 
