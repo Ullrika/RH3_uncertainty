@@ -16,69 +16,79 @@ library(ggplot2)
 
 # Introduction
 
-Tiered approach to reduce uncertainty
+## Uncertainty characterisation 
+
+Uncertainty in an assessment is characterised by 
+
+1. identifying sources of uncertainty and 
+
+2. evaluating their combined impact on the conclusion
+
+## A tiered approach to **reduce** uncertainty
 
 -   If practical certainty is not obtained, collect more data
 
 -   Follow integrated testing strategies such as the ASPA framework
 
-Tiered approach to refine uncertainty
+## A tiered approach to **refine** uncertainty
 
 -   If practical certainty is not obtained, and it is not justified to collect more data, refine the characterisation of uncertainty
 
 -   Follow options for increased refinement until practical certainty is obtained or stop with an inconclusive assessment
 
-Options to refine the procedure:
+### Options to refine the procedure:
 
 -   Use worst case assumptions and characterise uncertainty in conclusion directly by expert judgement
 
 -   Break down the assessment into parts, characterise uncertainty in each part, combine by calculations, and make expert judgement considering additional sources of uncertainty
 
-Options to refine the precision:
+### Options to refine the precision:
 
 -   Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or if suitable DST).
 
 -   Proceed with reducing bounds on probabilities
 
-- Alternatively for Numbers, proceed with specifying full probability distributions instead of probability bounds and combine by probability calculations or Monte Carlo simulation. 
+-   Alternatively for Numbers, proceed with specifying full probability distributions instead of probability bounds and combine by probability calculations or Monte Carlo simulation.
 
+> A **bounded probability** is a subjective probability with a lower and upper bound. For example, P is a probability that is greater than 60%, P \> 60% (can also be written as $\underline{P} = 60\%).$
 
-> A **bounded probability** is a subjective probability with a lower and upper bound. For example, P is a probability that is greater than 60\%, P > 60\% (can also be written as $\underline{P} = 60\%).$
+> A **probability bound** is a quantile for a continuous quantity associated with a probability (or bounded probability). For example, $q_{05}$ is the 5th quantile for the number $X$ if $P(X<q_{05}) = 5%$. An example of a bounded probability bound (horrible terminology) can be $q_{\leq 05}$ is a bounded quantile for the number $X$ if $P(X<q_{\leq 05}) \leq 5%$.
 
-> A **probability bound** is a quantile for a continuous quantity associated with a probability (or bounded probability). For example, $q_{05}$ is the 5th quantile for the number $X$ if $P(X<q_{05}) = 5%$.
-An example of a bounded probability bound (horrible terminology) can be $q_{\leq 05}$ is a bounded quantile for the number $X$ if $P(X<q_{\leq 05}) \leq 5%$. 
+> A **probability distribution** is a full specification of the probability for any value or combinations of values that a random variable $X$ can take. For example, it can be a function that for a given x-value calculates the probability that $X$ is below this value, $P(X \leq x)$.
 
-> A **probability distribution** is a full specification of the probability for any value or combinations of values that a random variable $X$ can take. For example, it can be a function that for a given x-value calculates the probability that $X$ is below this value, $P(X \leq x)$.  
+> An **interval** express a range for possible values a Number can take without an associated probability. In order to conclude, experts must judge how certain they are by adding their probability to the interval. Therefore, we do not consider intervals in the tiered approach.
 
-# Settings
+# Assessment
 
 ## Assessment question
 
-For this hazard identification the question is if exposure  at a given dose to compound $X$ can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.
+For this hazard identification the question is if exposure at a given dose to compound $X$ can cause an effect in a chosen endpoint? 
+
+This is a categorical questions with two possible answers NO and YES.
 
 ## Uncertainty in the conclusion
 
 The goal of uncertainty characterisation is to summarise uncertainty in the conclusion in a quantitative expression. Here we use **subjective** (or personal) probability (or degree of belief) as the quantitative expression of uncertainty.
 
-In these examples, we sometimes use \% certainty instead of \% probability for the more probable outcome. This is also a way to remind ourselves that the probability is should be interpreted as someone's uncertainty and not a frequency.
+In these examples, we sometimes use % certainty instead of % probability for the more probable outcome. This is also a way to remind ourselves that the probability is should be interpreted as someone's uncertainty and not a frequency.
 
-:::{.callout-note}
+::: callout-note
 A probability is a single number quantifying the likelihood of either:
 
-- A specified answer to a question (e.g. a ‘yes’ answer to a ‘yes/no’ question)
-- A specified quantity lying in a specified range of values, or above or below a specified value
+-   A specified answer to a question (e.g. a ‘yes’ answer to a ‘yes/no’ question)
+-   A specified quantity lying in a specified range of values, or above or below a specified value
 
 Probability theory is agnostic to the interpretation of probability, but the interpretation matters when using probability to express uncertainty. Learn more about [Probability in EFSAs tutorial on uncertainty](https://multimedia.efsa.europa.eu/uncertainty-tutorial/uncertainty-communication/expressions-precise.html)
 :::
 
-:::{.callout-note}
+::: callout-note
 There are several reasons to aim for a quantitative expression of uncertainty. Qualitative expressions of uncertainty are still useful. You can read more about it on [EFSAs tutorial on uncertainty](https://multimedia.efsa.europa.eu/uncertainty-tutorial/principles-and-methods/uncertainty-analysis-expressions.html)
 :::
 
 ## Practical certainty
 
 ```{r}
-pc_yes = 0.66
+pc_yes = 0.75
 pc_no = 0.8
 ```
 
@@ -235,11 +245,10 @@ ggplot2::ggplot(df,aes(x=p_yes,y=a, colour = type)) +
 geom_line(aes(linetype=type)) + 
   scale_colour_manual(values = c("#2B308B", "#57B4ED")) +
   ylab("2nd order uncertainty") +
-  xlab("% probability YES") +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   scale_y_continuous(name="distance to \n almost likely as not", breaks=c(2.5,5,7.5), labels = c("","",""), limits = c(0,11)) +
-  xlim(0,1) + 
+  scale_x_continuous(name="probability YES", breaks=c(0,0.25,0.5,0.75,1), labels = c("0%","25%","50%","75%","100%"), limits = c(0,1)) +
   geom_point(data=df_point,aes(x,y)) +
   annotate(geom="text", x=(1-pc_no)/2, y=11, label="NO",
               color="#269C2E") +
@@ -264,7 +273,7 @@ The probability of YES given the evidence is between `r round(min(post_yes_imp_s
 
 Is practical certainty obtained?
 
-No, but it is close.
+No.
 
 ```{r, echo = FALSE}
 df_step2 <- data.frame(p_yes = c(prior_yes_imp,post_yes_imp_step2), a = rep(dist_to_50,2), type = rep(c("prior","posterior"),each=length(prior_yes_imp)))
@@ -274,7 +283,7 @@ ind_high = max(which(post_yes_imp_step2 <= (1-pc_no)),0)
 
 ind_pcno = max(which(post_yes_imp_step2 <= (1-pc_no)))
 
-df_point=data.frame(y=rep(dist_to_50[ind_pcno],2),x=c(prior_yes_imp[ind_pcno],post_yes_imp_step2[ind_pcno]),type=c("prior","posterior"))
+df_point_step2=data.frame(y=rep(dist_to_50[ind_pcno],2),x=c(prior_yes_imp[ind_pcno],post_yes_imp_step2[ind_pcno]),type=c("prior","posterior"))
 
 
 #prior_yes_imp[ind_low]
@@ -282,6 +291,8 @@ df_point=data.frame(y=rep(dist_to_50[ind_pcno],2),x=c(prior_yes_imp[ind_pcno],po
 ```
 
 The prior probability for a YES must be less than `r round(100*prior_yes_imp[ind_high],0)`% instead of less than `r round(100*max(prior_yes_imp),0)`% for the conclusion to reach practical certainty.
+
+Let us proceed by **refining** the characterisation of uncertainty.
 
 ```{r, echo = FALSE}
 
@@ -298,14 +309,11 @@ ggplot2::ggplot(df_step2,aes(x=p_yes,y=a, colour = type)) +
   ) +
 geom_line(aes(linetype=type)) + 
   scale_colour_manual(values = c("#2B308B", "#57B4ED")) +
-  ylab("2nd order uncertainty") +
-  xlab("% probability YES") +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   scale_y_continuous(name="distance to \n almost likely as not", breaks=c(2.5,5,7.5), labels = c("","",""), limits = c(0,11)) +
-  xlim(0,1) + 
-  geom_point(data=df_point,aes(x,y)) +
- 
+  scale_x_continuous(name="probability YES", breaks=c(0,0.25,0.5,0.75,1), labels = c("0%","25%","50%","75%","100%"), limits = c(0,1)) + 
+  geom_point(data=df_point_step2,aes(x,y)) +
   annotate(geom="text", x=(1-pc_no)/2, y=11, label="NO",
               color="#269C2E") +
   annotate(geom="text", x=(pc_yes + 1)/2, y=11, label="YES",
@@ -315,11 +323,44 @@ geom_line(aes(linetype=type)) +
 
 ```
 
-Let us proceed by **refining** the characterisation of uncertainty.
 
+```{r, echo = FALSE}
+
+df_combo <- data.frame(p_yes = c(prior_yes_imp,post_yes_imp,post_yes_imp_step2), a = rep(dist_to_50,3), type = rep(c("prior","posterior 1 NAM","posterior 3 NAM"),each=length(prior_yes_imp)))
+
+df_point$type = c("prior","posterior 1 NAM")
+df_point_step2$type = c("prior","posterior 3 NAM")
+df_point_combo = rbind(df_point,df_point_step2)
+
+pp <- ggplot2::ggplot(df_combo,aes(x=p_yes,y=a, colour = type)) +
+  geom_hline(
+    aes(yintercept = y), 
+    data.frame(y = c(2.5,5,7.5)),
+    color = "lightgrey"
+  ) +
+  geom_vline(
+    aes(xintercept = x), 
+    data.frame(x = c(1-pc_no,pc_yes)),
+    color = c("#269C2E","darkred")
+  ) +
+geom_line(aes(linetype=type)) + 
+  scale_colour_manual(values = c("#2B308B", "#595e70","#57B4ED")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  scale_y_continuous(name="distance to \n almost likely as not", breaks=c(2.5,5,7.5), labels = c("","",""), limits = c(0,11)) +
+  scale_x_continuous(name="probability YES", breaks=c(0,0.25,0.5,0.75,1), labels = c("0%","25%","50%","75%","100%"), limits = c(0,1)) +
+  annotate(geom="text", x=(1-pc_no)/2, y=11, label="NO",
+              color="#269C2E") +
+  annotate(geom="text", x=(pc_yes + 1)/2, y=11, label="YES",
+              color="darkred") +
+  annotate(geom="text", x=(pc_yes + (1-pc_no))/2, y=11, label="INCONLUSIVE",
+              color="black")  
+
+ggsave("img/bound_img.png",height = 3)
+```
 ## Step 2.3
 
-The assessors agree that prior for a YES could have been less than 60% instead of 66% probability.
+The assessors agree that prior for a YES could have been less than 60% instead of 75% probability.
 
 Practical certainty is obtained under any prior in this range.
 
@@ -362,9 +403,9 @@ We now have three lines of evidence and make a conclusion from each of them sepa
 
 | NO  | YES | either YES or NO |
 |:---:|:---:|:----------------:|
-| 70% | 0%  |  30%             |
-| 90% | 0%  |  10%             |
-| 0%  | 50% |  50%             |
+| 70% | 0%  |       30%        |
+| 90% | 0%  |       10%        |
+| 0%  | 50% |       50%        |
 
 ```{r}
 DST_combine_2_state = function(E1,E2){
@@ -397,13 +438,13 @@ E123 <- as.numeric(unlist(E123))
 
 Our uncertainty in the answer to the assessment question from each line of evidence are combined using the DS rule. This results in the mass function:
 
-| NO  | YES | Empty |
-|:---:|:---:|:-----:|
-| 94% | 3%  |  3%   |
+| NO  | YES | either YES or NO |
+|:---:|:---:|:----------------:|
+| 94% | 3%  |        3%        |
 
 If we assign a probability interpretation to the mass function, we can say that the compound $X$ can cause an effect on the endpoint with a probability between `r round(E123[1]*100)` and `r round((E123[1] + E123[3])*100)`%.
 
-We also conclude we are betwee `r round(E123[2]*100)` and `r round((E123[2] + E123[3])*100)`% certain that it does not cause the effect.
+We are between `r round(E123[2]*100)` and `r round((E123[2] + E123[3])*100)`% certain that it does not cause the effect.
 
 Is practical certainty obtained?
 

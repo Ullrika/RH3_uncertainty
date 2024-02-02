@@ -112,8 +112,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#settings" id="toc-settings" class="nav-link" data-scroll-target="#settings">Settings</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#uncertainty-characterisation" id="toc-uncertainty-characterisation" class="nav-link" data-scroll-target="#uncertainty-characterisation">Uncertainty characterisation</a></li>
+  <li><a href="#a-tiered-approach-to-reduce-uncertainty" id="toc-a-tiered-approach-to-reduce-uncertainty" class="nav-link" data-scroll-target="#a-tiered-approach-to-reduce-uncertainty">A tiered approach to <strong>reduce</strong> uncertainty</a></li>
+  <li><a href="#a-tiered-approach-to-refine-uncertainty" id="toc-a-tiered-approach-to-refine-uncertainty" class="nav-link" data-scroll-target="#a-tiered-approach-to-refine-uncertainty">A tiered approach to <strong>refine</strong> uncertainty</a>
+  <ul class="collapse">
+  <li><a href="#options-to-refine-the-procedure" id="toc-options-to-refine-the-procedure" class="nav-link" data-scroll-target="#options-to-refine-the-procedure">Options to refine the procedure:</a></li>
+  <li><a href="#options-to-refine-the-precision" id="toc-options-to-refine-the-precision" class="nav-link" data-scroll-target="#options-to-refine-the-precision">Options to refine the precision:</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#assessment" id="toc-assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a>
   <ul class="collapse">
   <li><a href="#assessment-question" id="toc-assessment-question" class="nav-link" data-scroll-target="#assessment-question">Assessment question</a></li>
   <li><a href="#uncertainty-in-the-conclusion" id="toc-uncertainty-in-the-conclusion" class="nav-link" data-scroll-target="#uncertainty-in-the-conclusion">Uncertainty in the conclusion</a></li>
@@ -169,22 +178,36 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Tiered approach to reduce uncertainty</p>
+<section id="uncertainty-characterisation" class="level2">
+<h2 class="anchored" data-anchor-id="uncertainty-characterisation">Uncertainty characterisation</h2>
+<p>Uncertainty in an assessment is characterised by</p>
+<ol type="1">
+<li><p>identifying sources of uncertainty and</p></li>
+<li><p>evaluating their combined impact on the conclusion</p></li>
+</ol>
+</section>
+<section id="a-tiered-approach-to-reduce-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="a-tiered-approach-to-reduce-uncertainty">A tiered approach to <strong>reduce</strong> uncertainty</h2>
 <ul>
 <li><p>If practical certainty is not obtained, collect more data</p></li>
 <li><p>Follow integrated testing strategies such as the ASPA framework</p></li>
 </ul>
-<p>Tiered approach to refine uncertainty</p>
+</section>
+<section id="a-tiered-approach-to-refine-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="a-tiered-approach-to-refine-uncertainty">A tiered approach to <strong>refine</strong> uncertainty</h2>
 <ul>
 <li><p>If practical certainty is not obtained, and it is not justified to collect more data, refine the characterisation of uncertainty</p></li>
 <li><p>Follow options for increased refinement until practical certainty is obtained or stop with an inconclusive assessment</p></li>
 </ul>
-<p>Options to refine the procedure:</p>
+<section id="options-to-refine-the-procedure" class="level3">
+<h3 class="anchored" data-anchor-id="options-to-refine-the-procedure">Options to refine the procedure:</h3>
 <ul>
 <li><p>Use worst case assumptions and characterise uncertainty in conclusion directly by expert judgement</p></li>
 <li><p>Break down the assessment into parts, characterise uncertainty in each part, combine by calculations, and make expert judgement considering additional sources of uncertainty</p></li>
 </ul>
-<p>Options to refine the precision:</p>
+</section>
+<section id="options-to-refine-the-precision" class="level3">
+<h3 class="anchored" data-anchor-id="options-to-refine-the-precision">Options to refine the precision:</h3>
 <ul>
 <li><p>Start with bounded probability (FACTs) or probability bounds (Numbers) and combine by Probability Bounds Analysis (or if suitable DST).</p></li>
 <li><p>Proceed with reducing bounds on probabilities</p></li>
@@ -199,12 +222,18 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>A <strong>probability distribution</strong> is a full specification of the probability for any value or combinations of values that a random variable <span class="math inline">\(X\)</span> can take. For example, it can be a function that for a given x-value calculates the probability that <span class="math inline">\(X\)</span> is below this value, <span class="math inline">\(P(X \leq x)\)</span>.</p>
 </blockquote>
+<blockquote class="blockquote">
+<p>An <strong>interval</strong> express a range for possible values a Number can take without an associated probability. In order to conclude, experts must judge how certain they are by adding their probability to the interval. Therefore, we do not consider intervals in the tiered approach.</p>
+</blockquote>
 </section>
-<section id="settings" class="level1">
-<h1>Settings</h1>
+</section>
+</section>
+<section id="assessment" class="level1">
+<h1>Assessment</h1>
 <section id="assessment-question" class="level2">
 <h2 class="anchored" data-anchor-id="assessment-question">Assessment question</h2>
-<p>For this hazard identification the question is if exposure at a given dose to compound <span class="math inline">\(X\)</span> can cause an effect in a chosen endpoint? This is a categorical questions with two possible answers NO and YES.</p>
+<p>For this hazard identification the question is if exposure at a given dose to compound <span class="math inline">\(X\)</span> can cause an effect in a chosen endpoint?</p>
+<p>This is a categorical questions with two possible answers NO and YES.</p>
 </section>
 <section id="uncertainty-in-the-conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="uncertainty-in-the-conclusion">Uncertainty in the conclusion</h2>
@@ -244,7 +273,7 @@ Note
 </section>
 <section id="practical-certainty" class="level2">
 <h2 class="anchored" data-anchor-id="practical-certainty">Practical certainty</h2>
-<p>The practical certainty is by risk managers set to be 66% probability for a YES and 80% probability for a NO. The assessment is <em>inconclusive</em> for any uncertainty in between the limits.</p>
+<p>The practical certainty is by risk managers set to be 75% probability for a YES and 80% probability for a NO. The assessment is <em>inconclusive</em> for any uncertainty in between the limits.</p>
 <table class="table">
 <colgroup>
 <col style="width: 29%">
@@ -261,8 +290,8 @@ Note
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">&lt;20%</td>
-<td style="text-align: center;">20 - 66</td>
-<td style="text-align: center;">&gt;66%</td>
+<td style="text-align: center;">20 - 75</td>
+<td style="text-align: center;">&gt;75%</td>
 </tr>
 </tbody>
 </table>
@@ -329,7 +358,7 @@ Note
 <h1>A tiered approach with uncertainty expressed by bounded probability combined with Bayesian reasoning</h1>
 <section id="step-2.1" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.1">Step 2.1</h2>
-<p>Same evidence as above, but start with a prior for a YES bounded in the range of inconclusiveness i.e.&nbsp;between 20 and 66% probability.</p>
+<p>Same evidence as above, but start with a prior for a YES bounded in the range of inconclusiveness i.e.&nbsp;between 20 and 75% probability.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -345,11 +374,11 @@ Note
 <p>The experts have the opportunity to reduce the range bounded the prior, but it is difficult to justify why they would be allowed to enlarge it. The latter would imply that they specified the wrong bounds from the beginning.</p>
 </div>
 </div>
-<p>The probability of YES given the evidence is between 7 and 36%.</p>
-<p>This is the same thing as saying that we are between 64 to 93% certain that the answer is NO.</p>
+<p>The probability of YES given the evidence is between 7 and 46%.</p>
+<p>This is the same thing as saying that we are between 54 to 93% certain that the answer is NO.</p>
 <p>Is practical certainty obtained?</p>
 <p>No, because (the lower bound of) <span class="math inline">\(\underline{P}(NO|-,-,+)&lt;80\%\)</span></p>
-<p>The prior probability must be less than 46% instead of less than 66% for the conclusion to reach practical certainty.</p>
+<p>The prior probability must be less than 46% instead of less than 75% for the conclusion to reach practical certainty.</p>
 <p>A way to illustrate this is to use an unit-less measure for second order uncertainty (or robustness) that maps the prior to the posterior.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -361,20 +390,20 @@ Note
 <section id="step-2.2" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.2">Step 2.2</h2>
 <p>Same as above for step 2, but with three NAMs.</p>
-<p>The probability of YES given the evidence is between 3 and 20%.</p>
+<p>The probability of YES given the evidence is between 3 and 28%.</p>
 <p>Is practical certainty obtained?</p>
-<p>No, but it is close.</p>
-<p>The prior probability for a YES must be less than 65% instead of less than 66% for the conclusion to reach practical certainty.</p>
+<p>No.</p>
+<p>The prior probability for a YES must be less than 65% instead of less than 75% for the conclusion to reach practical certainty.</p>
+<p>Let us proceed by <strong>refining</strong> the characterisation of uncertainty.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="hazard-example_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Let us proceed by <strong>refining</strong> the characterisation of uncertainty.</p>
 </section>
 <section id="step-2.3" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.3">Step 2.3</h2>
-<p>The assessors agree that prior for a YES could have been less than 60% instead of 66% probability.</p>
+<p>The assessors agree that prior for a YES could have been less than 60% instead of 75% probability.</p>
 <p>Practical certainty is obtained under any prior in this range.</p>
 <p>Risk managers agree that the conclusion is NO with sufficient certainty. In other words, there is sufficient certainty that <span class="math inline">\(X\)</span> is not a hazard. Proceed with the decision.</p>
 </section>
@@ -443,7 +472,7 @@ Note
 <tr class="header">
 <th style="text-align: center;">NO</th>
 <th style="text-align: center;">YES</th>
-<th style="text-align: center;">Empty</th>
+<th style="text-align: center;">either YES or NO</th>
 </tr>
 </thead>
 <tbody>
@@ -455,7 +484,7 @@ Note
 </tbody>
 </table>
 <p>If we assign a probability interpretation to the mass function, we can say that the compound <span class="math inline">\(X\)</span> can cause an effect on the endpoint with a probability between 3 and 6%.</p>
-<p>We also conclude we are betwee 94 and 97% certain that it does not cause the effect.</p>
+<p>We are between 94 and 97% certain that it does not cause the effect.</p>
 <p>Is practical certainty obtained?</p>
 <p>Yes, there is sufficient certainty that <span class="math inline">\(X\)</span> is not a hazard. Proceed with the decision.</p>
 <div class="callout callout-style-default callout-note callout-titled">
