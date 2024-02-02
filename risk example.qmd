@@ -172,7 +172,7 @@ A refined option is to assess uncertainties separately for the **PoD** and **HE*
 
 We explore how to do this with **probability bound analysis** where we offer two approaches: probabilities first or numbers first. 
 
-%::: panel-tabset
+
 ## Probabilities first
 
 ```{r}
@@ -236,7 +236,6 @@ That implies that the conservative estimate for the hazard is $y = `r bmdl`$
 
 <!-- In some situations, the PoD is the BMDL and then it is difficult to talk about uncertainty about the PoD. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on PoD/UF instead of PoD. -->
 
-$$P(PoD > y) = `r p_PoD`\%$$
 
 Derive the value on the High Exposure where the risk ratio is at the critical threshold
 
@@ -272,7 +271,7 @@ In this example, the left hand side is $100-[`r 100 -  p_PoD`+`r 100-p_HE`]=100-
 <!-- | $\leq `r p_lost`\%$| `r round(heu/bmdl,2)`|$\geq `r 100-p_lost`\%$| -->
 
 <!-- See if a conclusion can be made. If the value `r round(heu/bmdl,2)` is less than `r th` and the probability is above the practical certainty `r pc_yes`, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than `r th`).  -->
-%:::
+
 
 If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.
 
@@ -418,13 +417,17 @@ he <- sample_HE(niter)
 The distributions for High Exposure and the Point of Departure overlap.
 
 ```{r}
-ggplot(data.frame(dose = c(pod,he), quantity = rep(c("Point of Departure", "High Exposure"),each = niter)),aes(x=dose, fill = quantity)) +
+pp1 <- ggplot(data.frame(dose = c(pod,he), quantity = rep(c("Point of Departure", "High Exposure"),each = niter)),aes(x=dose, fill = quantity)) +
   geom_density(alpha=0.2) +
   ggtitle("Uncertainty in a High Exposure and the Point of Departure")
+
+pp1 
+
+#ggsave("img/uncertaintyhepod.png",height = 3)
 ```
 
 The calculated probability that the risk ratio is below 1 is 
-$$P(\frac{HE}{PoD}>1) = `r round(mean(he/pod<1)*100)` \%$$
+$$P(\frac{HE}{PoD}<1) = `r round(mean(he/pod<1)*100)` \%$$
 
 This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio \< 1.
 
@@ -447,12 +450,14 @@ This is the preferred option when no health concern is the more probable outcome
 ```{r}
 df <- density(he/pod, from=0)
 df <- data.frame(x=df$x,y=df$y)
-ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
+pp <- ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   geom_line() +
   geom_ribbon(data=subset(df,x<1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
   xlab("HE/PoD") +
   ylab("density") +
   ggtitle("Uncertainty in HE/PoD", subtitle=paste0("P(HE/PoD<1)=",round(mean(he/pod<1)*100),"%"))
+pp
+#ggsave("img/uncertaintyriskratio.png",height = 3)
 ```
 
 In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.
@@ -472,7 +477,7 @@ ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   ggtitle("Uncertainty in HE/PoD", subtitle=paste0("P(HE/PoD>1)=",round(mean(he/pod>1)*100),"%"))
 ```
 
-In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.
+In this visualisation, the red area corresponds to a High Exposure greater than the Point of Departure.
 
 ### Consider additional sources of uncertainty
 

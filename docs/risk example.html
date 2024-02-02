@@ -168,6 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tier-1.-basic-option" id="toc-tier-1.-basic-option" class="nav-link" data-scroll-target="#tier-1.-basic-option">Tier 1. Basic option</a></li>
   <li><a href="#tier-2.-refined-option-with-probability-bounds" id="toc-tier-2.-refined-option-with-probability-bounds" class="nav-link" data-scroll-target="#tier-2.-refined-option-with-probability-bounds">Tier 2. Refined option with probability bounds</a>
   <ul class="collapse">
+  <li><a href="#probabilities-first" id="toc-probabilities-first" class="nav-link" data-scroll-target="#probabilities-first">Probabilities first</a></li>
   <li><a href="#numbers-first" id="toc-numbers-first" class="nav-link" data-scroll-target="#numbers-first">Numbers first</a></li>
   </ul></li>
   <li><a href="#tier-3.-refined-option-with-probability-distributions" id="toc-tier-3.-refined-option-with-probability-distributions" class="nav-link" data-scroll-target="#tier-3.-refined-option-with-probability-distributions">Tier 3. Refined option with probability distributions</a>
@@ -360,7 +361,8 @@ Note
 <p>A refined approach is useful when there is a small difference between the Point of Departure and the Highest Exposure, when the experts cannot conclude and collecting more data is not possible within the limits of the assessment.</p>
 <p>A refined option is to assess uncertainties separately for the <strong>PoD</strong> and <strong>HE</strong>, combine them by calculations into a risk ratio and assess uncertainty in the conclusion.</p>
 <p>We explore how to do this with <strong>probability bound analysis</strong> where we offer two approaches: probabilities first or numbers first.</p>
-<p>%::: panel-tabset ## Probabilities first</p>
+<section id="probabilities-first" class="level2">
+<h2 class="anchored" data-anchor-id="probabilities-first">Probabilities first</h2>
 <p>The refined option with probability bounds can be modified to consider practical certainty in the following way. In this example, the risk managers and the experts have agreed that experts must be at least 75% certain that a High Exposure <strong>HE</strong> is below the <strong>PoD</strong> in order for risk managers to make a decision.</p>
 <p>This means that the assessment is conclusive when the experts are at least 75% certain that the risk ratio is less than one (<em>no health concern</em>).</p>
 <p>Subtract the probability threshold for practical certainty from 100% to set an upper bound for the the sum of the lost probabilities.</p>
@@ -379,6 +381,7 @@ Note
 <p>Divide the conservative estimate for the exposure with the conservative estimate for the hazard <span class="math inline">\(\frac{x}{y}\)</span>.</p>
 <p>Practical certainty is obtained if <span class="math inline">\(\frac{x}{y} &lt; 1\)</span>.</p>
 <p>In this example, this ratio is <span class="math inline">\(\frac{5.4}{5.2} = 1.0384615\)</span></p>
+</section>
 <section id="numbers-first" class="level2">
 <h2 class="anchored" data-anchor-id="numbers-first">Numbers first</h2>
 <p>Use a conservative estimate for PoD as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.</p>
@@ -402,7 +405,6 @@ Note
 </tbody>
 </table>
 <!-- In some situations, the PoD is the BMDL and then it is difficult to talk about uncertainty about the PoD. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on PoD/UF instead of PoD. -->
-<p><span class="math display">\[P(PoD &gt; y) = 95\%\]</span></p>
 <p>Derive the value on the High Exposure where the risk ratio is at the critical threshold</p>
 <p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
 <p>This value is <span class="math inline">\(x = 1 \cdot y = 5.2\)</span></p>
@@ -433,7 +435,6 @@ Note
 <!-- |--------------------|----------------------|-----------------------| -->
 <!-- | $\leq 20\%$| 0.87|$\geq 80\%$| -->
 <!-- See if a conclusion can be made. If the value 0.87 is less than 1 and the probability is above the practical certainty 0.75, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than 1).  -->
-<p>%:::</p>
 <p>If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.</p>
 </section>
 </section>
@@ -607,7 +608,7 @@ Warning
 <p><img src="risk-example_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(\frac{HE}{PoD}&gt;1) = 98 \%\]</span></p>
+<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(\frac{HE}{PoD}&lt;1) = 98 \%\]</span></p>
 <p>This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio &lt; 1.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rr <span class="ot">=</span> pod<span class="sc">/</span>he</span>
@@ -636,7 +637,7 @@ Warning
 <p><img src="risk-example_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.</p>
+<p>In this visualisation, the red area corresponds to a High Exposure greater than the Point of Departure.</p>
 </section>
 </section>
 <section id="consider-additional-sources-of-uncertainty" class="level3">
