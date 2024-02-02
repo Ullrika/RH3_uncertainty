@@ -170,7 +170,11 @@ A refined approach is useful when there is a small difference between the Point 
 
 A refined option is to assess uncertainties separately for the **PoD** and **HE**, combine them by calculations into a risk ratio and assess uncertainty in the conclusion.
 
-We explore how to do this with **probability bound analysis** where we offer two approaches: probabilities first or numbers first. 
+We explore how to do this with **probability bound analysis** where we offer two approaches: 
+
+- probabilities first: to elicit quantiles for given probabilities, where the probabilities are chosen to result in practical certainty
+
+- numbers first: to elicit probabilities given numerical values, where the numerical values are chosen so the risk ratio is 1.  
 
 
 ## Probabilities first
@@ -197,7 +201,7 @@ Elicit the conservative estimate of the Point of Departure from the toxicology e
 
 $$P(PoD > y) = `r 100-p_lost_PoD`\%$$
 
-Here the expert set $y = `r x`$.
+Here the expert set $y = `r y`$.
 
 Subtract the lost probability for exposure from 100, to set the probability associated with the conservative estimate of a High Exposure.
 
@@ -281,7 +285,7 @@ A refined option can alternatively be done with probability distributions which 
 
 This is an option, when the outcome of a probability bound analysis was inconclusive. 
 
-It can also be an option when the assessors prefers to choose to justify probability distributions for uncertainty from available information, combine uncertainties by performing the probability calculations, and then ask the experts to make a judgement on the outcome of interest directly. 
+It can also be an option when the assessors prefers to choose to justify probability distributions for uncertainty from available information, combine uncertainties by performing the probability calculations, and then ask the experts to consider additional sources of uncertainty (not yet accounted for) by making a judgement on the outcome of interest directly. 
 
 :::{.callout-note}
 Note that an explicit elicitation of the outcome of interest following a Monte Carlo simulation is a condition for this approach to result in a characterisation of the experts uncertainty considering the combined impact of **all** sources of uncertainty in the assessment.
@@ -298,7 +302,7 @@ We let the BMDL, the BMD, and the BMDU define the 5th percentile (P05), the medi
 | P05      | P50     | P95      |
 | `r bmdl` | `r bmd` | `r bmdu` |
 
-The lower bound is zero. Since the distribution is skewed to the right we set an upper plausible bound. Here we fit a beta distribution using the SHELF R-package.
+The lower bound is zero. Since the distribution is skewed to the right, the experts set an upper plausible bound. Here we fit a generalised beta distribution to these quantiles using the SHELF R-package.
 
 ```{r}
 #| echo: true 
@@ -311,11 +315,11 @@ SHELF::plotfit(fit,d="beta",xlab="PoD",ylab="probability density")
 An alternative is to go to the online elicitation app for one distribution [link to SHELF app](https://jeremy-oakley.shinyapps.io/SHELF-single/) and find a probability distribution that matches these quantiles. Note that you have to specify the lower and upper bound of the plausible range. You can get them from studying the sample from BMD modelling. You can find the R-code to generate random numbers from the selected probability distribution in the report that is possible to download from SHELF
 :::
 
-The beta-distribution is defined as
+The generalised beta-distribution is generalised in the sense that it is not bounded in the interval 0 to 1. It is defined by relating to the standard beta-distribution as
 
 $$\frac{PoD}{`r fit$limits$upper-fit$limits$lower`} \sim beta(`r round(fit$Beta$shape1,2)`, `r round(fit$Beta$shape2,2)`)$$
 
-We sample from it using this function
+We sample from this distribution using this R-code
 
 ```{r}
 #| echo: true 
@@ -357,7 +361,7 @@ This approach ignores additional sources of uncertainty than those considered in
 
 ### High Exposure
 
-A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be specified by assuming that the range of the dietary exposure estimates corresponds to the bounds of an 80% probability interval.
+A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be specified by using the range of the dietary exposure estimates under the high scenario as bounds of an 80% probability interval. A better option is to use expert knowledge of the probability bounds.  
 
 | min HE  | max HE  |
 |---------|---------|
@@ -489,7 +493,7 @@ An additional sources of uncertainty could e.g. be the choice of distributions u
 
 Here the expert judge that their % certainty for no health concern is `r round(mean(pod/he>1)*100)`%. 
 
-If this value is in the region of practical certainty (i.e. \<`r pc_yes`%) the uncertianty characterisation is completed and one can proceed with decision making.
+If this value is in the region of practical certainty (i.e. \<`r pc_yes`%) the uncertainty characterisation is completed and one can proceed with decision making.
 
 # Conclusions
 

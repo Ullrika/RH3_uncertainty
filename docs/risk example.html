@@ -360,7 +360,11 @@ Note
 <h1>Tier 2. Refined option with probability bounds</h1>
 <p>A refined approach is useful when there is a small difference between the Point of Departure and the Highest Exposure, when the experts cannot conclude and collecting more data is not possible within the limits of the assessment.</p>
 <p>A refined option is to assess uncertainties separately for the <strong>PoD</strong> and <strong>HE</strong>, combine them by calculations into a risk ratio and assess uncertainty in the conclusion.</p>
-<p>We explore how to do this with <strong>probability bound analysis</strong> where we offer two approaches: probabilities first or numbers first.</p>
+<p>We explore how to do this with <strong>probability bound analysis</strong> where we offer two approaches:</p>
+<ul>
+<li><p>probabilities first: to elicit quantiles for given probabilities, where the probabilities are chosen to result in practical certainty</p></li>
+<li><p>numbers first: to elicit probabilities given numerical values, where the numerical values are chosen so the risk ratio is 1.</p></li>
+</ul>
 <section id="probabilities-first" class="level2">
 <h2 class="anchored" data-anchor-id="probabilities-first">Probabilities first</h2>
 <p>The refined option with probability bounds can be modified to consider practical certainty in the following way. In this example, the risk managers and the experts have agreed that experts must be at least 75% certain that a High Exposure <strong>HE</strong> is below the <strong>PoD</strong> in order for risk managers to make a decision.</p>
@@ -372,7 +376,7 @@ Note
 <p><span class="math display">\[100\% - 5\% = 95\%\]</span></p>
 <p>Elicit the conservative estimate of the Point of Departure from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile <span class="math inline">\(y\)</span></p>
 <p><span class="math display">\[P(PoD &gt; y) = 95\%\]</span></p>
-<p>Here the expert set <span class="math inline">\(y = 5.4\)</span>.</p>
+<p>Here the expert set <span class="math inline">\(y = 5.2\)</span>.</p>
 <p>Subtract the lost probability for exposure from 100, to set the probability associated with the conservative estimate of a High Exposure.</p>
 <p><span class="math display">\[100\% - 20\% = 80\%\]</span></p>
 <p>Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment). Define the conservative estimate as the quantile <span class="math inline">\(x\)</span></p>
@@ -442,7 +446,7 @@ Note
 <h1>Tier 3. Refined option with probability distributions</h1>
 <p>A refined option can alternatively be done with probability distributions which are combined by calculations or Monte Carlo simulation.</p>
 <p>This is an option, when the outcome of a probability bound analysis was inconclusive.</p>
-<p>It can also be an option when the assessors prefers to choose to justify probability distributions for uncertainty from available information, combine uncertainties by performing the probability calculations, and then ask the experts to make a judgement on the outcome of interest directly.</p>
+<p>It can also be an option when the assessors prefers to choose to justify probability distributions for uncertainty from available information, combine uncertainties by performing the probability calculations, and then ask the experts to consider additional sources of uncertainty (not yet accounted for) by making a judgement on the outcome of interest directly.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -481,7 +485,7 @@ Note
 </tr>
 </tbody>
 </table>
-<p>The lower bound is zero. Since the distribution is skewed to the right we set an upper plausible bound. Here we fit a beta distribution using the SHELF R-package.</p>
+<p>The lower bound is zero. Since the distribution is skewed to the right, the experts set an upper plausible bound. Here we fit a generalised beta distribution to these quantiles using the SHELF R-package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> SHELF<span class="sc">::</span><span class="fu">fitdist</span>(<span class="at">vals =</span> <span class="fu">c</span>(bmdl,bmd,bmdu),<span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span>), <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper=</span> bmdu<span class="sc">*</span><span class="fl">1.2</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>SHELF<span class="sc">::</span><span class="fu">plotfit</span>(fit,<span class="at">d=</span><span class="st">"beta"</span>,<span class="at">xlab=</span><span class="st">"PoD"</span>,<span class="at">ylab=</span><span class="st">"probability density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -502,9 +506,9 @@ Tip
 <p>An alternative is to go to the online elicitation app for one distribution <a href="https://jeremy-oakley.shinyapps.io/SHELF-single/">link to SHELF app</a> and find a probability distribution that matches these quantiles. Note that you have to specify the lower and upper bound of the plausible range. You can get them from studying the sample from BMD modelling. You can find the R-code to generate random numbers from the selected probability distribution in the report that is possible to download from SHELF</p>
 </div>
 </div>
-<p>The beta-distribution is defined as</p>
+<p>The generalised beta-distribution is generalised in the sense that it is not bounded in the interval 0 to 1. It is defined by relating to the standard beta-distribution as</p>
 <p><span class="math display">\[\frac{PoD}{18.96} \sim beta(4.31, 3.76)\]</span></p>
-<p>We sample from it using this function</p>
+<p>We sample from this distribution using this R-code</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_PoD <span class="ot">&lt;-</span> <span class="cf">function</span>(niter){</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  fit<span class="sc">$</span>limits<span class="sc">$</span>lower <span class="sc">+</span> (fit<span class="sc">$</span>limits<span class="sc">$</span>upper<span class="sc">-</span>fit<span class="sc">$</span>limits<span class="sc">$</span>lower) <span class="sc">*</span> <span class="fu">rbeta</span>(<span class="at">n =</span> niter, <span class="at">shape1 =</span> fit<span class="sc">$</span>Beta<span class="sc">$</span>shape1, <span class="at">shape2 =</span> fit<span class="sc">$</span>Beta<span class="sc">$</span>shape2)</span>
@@ -539,7 +543,7 @@ Warning
 </section>
 <section id="high-exposure" class="level3">
 <h3 class="anchored" data-anchor-id="high-exposure">High Exposure</h3>
-<p>A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be specified by assuming that the range of the dietary exposure estimates corresponds to the bounds of an 80% probability interval.</p>
+<p>A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be specified by using the range of the dietary exposure estimates under the high scenario as bounds of an 80% probability interval. A better option is to use expert knowledge of the probability bounds.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -646,7 +650,7 @@ Warning
 <p>For the purpose of this exercise we assume that the experts subsequently judged that any additional sources of uncertainty were small enough that there was no need to adjust the calculated % probability that the risk ratio is less than 1.</p>
 <p>An additional sources of uncertainty could e.g.&nbsp;be the choice of distributions used in the Monte Carlo simulation and any limitations in the quality of the exposure and toxicity data that are not taken into account in those distributions.</p>
 <p>Here the expert judge that their % certainty for no health concern is 98%.</p>
-<p>If this value is in the region of practical certainty (i.e.&nbsp;&lt;0.75%) the uncertianty characterisation is completed and one can proceed with decision making.</p>
+<p>If this value is in the region of practical certainty (i.e.&nbsp;&lt;0.75%) the uncertainty characterisation is completed and one can proceed with decision making.</p>
 </section>
 </section>
 <section id="conclusions" class="level1">

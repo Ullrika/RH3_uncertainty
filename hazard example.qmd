@@ -356,11 +356,15 @@ geom_line(aes(linetype=type)) +
   annotate(geom="text", x=(pc_yes + (1-pc_no))/2, y=11, label="INCONLUSIVE",
               color="black")  
 
-ggsave("img/bound_img.png",height = 3)
+#ggsave("img/bound_img.png",height = 3)
 ```
 ## Step 2.3
 
 The assessors agree that prior for a YES could have been less than 60% instead of 75% probability.
+
+::: callout-note
+To avoid bias and anchoring, it is important that the experts are not aware of the upper bound of the prior that corresponds to practical certainty. The assessors responsible for the uncertainty characterisation should not be an expert providing judgements, but rather facilitate the process. The experts can be told that the assessment is inconclusive and that the steering group has decided to refine the characterisation of uncertainty by asking them to specify their prior (which before was the inconclusive range as default). 
+:::
 
 Practical certainty is obtained under any prior in this range.
 
