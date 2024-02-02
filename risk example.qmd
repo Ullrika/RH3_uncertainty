@@ -449,7 +449,7 @@ df <- density(he/pod, from=0)
 df <- data.frame(x=df$x,y=df$y)
 ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   geom_line() +
-  geom_ribbon(data=subset(df,x>1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
+  geom_ribbon(data=subset(df,x<1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
   xlab("HE/PoD") +
   ylab("density") +
   ggtitle("Uncertainty in HE/PoD", subtitle=paste0("P(HE/PoD<1)=",round(mean(he/pod<1)*100),"%"))
@@ -466,7 +466,7 @@ df <- density(he/pod, from=0)
 df <- data.frame(x=df$x,y=df$y)
 ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   geom_line() +
-  geom_ribbon(data=subset(df,x<1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
+  geom_ribbon(data=subset(df,x>1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
   xlab("HE/PoD") +
   ylab("density") +
   ggtitle("Uncertainty in HE/PoD", subtitle=paste0("P(HE/PoD>1)=",round(mean(he/pod>1)*100),"%"))
