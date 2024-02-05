@@ -16,13 +16,13 @@ library(ggplot2)
 
 # Introduction
 
-## Uncertainty characterisation 
+## Uncertainty characterisation
 
-Uncertainty in an assessment is characterised by 
+Uncertainty in an assessment is characterised by
 
-1. identifying sources of uncertainty and 
+1.  identifying sources of uncertainty and
 
-2. evaluating their combined impact on the conclusion
+2.  evaluating their combined impact on the conclusion
 
 ## A tiered approach to **reduce** uncertainty
 
@@ -62,7 +62,7 @@ Uncertainty in an assessment is characterised by
 
 ## Assessment question
 
-For this hazard identification the question is if exposure at a given dose to compound $X$ can cause an effect in a chosen endpoint? 
+For this hazard identification the question is if exposure at a given dose to compound $X$ can cause an effect in a chosen endpoint?
 
 This is a categorical questions with two possible answers NO and YES.
 
@@ -323,7 +323,6 @@ geom_line(aes(linetype=type)) +
 
 ```
 
-
 ```{r, echo = FALSE}
 
 df_combo <- data.frame(p_yes = c(prior_yes_imp,post_yes_imp,post_yes_imp_step2), a = rep(dist_to_50,3), type = rep(c("prior","posterior 1 NAM","posterior 3 NAM"),each=length(prior_yes_imp)))
@@ -358,12 +357,13 @@ geom_line(aes(linetype=type)) +
 
 #ggsave("img/bound_img.png",height = 3)
 ```
+
 ## Step 2.3
 
 The assessors agree that prior for a YES could have been less than 60% instead of 75% probability.
 
 ::: callout-note
-To avoid bias and anchoring, it is important that the experts are not aware of the upper bound of the prior that corresponds to practical certainty. The assessors responsible for the uncertainty characterisation should not be an expert providing judgements, but rather facilitate the process. The experts can be told that the assessment is inconclusive and that the steering group has decided to refine the characterisation of uncertainty by asking them to specify their prior (which before was the inconclusive range as default). 
+To avoid bias and anchoring, it is important that the experts are not aware of the upper bound of the prior that corresponds to practical certainty. The assessors responsible for the uncertainty characterisation should not be an expert providing judgements, but rather facilitate the process. The experts can be told that the assessment is inconclusive and that the steering group has decided to refine the characterisation of uncertainty by asking them to specify their prior (which before was the inconclusive range as default).
 :::
 
 Practical certainty is obtained under any prior in this range.

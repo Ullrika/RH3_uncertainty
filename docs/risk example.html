@@ -348,7 +348,7 @@ Note
 </section>
 <section id="tier-1.-basic-option" class="level1">
 <h1>Tier 1. Basic option</h1>
-<p>The basic option is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that <span class="math inline">\(\frac{HE}{PoD} &lt; 1\)</span>, given evidence and that all identified (non-standard or standard) sources of uncertainty has been resolved.</p>
+<p>The basic option is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that <span class="math inline">\(\frac{HE}{PoD} &lt; 1\)</span>, considering all evidence and all identified (non-standard or standard) sources of uncertainty.</p>
 <p>This can be done by reaching a consensus judgement, following procedures for expert knowledge elicitation (using behavioural aggregation to allow for discussions). This judgement requires expertise on both toxicity and exposure assessment.</p>
 <p>This judgement is more easy when the conservative estimate for the Highest Exposure (here 4.5) is far below (a conservative value for) the Point of Departure (here 5.2).</p>
 <p>Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors as they will result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.</p>
@@ -362,9 +362,10 @@ Note
 <p>A refined option is to assess uncertainties separately for the <strong>PoD</strong> and <strong>HE</strong>, combine them by calculations into a risk ratio and assess uncertainty in the conclusion.</p>
 <p>We explore how to do this with <strong>probability bound analysis</strong> where we offer two approaches:</p>
 <ul>
-<li><p>probabilities first: to elicit quantiles for given probabilities, where the probabilities are chosen to result in practical certainty</p></li>
+<li><p>probabilities first: to elicit quantiles for given probabilities, where the probabilities are chosen to obtain practical certainty</p></li>
 <li><p>numbers first: to elicit probabilities given numerical values, where the numerical values are chosen so the risk ratio is 1.</p></li>
 </ul>
+<p>Also know as the glorious <em>Dawei formulas</em></p>
 <section id="probabilities-first" class="level2">
 <h2 class="anchored" data-anchor-id="probabilities-first">Probabilities first</h2>
 <p>The refined option with probability bounds can be modified to consider practical certainty in the following way. In this example, the risk managers and the experts have agreed that experts must be at least 75% certain that a High Exposure <strong>HE</strong> is below the <strong>PoD</strong> in order for risk managers to make a decision.</p>
@@ -381,10 +382,11 @@ Note
 <p><span class="math display">\[100\% - 20\% = 80\%\]</span></p>
 <p>Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment). Define the conservative estimate as the quantile <span class="math inline">\(x\)</span></p>
 <p><span class="math display">\[P(HE &lt; x) = 80\%\]</span></p>
-<p>In this example, the expert elicit the value <span class="math inline">\(x = 5.4\)</span>.</p>
+<p>In this example, the expert elicit the value <span class="math inline">\(x = 4.95\)</span>.</p>
 <p>Divide the conservative estimate for the exposure with the conservative estimate for the hazard <span class="math inline">\(\frac{x}{y}\)</span>.</p>
 <p>Practical certainty is obtained if <span class="math inline">\(\frac{x}{y} &lt; 1\)</span>.</p>
-<p>In this example, this ratio is <span class="math inline">\(\frac{5.4}{5.2} = 1.0384615\)</span></p>
+<p>In this example, this ratio is <span class="math inline">\(\frac{4.95}{5.2} = 0.95\)</span></p>
+<p>Hence, practical certainty is reached. Proceed to the decision.</p>
 </section>
 <section id="numbers-first" class="level2">
 <h2 class="anchored" data-anchor-id="numbers-first">Numbers first</h2>
@@ -412,8 +414,8 @@ Note
 <p>Derive the value on the High Exposure where the risk ratio is at the critical threshold</p>
 <p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
 <p>This value is <span class="math inline">\(x = 1 \cdot y = 5.2\)</span></p>
-<p>Ask the experts to judge their probability that a High Exposure is below 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 85%.</p>
-<p><span class="math display">\[P( HE &lt; x) = 85\%\]</span></p>
+<p>Ask the experts to judge their probability that a High Exposure is below 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 70%.</p>
+<p><span class="math display">\[P( HE &lt; x) = 70\%\]</span></p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -424,20 +426,21 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>85%</td>
+<td>70%</td>
 <td>x</td>
-<td>15%</td>
+<td>30%</td>
 </tr>
 </tbody>
 </table>
-<p>Practical certainty is obtained if <span class="math display">\[100 - [(100-P(HE &lt; x)) + (100-P(PoD &gt; y))] \geq 75\]</span> In this example, the left hand side is <span class="math inline">\(100-[5+15]=100-5 + 15= 80\)</span></p>
+<p>Practical certainty is obtained if <span class="math display">\[100 - [(100-P(HE &lt; x)) + (100-P(PoD &gt; y))] \geq 75\]</span> In this example, the left hand side is <span class="math inline">\(100-[5+30]=100-5 + 30= 65\)</span></p>
+<p>Hence, practical certainty is not reached.</p>
 <!-- Probability bounds analysis (and the rule of "lost probabilities") allows us to calculate that it is at least  -->
-<!-- $$ 100 - [(100-95)+(100-85)]=80\%$$  -->
+<!-- $$ 100 - [(100-95)+(100-70)]=65\%$$  -->
 <!-- probable that the ratio of the highest estimate of High Exposure to the Point of Departure is less than or equal than 4.5/5.2 = 0.87 -->
-<!-- $$P(\frac{HE}{PoD} < 0.87) \geq 80\%$$ -->
+<!-- $$P(\frac{HE}{PoD} < 0.87) \geq 65\%$$ -->
 <!-- | P below            | value                | P above               | -->
 <!-- |--------------------|----------------------|-----------------------| -->
-<!-- | $\leq 20\%$| 0.87|$\geq 80\%$| -->
+<!-- | $\leq 35\%$| 0.87|$\geq 65\%$| -->
 <!-- See if a conclusion can be made. If the value 0.87 is less than 1 and the probability is above the practical certainty 0.75, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than 1).  -->
 <p>If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.</p>
 </section>
@@ -463,7 +466,7 @@ Note
 <section id="point-of-departure" class="level3">
 <h3 class="anchored" data-anchor-id="point-of-departure">Point of Departure</h3>
 <p>A probability distribution representing uncertainty in the <strong>Point of Departure</strong> can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling. There are plenty of BMD software available to do this.</p>
-<p>We let the BMDL, the BMD, and the BMDU define the 5th percentile (P05), the median (P50), and the 95th percentile (P95) of the probability distribution for uncertainty in the <strong>PoD</strong>.</p>
+<p>We (the assessors) let the BMDL, the BMD, and the BMDU define the 5th percentile (P05), the median (P50), and the 95th percentile (P95) of the probability distribution for uncertainty in the <strong>PoD</strong>.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -543,7 +546,7 @@ Warning
 </section>
 <section id="high-exposure" class="level3">
 <h3 class="anchored" data-anchor-id="high-exposure">High Exposure</h3>
-<p>A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be specified by using the range of the dietary exposure estimates under the high scenario as bounds of an 80% probability interval. A better option is to use expert knowledge of the probability bounds.</p>
+<p>A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be approximated by using the range of the dietary exposure estimates under the high scenario as bounds of an 80% probability interval. A better option is to use expert knowledge of the probability bounds.</p>
 <table class="table">
 <thead>
 <tr class="header">
