@@ -69,12 +69,14 @@ heu = 4.5
 ## risk threshold
 th = 1
 
-p_lost_PoD = 5
+# probability first
+p_lost_PoD = 10
 y = bmdl
-x = heu*1.10
+x = heu*1.05
 
-p_PoD = 95
-p_HE = 70
+# numbers first
+p_PoD = 90
+p_HE = 84
 ```
 
 ## Hazard assessment
@@ -258,7 +260,7 @@ $$P( HE < x) = `r p_HE`\%$$
 
 Practical certainty is obtained if $$100 - [(100-P(HE < x)) + (100-P(PoD > y))] \geq `r 100*pc_yes`$$ In this example, the left hand side is $100-[`r 100 - p_PoD`+`r 100-p_HE`]=100-`r 100-p_PoD` + `r 100-p_HE`= `r 100-(100-p_PoD + 100-p_HE)`$
 
-Hence, practical certainty is not reached. 
+Hence, practical certainty is not reached.
 
 <!-- Probability bounds analysis (and the rule of "lost probabilities") allows us to calculate that it is at least  -->
 
@@ -277,6 +279,10 @@ Hence, practical certainty is not reached.
 <!-- See if a conclusion can be made. If the value `r round(heu/bmdl,2)` is less than `r th` and the probability is above the practical certainty `r pc_yes`, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than `r th`).  -->
 
 If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.
+
+:::{.callout-note}
+A humble note from Ullrika and Dawei: The numbers and probabilities are chosen for demonstration. There are inconsistencies in the judgements between probability and numbers first in this example. In reality, only one of the options are chosen. Due to this inconsistency, the next tier will not be consistent with this one. 
+:::
 
 # Tier 3. Refined option with probability distributions
 

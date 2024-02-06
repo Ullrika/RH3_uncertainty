@@ -372,28 +372,28 @@ Note
 <p>This means that the assessment is conclusive when the experts are at least 75% certain that the risk ratio is less than one (<em>no health concern</em>).</p>
 <p>Subtract the probability threshold for practical certainty from 100% to set an upper bound for the the sum of the lost probabilities.</p>
 <p><span class="math display">\[100\% - 75\% = 25\%\]</span></p>
-<p>Divide the resulting probability into two parts, one for the hazard, here <span class="math inline">\(5\%\)</span>, and one for the exposure, what remains <span class="math inline">\(100-75 - 5 = 20\%\)</span>.</p>
+<p>Divide the resulting probability into two parts, one for the hazard, here <span class="math inline">\(10\%\)</span>, and one for the exposure, what remains <span class="math inline">\(100-75 - 10 = 15\%\)</span>.</p>
 <p>Subtract the lost probability for the hazard from 100 to set the probability associated with a conservative estimate of the Point of Departure.</p>
-<p><span class="math display">\[100\% - 5\% = 95\%\]</span></p>
+<p><span class="math display">\[100\% - 10\% = 90\%\]</span></p>
 <p>Elicit the conservative estimate of the Point of Departure from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile <span class="math inline">\(y\)</span></p>
-<p><span class="math display">\[P(PoD &gt; y) = 95\%\]</span></p>
+<p><span class="math display">\[P(PoD &gt; y) = 90\%\]</span></p>
 <p>Here the expert set <span class="math inline">\(y = 5.2\)</span>.</p>
 <p>Subtract the lost probability for exposure from 100, to set the probability associated with the conservative estimate of a High Exposure.</p>
-<p><span class="math display">\[100\% - 20\% = 80\%\]</span></p>
+<p><span class="math display">\[100\% - 15\% = 85\%\]</span></p>
 <p>Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment). Define the conservative estimate as the quantile <span class="math inline">\(x\)</span></p>
-<p><span class="math display">\[P(HE &lt; x) = 80\%\]</span></p>
-<p>In this example, the expert elicit the value <span class="math inline">\(x = 4.95\)</span>.</p>
+<p><span class="math display">\[P(HE &lt; x) = 85\%\]</span></p>
+<p>In this example, the expert elicit the value <span class="math inline">\(x = 4.725\)</span>.</p>
 <p>Divide the conservative estimate for the exposure with the conservative estimate for the hazard <span class="math inline">\(\frac{x}{y}\)</span>.</p>
 <p>Practical certainty is obtained if <span class="math inline">\(\frac{x}{y} &lt; 1\)</span>.</p>
-<p>In this example, this ratio is <span class="math inline">\(\frac{4.95}{5.2} = 0.95\)</span></p>
+<p>In this example, this ratio is <span class="math inline">\(\frac{4.725}{5.2} = 0.91\)</span></p>
 <p>Hence, practical certainty is reached. Proceed to the decision.</p>
 </section>
 <section id="numbers-first" class="level2">
 <h2 class="anchored" data-anchor-id="numbers-first">Numbers first</h2>
 <p>Use a conservative estimate for PoD as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.</p>
 <p>Ask experts to judge their probability expressing their uncertainty about a conservative estimate of hazard, e.g.&nbsp;the BMDL,</p>
-<p>The experts judge that they are 95% certain that the Point of Departure is above 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day.</p>
-<p><span class="math display">\[P(PoD &gt; y) = 95\%\]</span> That implies that the conservative estimate for the hazard is <span class="math inline">\(y = 5.2\)</span></p>
+<p>The experts judge that they are 90% certain that the Point of Departure is above 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day.</p>
+<p><span class="math display">\[P(PoD &gt; y) = 90\%\]</span> That implies that the conservative estimate for the hazard is <span class="math inline">\(y = 5.2\)</span></p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -404,9 +404,9 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>5%</td>
+<td>10%</td>
 <td>y</td>
-<td>95%</td>
+<td>90%</td>
 </tr>
 </tbody>
 </table>
@@ -414,8 +414,8 @@ Note
 <p>Derive the value on the High Exposure where the risk ratio is at the critical threshold</p>
 <p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
 <p>This value is <span class="math inline">\(x = 1 \cdot y = 5.2\)</span></p>
-<p>Ask the experts to judge their probability that a High Exposure is below 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 70%.</p>
-<p><span class="math display">\[P( HE &lt; x) = 70\%\]</span></p>
+<p>Ask the experts to judge their probability that a High Exposure is below 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 84%.</p>
+<p><span class="math display">\[P( HE &lt; x) = 84\%\]</span></p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -426,23 +426,36 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>70%</td>
+<td>84%</td>
 <td>x</td>
-<td>30%</td>
+<td>16%</td>
 </tr>
 </tbody>
 </table>
-<p>Practical certainty is obtained if <span class="math display">\[100 - [(100-P(HE &lt; x)) + (100-P(PoD &gt; y))] \geq 75\]</span> In this example, the left hand side is <span class="math inline">\(100-[5+30]=100-5 + 30= 65\)</span></p>
+<p>Practical certainty is obtained if <span class="math display">\[100 - [(100-P(HE &lt; x)) + (100-P(PoD &gt; y))] \geq 75\]</span> In this example, the left hand side is <span class="math inline">\(100-[10+16]=100-10 + 16= 74\)</span></p>
 <p>Hence, practical certainty is not reached.</p>
 <!-- Probability bounds analysis (and the rule of "lost probabilities") allows us to calculate that it is at least  -->
-<!-- $$ 100 - [(100-95)+(100-70)]=65\%$$  -->
+<!-- $$ 100 - [(100-90)+(100-84)]=74\%$$  -->
 <!-- probable that the ratio of the highest estimate of High Exposure to the Point of Departure is less than or equal than 4.5/5.2 = 0.87 -->
-<!-- $$P(\frac{HE}{PoD} < 0.87) \geq 65\%$$ -->
+<!-- $$P(\frac{HE}{PoD} < 0.87) \geq 74\%$$ -->
 <!-- | P below            | value                | P above               | -->
 <!-- |--------------------|----------------------|-----------------------| -->
-<!-- | $\leq 35\%$| 0.87|$\geq 65\%$| -->
+<!-- | $\leq 26\%$| 0.87|$\geq 74\%$| -->
 <!-- See if a conclusion can be made. If the value 0.87 is less than 1 and the probability is above the practical certainty 0.75, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than 1).  -->
 <p>If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A humble note from Ullrika and Dawei: The numbers and probabilities are chosen for demonstration. There are inconsistencies in the judgements between probability and numbers first in this example. In reality, only one of the options are chosen. Due to this inconsistency, the next tier will not be consistent with this one.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="tier-3.-refined-option-with-probability-distributions" class="level1">
