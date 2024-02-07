@@ -95,7 +95,7 @@ pc_no = 0.8
 The practical certainty is by risk managers set to be `r pc_yes*100`% probability for a YES and `r pc_no*100`% probability for a NO. The assessment is *inconclusive* for any uncertainty in between the limits.
 
 |          NO          |            Inconclusive            |        YES        |
-|:-------------------:|:-------------------------------:|:----------------:|
+|:-------------------:|:------------------------------:|:-----------------:|
 | \<`r 100*(1-pc_no)`% | `r 100*(1-pc_no)` - `r 100*pc_yes` | \>`r 100*pc_yes`% |
 
 # A tiered approach with uncertainty expressed by precise probability combined with Bayesian reasoning
@@ -460,14 +460,6 @@ Ullrika here again. Note that there are differences between the Probability Boun
 
 # Conclusion
 
-Reduce by considering more evidence/data.
-
-Adding evidence/data does not necessarily reduce uncertainty. Uncertainty can increase when considering diverging evidence.
-
-Refine by increasing precision in the characterisation of uncertainty.
-
-A tiered approach should avoid reducing precision in the characterisation of uncertainty, and therefore it is best to start with a rough characterisation.
-
 The concept practical certainty is a key to go through a tiered approach.
 
 We demonstrate tiered approaches with
@@ -477,3 +469,13 @@ We demonstrate tiered approaches with
 -   Bayesian reasoning with bounded probabilities
 
 -   Dempster Shafer Theory (DST)
+
+
+Evidence or data is integrated to the assessment by specifying a appropriate likelihood. In these examples, the likelihood is defined by information on sensitivity and specificity. 
+
+New evidence/data that can result in a reduction of uncertainty. However, adding evidence/data does not necessarily reduce uncertainty. Uncertainty can increase (in the sense moving closer to the center of the inclusive range) when considering diverging evidence.
+
+The option to refine by increasing precision in the characterisation of uncertainty is possible when uncertainty is not at the highest level of precision. A recommendation is therefore to start with a less precise charactersiation of uncertainty. This would also avoid unnecessary expert judgement early in the process. 
+
+It is possible that the characterisation of uncertainty goes from precise to less precise if the new evidence is added with an imprecise likelihood, or when the characterisation is in a range and the assessment is considering new conflicting evidence.  
+
