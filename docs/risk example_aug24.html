@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -123,7 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./risk example_aug24.html" rel="" target="">
+    <a class="nav-link active" href="./risk example_aug24.html" rel="" target="" aria-current="page">
  <span class="menu-text">Risk</span></a>
   </li>  
 </ul>
@@ -185,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Tiered approaches to characterise uncertainty in NGRA exemplified with a risk assessment</h1>
-<p class="subtitle lead">Work in progress RiskHunt3R</p>
+<p class="subtitle lead">RiskHunt3R meeting Aug 2024</p>
 </div>
 
 
@@ -248,15 +214,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="assessment" class="level1">
 <h1>Assessment</h1>
 <p>Consider a human health risk assessment of chemical <span class="math inline">\(X\)</span>.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.15</code></pre>
-</div>
-</div>
 <section id="hazard-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="hazard-assessment">Hazard assessment</h2>
 <p>The quantity of interest for the hazard assessment is the Point of Departure, <strong>PoD</strong>.</p>
-<p>As an example, a PoD of 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.</p>
+<p>As an example, a PoD of 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.</p>
 <p>Model Averaged BMD model</p>
 <table class="table">
 <thead>
@@ -268,9 +229,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>5.2</td>
-<td>10.1</td>
-<td>15.8</td>
+<td>0.07</td>
+<td>1.06</td>
+<td>1.3</td>
 </tr>
 </tbody>
 </table>
@@ -278,16 +239,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exposure-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="exposure-assessment">Exposure assessment</h2>
 <p>The quantity of interest for the exposure assessment is a High Exposure in the target population, <strong>HE</strong>.</p>
-<p>The range (seen over different populations and data sets) of the exposure estimates for <span class="math inline">\(X\)</span> was assessed as</p>
-<ul>
-<li>2.8 - 4.5 μg/kg bw per day for a high-level exposure scenario.</li>
-</ul>
+<p>Estimate of high exposure μg/kg bw per day for compound <span class="math inline">\(X\)</span> is</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>HEL</th>
+<th>HE</th>
+<th>HE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.1</td>
+<td>0.36</td>
+<td>1.34</td>
+</tr>
+</tbody>
+</table>
+<p>for the given exposure scenario.</p>
 </section>
 <section id="risk-characterisation" class="level2">
 <h2 class="anchored" data-anchor-id="risk-characterisation">Risk characterisation</h2>
 <p>The question for the risk assessment is if the High Exposure is below the Point of Departure, i.e.</p>
 <p><span class="math display">\[HE &lt; PoD\]</span></p>
-<p>The answer to the assessment question is <strong>NO HEALTH CONCERN</strong> if the ratio <span class="math inline">\(\frac{HE}{PoD} &lt; 1\)</span>.</p>
+<p>The answer to the assessment question is <strong>NO HEALTH CONCERN</strong> if the ratio <span class="math inline">\(\frac{\hat{HE}}{\hat{PoD}} &lt; 1\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -310,13 +285,13 @@ Note
 </section>
 <section id="practical-certainty" class="level1">
 <h1>Practical certainty</h1>
-<p>The practical certainty is by risk managers set to be 80% probability to conclude that compound <span class="math inline">\(X\)</span> is a health concern and 85% probability to conclude that compound <span class="math inline">\(X\)</span> is not a health concern. The assessment is <em>inconclusive</em> for any uncertainty in between the limits.</p>
+<p>The practical certainty is by risk managers set to be 80% probability to conclude that compound <span class="math inline">\(X\)</span> is a health concern and 90% probability to conclude that compound <span class="math inline">\(X\)</span> is not a health concern. The assessment is <em>inconclusive</em> for any (un)certainty in between the limits.</p>
 <p>It can be sufficient to conclude if uncertainty the conclusion is in the range of practical certainty.</p>
 <table class="table">
 <colgroup>
 <col style="width: 28%">
-<col style="width: 45%">
-<col style="width: 26%">
+<col style="width: 46%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -327,8 +302,8 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>&lt;15%</td>
-<td>15 - 80</td>
+<td>&lt;10%</td>
+<td>10 - 80</td>
 <td>&gt;80%</td>
 </tr>
 </tbody>
@@ -337,8 +312,8 @@ Note
 <table class="table">
 <colgroup>
 <col style="width: 29%">
-<col style="width: 45%">
-<col style="width: 25%">
+<col style="width: 46%">
+<col style="width: 24%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -350,8 +325,8 @@ Note
 <tbody>
 <tr class="odd">
 <td>&lt;20%</td>
-<td>20 - 85</td>
-<td>&gt;85%</td>
+<td>20 - 90</td>
+<td>&gt;90%</td>
 </tr>
 </tbody>
 </table>
@@ -373,9 +348,10 @@ Note
 <h1>Tier 1. Basic option</h1>
 <p>The basic option is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that <span class="math inline">\(\frac{HE}{PoD} &lt; 1\)</span>, considering all evidence and all identified (non-standard or standard) sources of uncertainty.</p>
 <p>This can be done by reaching a consensus judgement, following procedures for expert knowledge elicitation (using behavioural aggregation to allow for discussions). This judgement requires expertise on both toxicity and exposure assessment.</p>
-<p>This judgement is more easy when the conservative estimate for the Highest Exposure (here 4.5) is far below (a conservative value for) the Point of Departure (here 5.2).</p>
+<p>This judgement is more easy when the conservative estimate for the Highest Exposure is far below (a conservative value for) the Point of Departure. Here</p>
+<p><span class="math inline">\(\frac{HE}{PoD} = \frac{1.34}{0.07} = 19.1428571\)</span> which is above the threshold.</p>
 <p>Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors as they will result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.</p>
-<p>In our example, the expert agree that their uncertainty lies in the inconclusive range. Some of them even said that they could not make this judgement, which would also leed to an inconclusive assessment.</p>
+<p>In our example, the expert agree that their (un)certainty lies in the inconclusive range. Some of them say that they can not make this judgement, which would also leed to an inconclusive assessment.</p>
 <p>Is practical certainty obtained? No.</p>
 <p>We proceed by <strong>refining</strong> uncertainty</p>
 </section>
@@ -391,32 +367,33 @@ Note
 <!-- Also know as the *glorious formulas* -->
 <section id="probabilities-first" class="level2">
 <h2 class="anchored" data-anchor-id="probabilities-first">Probabilities first</h2>
-<p>The refined option with probability bounds can be modified to consider practical certainty in the following way. In this example, the risk managers and the experts have agreed that experts must be at least 85% certain that a High Exposure <strong>HE</strong> is below the <strong>PoD</strong> in order for risk managers to make a decision.</p>
-<p>This means that the assessment is conclusive when the experts are at least 85% certain that the risk ratio is less than one (<em>no health concern</em>).</p>
+<p>The refined option with probability bounds can be modified to consider practical certainty in the following way. In this example, the risk managers and the experts have agreed that experts must be at least 90% certain that a High Exposure <strong>HE</strong> is below the <strong>PoD</strong> in order for risk managers to make a decision.</p>
+<p>This means that the assessment is conclusive when the experts are at least 90% certain that the risk ratio is less than one (<em>no health concern</em>).</p>
 <p>Subtract the probability threshold for practical certainty from 100% to set an upper bound for the the sum of the lost probabilities.</p>
-<p><span class="math display">\[100\% - 85\% = 15\%\]</span></p>
-<p>Divide the resulting probability into two parts, one for the hazard, here <span class="math inline">\(10\%\)</span>, and one for the exposure, what remains <span class="math inline">\(100-85 - 10 = 5\%\)</span>.</p>
+<p><span class="math display">\[100\% - 90\% = 10\%\]</span></p>
+<p>Divide the resulting probability into two parts, one for the hazard, here <span class="math inline">\(5\%\)</span>, and one for the exposure, what remains <span class="math inline">\(100-90 - 5 = 5\%\)</span>.</p>
 <p>Subtract the lost probability for the hazard from 100 to set the probability associated with a conservative estimate of the Point of Departure.</p>
-<p><span class="math display">\[100\% - 10\% = 90\%\]</span></p>
+<p><span class="math display">\[100\% - 5\% = 95\%\]</span></p>
 <p>Elicit the conservative estimate of the Point of Departure from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile <span class="math inline">\(y\)</span></p>
-<p><span class="math display">\[P(PoD &gt; y) = 90\%\]</span></p>
-<p>Here the expert set <span class="math inline">\(y = 5.2\)</span>.</p>
+<p><span class="math display">\[P(PoD &gt; y) = 95\%\]</span></p>
+<p>Here the expert set <span class="math inline">\(y = 0.07\)</span>.</p>
 <p>Subtract the lost probability for exposure from 100, to set the probability associated with the conservative estimate of a High Exposure.</p>
 <p><span class="math display">\[100\% - 5\% = 95\%\]</span></p>
 <p>Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment). Define the conservative estimate as the quantile <span class="math inline">\(x\)</span></p>
 <p><span class="math display">\[P(HE &lt; x) = 95\%\]</span></p>
-<p>In this example, the expert elicit the value <span class="math inline">\(x = 4.725\)</span>.</p>
+<p>In this example, the expert elicit the value <span class="math inline">\(x = 1.32\)</span>.</p>
 <p>Divide the conservative estimate for the exposure with the conservative estimate for the hazard <span class="math inline">\(\frac{x}{y}\)</span>.</p>
 <p>Practical certainty is obtained if <span class="math inline">\(\frac{x}{y} &lt; 1\)</span>.</p>
-<p>In this example, this ratio is <span class="math inline">\(\frac{4.725}{5.2} = 0.91\)</span></p>
-<p>Hence, practical certainty is reached. Proceed to the decision.</p>
+<p>In this example, this ratio is <span class="math inline">\(\frac{1.32}{0.07} = 18.86\)</span></p>
+<p>Practical certainty is not reached with the probability bounds analaysis using probabilities first, proceed with a refined approach.</p>
+<!-- Hence, practical certainty is reached. Proceed to the decision. -->
 </section>
 <section id="numbers-first" class="level2">
 <h2 class="anchored" data-anchor-id="numbers-first">Numbers first</h2>
 <p>Use a conservative estimate for PoD as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.</p>
 <p>Ask experts to judge their probability expressing their uncertainty about a conservative estimate of hazard, e.g.&nbsp;the BMDL,</p>
-<p>The experts judge that they are 90% certain that the Point of Departure is above 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day.</p>
-<p><span class="math display">\[P(PoD &gt; y) = 90\%\]</span> That implies that the conservative estimate for the hazard is <span class="math inline">\(y = 5.2\)</span></p>
+<p>The experts judge that they are 95% certain that the Point of Departure is above 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day.</p>
+<p><span class="math display">\[P(PoD &gt; y) = 95\%\]</span> That implies that the conservative estimate for the hazard is <span class="math inline">\(y = 0.07\)</span></p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -427,18 +404,18 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>10%</td>
+<td>5%</td>
 <td>y</td>
-<td>90%</td>
+<td>95%</td>
 </tr>
 </tbody>
 </table>
 <!-- In some situations, the PoD is the BMDL and then it is difficult to talk about uncertainty about the PoD. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on PoD/UF instead of PoD. -->
 <p>Derive the value on the High Exposure where the risk ratio is at the critical threshold</p>
 <p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
-<p>This value is <span class="math inline">\(x = 1 \cdot y = 5.2\)</span></p>
-<p>Ask the experts to judge their probability that a High Exposure is below 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 90%.</p>
-<p><span class="math display">\[P( HE &lt; x) = 90\%\]</span></p>
+<p>This value is <span class="math inline">\(x = 1 \cdot y = 0.07\)</span></p>
+<p>Ask the experts to judge their probability that a High Exposure is below 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 2%.</p>
+<p><span class="math display">\[P( HE &lt; x) = 2\%\]</span></p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -449,22 +426,22 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>90%</td>
+<td>2%</td>
 <td>x</td>
-<td>10%</td>
+<td>98%</td>
 </tr>
 </tbody>
 </table>
-<p>Practical certainty is obtained if <span class="math display">\[100 - [(100-P(HE &lt; x)) + (100-P(PoD &gt; y))] \geq 85\]</span> In this example, the left hand side is <span class="math inline">\(100-[10+10]=100-10 + 10= 80\)</span></p>
-<p>Hence, practical certainty is not reached.</p>
+<p>Practical certainty is obtained if <span class="math display">\[100 - P(HE &lt; x) - P(PoD &gt; y) \geq 90\]</span> In this example, the left hand side is <span class="math inline">\(100-[2+5]=100-2 - 5= 93\)</span></p>
+<p>Hence, practical certainty is reached with the probability bounds analysis using numbers first.</p>
 <!-- Probability bounds analysis (and the rule of "lost probabilities") allows us to calculate that it is at least  -->
-<!-- $$ 100 - [(100-90)+(100-90)]=80\%$$  -->
-<!-- probable that the ratio of the highest estimate of High Exposure to the Point of Departure is less than or equal than 4.5/5.2 = 0.87 -->
-<!-- $$P(\frac{HE}{PoD} < 0.87) \geq 80\%$$ -->
+<!-- $$ 100 - [(100-95)+(100-2)]=-3\%$$  -->
+<!-- probable that the ratio of the highest estimate of High Exposure to the Point of Departure is less than or equal than 1.34/0.07 = 19.14 -->
+<!-- $$P(\frac{HE}{PoD} < 19.14) \geq -3\%$$ -->
 <!-- | P below            | value                | P above               | -->
 <!-- |--------------------|----------------------|-----------------------| -->
-<!-- | $\leq 20\%$| 0.87|$\geq 80\%$| -->
-<!-- See if a conclusion can be made. If the value 0.87 is less than 1 and the probability is above the practical certainty 0.85, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than 1).  -->
+<!-- | $\leq 103\%$| 19.14|$\geq -3\%$| -->
+<!-- See if a conclusion can be made. If the value 19.14 is less than 1 and the probability is above the practical certainty 0.9, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than 1).  -->
 <p>If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -476,7 +453,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A humble note from Ullrika and Dawei: The numbers and probabilities are chosen for demonstration. There are inconsistencies in the judgements between probability and numbers first in this example. In reality, only one of the options are chosen. Due to this inconsistency, the next tier will not be consistent with this one.</p>
+<p>A humble note from Ullrika and Dawei: The numbers and probabilities are chosen for demonstration. There might be inconsistencies in the judgements between the “probability-first” and “numbers-first” approaches in this example. In reality, only one of the options are chosen.</p>
 </div>
 </div>
 </section>
@@ -502,7 +479,7 @@ Note
 <section id="point-of-departure" class="level3">
 <h3 class="anchored" data-anchor-id="point-of-departure">Point of Departure</h3>
 <p>A probability distribution representing uncertainty in the <strong>Point of Departure</strong> can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling. There are plenty of BMD software available to do this.</p>
-<p>We (the assessors) let the BMDL, the BMD, and the BMDU define a lower percentile (10), the median (50), and a higher percentile (90) of the probability distribution for uncertainty in the <strong>PoD</strong>.</p>
+<p>We (the assessors) let the BMDL, the BMD, and the BMDU define a lower percentile (0.05), the median (0.5), and a higher percentile (0.95) of the probability distribution for uncertainty in the <strong>PoD</strong>.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -513,59 +490,27 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>10</td>
-<td>50</td>
-<td>90</td>
+<td>0.05</td>
+<td>0.5</td>
+<td>0.95</td>
 </tr>
 <tr class="even">
-<td>5.2</td>
-<td>10.1</td>
-<td>15.8</td>
+<td>0.07</td>
+<td>1.06</td>
+<td>1.3</td>
 </tr>
 </tbody>
 </table>
-<p>The lower bound is zero. Since the distribution is skewed to the right, the experts set an upper plausible bound. Here we fit a generalised beta distribution to these quantiles using the SHELF R-package.</p>
+<p>The lower bound is zero. The distribution for a BMD is usually skewed to the right, and therefore the experts set an upper plausible bound. Here we fit a distribution to these quantiles using a quantile matching method and draw samples from this distribution.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#fit &lt;- SHELF::fitdist(vals = c(bmdl,bmd,bmdu),probs = c(0.05, 0.5, 0.95), lower = 0, upper= bmdu*1.2)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SHELF<span class="sc">::</span><span class="fu">plotfit</span>(fit,<span class="at">d=</span><span class="st">"beta"</span>,<span class="at">xlab=</span><span class="st">"PoD"</span>,<span class="at">ylab=</span><span class="st">"probability density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>An alternative is to go to the online elicitation app for one distribution <a href="https://jeremy-oakley.shinyapps.io/SHELF-single/">link to SHELF app</a> and find a probability distribution that matches these quantiles. Note that you have to specify the lower and upper bound of the plausible range. You can get them from studying the sample from BMD modelling. You can find the R-code to generate random numbers from the selected probability distribution in the report that is possible to download from SHELF</p>
-</div>
-</div>
-<p>The generalised beta-distribution is generalised in the sense that it is not bounded in the interval 0 to 1. It is defined by relating to the standard beta-distribution as</p>
-<p><span class="math display">\[\frac{PoD}{18.96} \sim beta(2.58, 2.22)\]</span></p>
-<p>We sample from this distribution using this R-code</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sample_PoD <span class="ot">&lt;-</span> <span class="cf">function</span>(niter){</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  fit<span class="sc">$</span>limits<span class="sc">$</span>lower <span class="sc">+</span> (fit<span class="sc">$</span>limits<span class="sc">$</span>upper<span class="sc">-</span>fit<span class="sc">$</span>limits<span class="sc">$</span>lower) <span class="sc">*</span> <span class="fu">rbeta</span>(<span class="at">n =</span> niter, <span class="at">shape1 =</span> fit<span class="sc">$</span>Beta<span class="sc">$</span>shape1, <span class="at">shape2 =</span> fit<span class="sc">$</span>Beta<span class="sc">$</span>shape2)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<!-- # ```{r} -->
-<!-- # library(ggplot2) -->
-<!-- #  -->
-<!-- # pp = ppoints(200) -->
-<!-- # qq = qbeta(pp,3.15,1.92) -->
-<!-- # dd = dbeta(qq,3.15,1.92) -->
-<!-- #  -->
-<!-- # ggplot(data.frame(PoD = qq, density = dd), -->
-<!-- #        aes(x=PoD, y=density)) +  -->
-<!-- #   geom_line() + -->
-<!-- #   ggtitle("Uncertainty in the Point of Departure") -->
-<!-- #  -->
-<!-- # ``` -->
+<!-- ::: callout-tip -->
+<!-- An alternative is to go to the online elicitation app for one distribution [link to SHELF app](https://jeremy-oakley.shinyapps.io/SHELF-single/) and find a probability distribution that matches these quantiles. Note that you have to specify the lower and upper bound of the plausible range. You can get them from studying the sample from BMD modelling. You can find the R-code to generate random numbers from the selected probability distribution in the report that is possible to download from SHELF -->
+<!-- ::: -->
+<!-- We sample from the fitted distribution using this R-code -->
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -582,57 +527,44 @@ Warning
 </section>
 <section id="high-exposure" class="level3">
 <h3 class="anchored" data-anchor-id="high-exposure">High Exposure</h3>
-<p>A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be approximated by using the range of the dietary exposure estimates under the high scenario as bounds of an 80% probability interval. A better option is to use expert knowledge of the probability bounds.</p>
+<p>A probability distribution representing uncertainty in the estimates of High Exposure is informed by a Monte Carlo simulation sample of the 95th percentile of the Cmax in the target population. Here we have the quartiles from such a sample.</p>
 <table class="table">
 <thead>
 <tr class="header">
 <th>min HE</th>
+<th>median HE</th>
 <th>max HE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>P10</td>
-<td>P90</td>
+<td>P5</td>
+<td>P50</td>
+<td>P95</td>
 </tr>
 <tr class="even">
-<td>2.8</td>
-<td>4.5</td>
+<td>0.1</td>
+<td>0.36</td>
+<td>1.34</td>
+</tr>
+<tr class="odd">
+<td>-2.3025851</td>
+<td>-1.0216512</td>
+<td>0.2926696</td>
 </tr>
 </tbody>
 </table>
-<p>One choice could be to use a normal distribution to represent uncertainty in a High Exposure. A normal distribution has two parameters, the mean (<span class="math inline">\(\mu\)</span>) and the standard deviation (<span class="math inline">\(\sigma\)</span>).</p>
-<p><span class="math display">\[HE \sim N(\mu,\sigma)\]</span></p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The normal distributions is not an ideal choice for a non-negative variable. There is no default distribution and it is important that it represents experts uncertainty about a high exposure.</p>
-<p>The choice of probability distribution could be guided by more detailed information, paired averages and P95s from different populations groups.</p>
-</div>
-</div>
-<p>We derive the mean by taking the mid value in the interval:</p>
-<p><span class="math display">\[ \mu = \frac{4.5+2.8}{2}= 3.65\]</span></p>
+<p>One choice could be to use a lognormal distribution to represent uncertainty in a High Exposure. A lognormal distribution has two parameters, the mean (<span class="math inline">\(\mu\)</span>) and the standard deviation (<span class="math inline">\(\sigma\)</span>) on the log scale. Note that quantiles are preserved across monotonic transformations.</p>
+<p><span class="math display">\[logHE \sim N(\mu,\sigma)\]</span></p>
 <p>The standard deviation is specified by considering the formula for a 90% quantile in the normal distributions as a function of the parameters:</p>
-<p><span class="math display">\[ P90 = \mu + 1.28\cdot \sigma\]</span></p>
+<p><span class="math display">\[ P95 = \mu + 1.64\cdot \sigma\]</span></p>
 <p>and rearranging it to be a function of <span class="math inline">\(\sigma\)</span></p>
-<p><span class="math display">\[ \sigma = \frac{P90 - \mu}{1.28} =  \frac{4.5-0.85}{1.28}=0.66\]</span></p>
+<p><span class="math display">\[ \sigma = \frac{P95 - \mu}{1.64} =  \frac{0.2926696--1.0216512}{1.64}=0.8\]</span></p>
 <p>Specification of the parameters and draw of random numbers from the normal distribution.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sample_HE <span class="ot">&lt;-</span> <span class="cf">function</span>(niter){</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> (hel<span class="sc">+</span>heu)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> (heu<span class="sc">-</span>m)<span class="sc">/</span><span class="fu">qnorm</span>(<span class="fl">0.9</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>he <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> niter, <span class="at">mean =</span> m, <span class="at">sd =</span> s)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>he[he<span class="sc">&lt;</span><span class="dv">0</span>] <span class="ot">=</span> <span class="dv">0</span> <span class="co"># truncate</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(he)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 </section>
 <section id="calculated-risk-ratio" class="level3">
@@ -640,23 +572,14 @@ Warning
 <section id="combine-sources-of-uncertainty-by-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="combine-sources-of-uncertainty-by-calculations">Combine sources of uncertainty by calculations</h4>
 <p>Evaluate the combined impact of the characterised uncertainty in PoD and HE on the risk ratio by Monte Carlo simulation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>niter <span class="ot">=</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pod <span class="ot">&lt;-</span> <span class="fu">sample_PoD</span>(niter)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>he <span class="ot">&lt;-</span> <span class="fu">sample_HE</span>(niter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>The distributions for High Exposure and the Point of Departure overlap.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(\frac{HE}{PoD}&lt;1) = 94 \%\]</span></p>
+<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(\frac{HE}{PoD}&lt;1) = 90 \%\]</span></p>
 <p>This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio &lt; 1.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rr <span class="ot">=</span> pod<span class="sc">/</span>he</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rr<span class="sc">&lt;</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 </section>
 <section id="visualisation-of-uncertainty-in-the-risk-ratio" class="level3">
@@ -667,7 +590,7 @@ Warning
 <p>This is the preferred option when no health concern is the more probable outcome.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.</p>
@@ -677,7 +600,7 @@ Warning
 <p>Another way is to visualise the resulting distribution for uncertainty in the risk ratio by outcome that there is a health concern.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>In this visualisation, the red area corresponds to a High Exposure greater than the Point of Departure.</p>
@@ -686,10 +609,22 @@ Warning
 <section id="consider-additional-sources-of-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="consider-additional-sources-of-uncertainty">Consider additional sources of uncertainty</h3>
 <p>As a final step, the experts are invited to adjust this probability upwards or downwards considering <strong>additional sources of uncertainty</strong>, not previously taken into account in the analysis.</p>
-<p>For the purpose of this exercise we assume that the experts subsequently judged that any additional sources of uncertainty were small enough that there was no need to adjust the calculated % probability that the risk ratio is less than 1.</p>
 <p>An additional sources of uncertainty could e.g.&nbsp;be the choice of distributions used in the Monte Carlo simulation and any limitations in the quality of the exposure and toxicity data that are not taken into account in those distributions.</p>
-<p>Here the expert judge that their % certainty for no health concern is 94%.</p>
-<p>If this value is in the region of practical certainty (i.e.&nbsp;&lt;0.85%) the uncertainty characterisation is completed and one can proceed with decision making.</p>
+<p>Experts might judge that any additional sources of uncertainty will have little influence and that there is no need to adjust the calculated % probability that the risk ratio is less than 1.</p>
+<p>If not, experts can choose to consider any additional uncertainties by adjusting the PoD or HE by an uncertainty factor f.&nbsp;This factor can be described as a probability distribution or have a single number. Here the experts argue that the exposure is overly conservative, and can be adjusted down by a factor, i.e.&nbsp;<span class="math inline">\(f = 1/2\)</span>.</p>
+<p>The distributions for High Exposure and the Point of Departure when considering the impact of additional sources of uncertainty overlap.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here the expert judge that their % certainty for no health concern is 98%.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This value is in the region of practical certainty (i.e.&nbsp;&gt;90%) and therefore the uncertainty characterisation is completed and one can proceed with decision making.</p>
 </section>
 </section>
 <section id="conclusions" class="level1">

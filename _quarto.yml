@@ -8,9 +8,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: hazard example.qmd
-        text: Hazard
-      - href: risk example.qmd
+      #- href: hazard example.qmd
+      #  text: Hazard
+      - href: risk example_aug24.qmd
         text: Risk
 #- href: uncertainty_fact.qmd
       #  text: Fact
