@@ -18,6 +18,7 @@ format:
 library(ggplot2)
 library(sn)
 library(SHELF)
+library(paletteer)
 ```
 
 # Introduction
@@ -421,10 +422,16 @@ The distributions for High Exposure and the Point of Departure overlap.
 #| warning: false
 #| message: false
 
-pp1 <- ggplot(data.frame(dose = c(pod,he), quantity = rep(c("Point of Departure", "High Exposure"),each = niter)),aes(x=dose, fill = quantity)) +
+# to define consistent colours
+cols <- paletteer_d("nbapalettes::thunder")
+names(cols) = c("HE","HE*fHE" ,"PoD","PoD*fPoD")
+
+
+pp1 <- ggplot(data.frame(dose = c(pod,he), quantity = rep(c("PoD", "HE"),each = niter)),aes(x=dose, fill = quantity)) +
   geom_density(alpha=0.2) +
-xlim(0,20) +
-scale_x_continuous(trans='log') +
+#scale_fill_paletteer_d("nbapalettes::thunder") +
+scale_fill_manual(values = cols) +
+scale_x_continuous(trans='log10', limits = c(-2,5)) +
   ggtitle("Uncertainty in High Exposure \n and the Point of Departure")
 
 pp1 
@@ -501,10 +508,14 @@ Here the experts argue that the exposure is overly conservative, and can be adju
 
 
 ```{r}
-pp11 <- ggplot(data.frame(dose = c(pod*f_pod,he*f_he), quantity = rep(c("Point of Departure*fPoD", "High Exposure*fHE"),each = niter)),aes(x=dose, fill = quantity)) +
+
+
+df_combo <- data.frame(dose = c(pod,he,pod*f_pod,he*f_he), quantity = rep(c("PoD", "HE","PoD*fPoD", "HE*fHE"),each = niter))
+
+pp11 <- ggplot(df_combo,aes(x=dose, fill = quantity)) +
   geom_density(alpha=0.2) +
-xlim(0,20) +
-scale_x_continuous(trans='log') +
+scale_fill_manual(values=cols) +
+scale_x_continuous(trans='log10', limits = c(-2,5)) +
   ggtitle("Uncertainty in High Exposure*fHE \n and Point of Departure*fPoD")
 
 pp11 
@@ -531,7 +542,7 @@ pp
 
 This value is in the region of practical certainty (i.e. \>`r 100*pc_no`%) and therefore the uncertainty characterisation is completed and one can proceed with decision making.
 
-# Conclusions
+# Comments on the uncertainty framework
 
 Bayesian reasoning combined with Probability bounds analysis can be used for categorical as well as continuous quantities.
 
