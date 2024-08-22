@@ -115,11 +115,14 @@ p_PoD = 100-pr_bmdl*100 # probability for y
 x_nfirst = y_nfirst*th
 ```
 
+
 ```{r}
+# elicit probability
 p_HE <- 100*plnorm(x_nfirst,fit_he$Normal$mean,fit_he$Normal$sd)
-p_HE <- round(p_HE,0)
-p_lost <- (100-p_HE)+(100-p_PoD)
 ```
+
+
+
 
 ## Hazard assessment
 
@@ -170,13 +173,13 @@ The practical certainty is by risk managers set to be `r pc_yes*100`% probabilit
 It can be sufficient to conclude if uncertainty the conclusion is in the range of practical certainty.
 
 | No health concern    | Inconclusive                       | Yes health concern |
-|----------------------|------------------------------------|--------------------|
+|---------------------|---------------------------------|-------------------|
 | \<`r 100*(1-pc_no)`% | `r 100*(1-pc_no)` - `r 100*pc_yes` | \>`r 100*pc_yes`%  |
 
 or
 
 | Health concern        | Inconclusive                       | No health concern |
-|-----------------------|------------------------------------|-------------------|
+|---------------------|---------------------------------|------------------|
 | \<`r 100*(1-pc_yes)`% | `r 100*(1-pc_yes)` - `r 100*pc_no` | \>`r 100*pc_no`%  |
 
 If not, the assessment should be reported as **inconclusive**. The risk managers can then decide to support generation of new studies to **reduce** uncertainty by collecting more data or perform a re-evaluation of the risk assessment with a more **refined** characterisation of uncertainty.
@@ -305,21 +308,6 @@ Practical certainty is obtained if $$100 - P(HE < x) - P(PoD > y) \geq `r 100*pc
 
 Hence, practical certainty is reached with the probability bounds analysis using numbers first.
 
-<!-- Probability bounds analysis (and the rule of "lost probabilities") allows us to calculate that it is at least  -->
-
-<!-- $$ 100 - [(100-`r p_PoD`)+(100-`r p_HE`)]=`r 100-p_lost`\%$$  -->
-
-<!-- probable that the ratio of the highest estimate of High Exposure to the Point of Departure is less than or equal than `r heu`/`r bmdl` = `r round(heu/bmdl,2)` -->
-
-<!-- $$P(\frac{HE}{PoD} < `r round(heu/bmdl,2)`) \geq `r 100-p_lost`\%$$ -->
-
-<!-- | P below            | value                | P above               | -->
-
-<!-- |--------------------|----------------------|-----------------------| -->
-
-<!-- | $\leq `r p_lost`\%$| `r round(heu/bmdl,2)`|$\geq `r 100-p_lost`\%$| -->
-
-<!-- See if a conclusion can be made. If the value `r round(heu/bmdl,2)` is less than `r th` and the probability is above the practical certainty `r pc_no`, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than `r th`).  -->
 
 If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.
 
@@ -445,7 +433,7 @@ pp1
 
 The calculated probability that the risk ratio is below 1 is $$P(\frac{HE}{PoD}<1) = `r round(mean(he/pod<1)*100)` \%$$
 
-This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio \< 1. 
+This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio \< 1.
 
 ```{r}
 #| eval: false
@@ -471,6 +459,7 @@ pp <- ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   xlab("HE/PoD") +
   ylab("density") +
 #scale_x_continuous(trans='log') +
+xlim(0,4) +
   ggtitle("Uncertainty in HE/PoD", subtitle=paste0("P(HE/PoD<1)=",round(mean(he/pod<1)*100),"%"))
 pp
 #ggsave("img/uncertaintyriskratio.png",height = 3)
@@ -491,6 +480,7 @@ ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   xlab("HE/PoD") +
   ylab("density") +
 #scale_x_continuous(trans='log') +
+xlim(0,4) +
   ggtitle("Uncertainty in HE/PoD", subtitle=paste0("P(HE/PoD>1)=",round(mean(he/pod>1)*100),"%"))
 ```
 
@@ -528,7 +518,7 @@ pp11
 #ggsave("img/uncertaintyhepod.png",height = 3)
 ```
 
-Here the expert judge that their % certainty for no health concern is `r round(mean(pod/(he*f)>1)*100)`%.
+Here the expert judge that their % certainty for no health concern is `r round(mean(pod/(he*f)>1)*100)`%. 
 
 ```{r}
 df <- density(he*f/pod, from=0)
@@ -539,6 +529,7 @@ pp <- ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   xlab("HE*f/PoD") +
   ylab("density") +
 #scale_x_continuous(trans='log') +
+xlim(0,4) +
   ggtitle("Uncertainty in HE*f/PoD", subtitle=paste0("P(HE*f/PoD<1)=",round(mean(he*f/pod<1)*100),"%"))
 pp
 #ggsave("img/uncertaintyriskratio.png",height = 3)

@@ -290,8 +290,8 @@ Note
 <table class="table">
 <colgroup>
 <col style="width: 28%">
-<col style="width: 46%">
-<col style="width: 25%">
+<col style="width: 45%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -312,8 +312,8 @@ Note
 <table class="table">
 <colgroup>
 <col style="width: 29%">
-<col style="width: 46%">
-<col style="width: 24%">
+<col style="width: 45%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -414,8 +414,8 @@ Note
 <p>Derive the value on the High Exposure where the risk ratio is at the critical threshold</p>
 <p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
 <p>This value is <span class="math inline">\(x = 1 \cdot y = 0.07\)</span></p>
-<p>Ask the experts to judge their probability that a High Exposure is below 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 2%.</p>
-<p><span class="math display">\[P( HE &lt; x) = 2\%\]</span></p>
+<p>Ask the experts to judge their probability that a High Exposure is below 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 1.8805013%.</p>
+<p><span class="math display">\[P( HE &lt; x) = 1.8805013\%\]</span></p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -426,22 +426,14 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>2%</td>
+<td>1.8805013%</td>
 <td>x</td>
-<td>98%</td>
+<td>98.1194987%</td>
 </tr>
 </tbody>
 </table>
-<p>Practical certainty is obtained if <span class="math display">\[100 - P(HE &lt; x) - P(PoD &gt; y) \geq 90\]</span> In this example, the left hand side is <span class="math inline">\(100-[2+5]=100-2 - 5= 93\)</span></p>
+<p>Practical certainty is obtained if <span class="math display">\[100 - P(HE &lt; x) - P(PoD &gt; y) \geq 90\]</span> In this example, the left hand side is <span class="math inline">\(100-[1.8805013+5]=100-1.8805013 - 5= 93.1194987\)</span></p>
 <p>Hence, practical certainty is reached with the probability bounds analysis using numbers first.</p>
-<!-- Probability bounds analysis (and the rule of "lost probabilities") allows us to calculate that it is at least  -->
-<!-- $$ 100 - [(100-95)+(100-2)]=-3\%$$  -->
-<!-- probable that the ratio of the highest estimate of High Exposure to the Point of Departure is less than or equal than 1.34/0.07 = 19.14 -->
-<!-- $$P(\frac{HE}{PoD} < 19.14) \geq -3\%$$ -->
-<!-- | P below            | value                | P above               | -->
-<!-- |--------------------|----------------------|-----------------------| -->
-<!-- | $\leq 103\%$| 19.14|$\geq -3\%$| -->
-<!-- See if a conclusion can be made. If the value 19.14 is less than 1 and the probability is above the practical certainty 0.9, then result is enough to reach a conclusion whether a High Exposure is below the Point of Departure (i.e. that the MOE is greater than 1).  -->
 <p>If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -578,7 +570,7 @@ Warning
 <p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(\frac{HE}{PoD}&lt;1) = 90 \%\]</span></p>
+<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(\frac{HE}{PoD}&lt;1) = 89 \%\]</span></p>
 <p>This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio &lt; 1.</p>
 </section>
 </section>
