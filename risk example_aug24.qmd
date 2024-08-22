@@ -216,7 +216,7 @@ $\frac{HE}{PoD} = \frac{`r heu`}{`r bmdl`} = `r round(heu/bmdl,1)`$ which is abo
 
 Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors as they will result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.
 
-In our example, the expert agree that their (un)certainty lies in the inconclusive range. Some of them say that they can not make this judgement, which would also leed to an inconclusive assessment.
+In our example, the expert agree that their (un)certainty lies in the inconclusive range. Some of them say that they can not make this judgement, which would also lead to an inconclusive assessment.
 
 Is practical certainty obtained? No.
 
@@ -404,7 +404,7 @@ return(he)
 }
 ```
 
-### Calculated risk ratio
+### Risk evaluation
 
 #### Combine sources of uncertainty by calculations
 
@@ -450,7 +450,7 @@ rr = pod/he
 mean(rr<1)
 ```
 
-#### Visualisation
+### Visualisation
 
 Depending on what is the more probable outcome, there are alternatives to visualise uncertainty in the risk ratio: Framing as no health concern and Framing as a health concern. We recommend to choose the framing that corresponds to the more probable outcome.
 

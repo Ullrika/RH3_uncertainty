@@ -137,7 +137,8 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#point-of-departure" id="toc-point-of-departure" class="nav-link" data-scroll-target="#point-of-departure">Point of Departure</a></li>
   <li><a href="#high-exposure" id="toc-high-exposure" class="nav-link" data-scroll-target="#high-exposure">High Exposure</a></li>
-  <li><a href="#calculated-risk-ratio" id="toc-calculated-risk-ratio" class="nav-link" data-scroll-target="#calculated-risk-ratio">Calculated risk ratio</a></li>
+  <li><a href="#risk-evaluation" id="toc-risk-evaluation" class="nav-link" data-scroll-target="#risk-evaluation">Risk evaluation</a></li>
+  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation">Visualisation</a></li>
   <li><a href="#consider-additional-sources-of-uncertainty" id="toc-consider-additional-sources-of-uncertainty" class="nav-link" data-scroll-target="#consider-additional-sources-of-uncertainty">Consider additional sources of uncertainty</a></li>
   </ul></li>
   <li><a href="#comments-on-the-uncertainty-framework" id="toc-comments-on-the-uncertainty-framework" class="nav-link" data-scroll-target="#comments-on-the-uncertainty-framework">Comments on the uncertainty framework</a></li>
@@ -350,7 +351,7 @@ Note
 <p>This judgement is more easy when the conservative estimate for the Highest Exposure is far below (a conservative value for) the Point of Departure. Here</p>
 <p><span class="math inline">\(\frac{HE}{PoD} = \frac{1.34}{0.07} = 19.1\)</span> which is above the threshold.</p>
 <p>Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors as they will result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.</p>
-<p>In our example, the expert agree that their (un)certainty lies in the inconclusive range. Some of them say that they can not make this judgement, which would also leed to an inconclusive assessment.</p>
+<p>In our example, the expert agree that their (un)certainty lies in the inconclusive range. Some of them say that they can not make this judgement, which would also lead to an inconclusive assessment.</p>
 <p>Is practical certainty obtained? No.</p>
 <p>We proceed by <strong>refining</strong> uncertainty</p>
 </section>
@@ -574,8 +575,8 @@ Warning
 </div>
 </div>
 </section>
-<section id="calculated-risk-ratio" class="level3">
-<h3 class="anchored" data-anchor-id="calculated-risk-ratio">Calculated risk ratio</h3>
+<section id="risk-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="risk-evaluation">Risk evaluation</h3>
 <section id="combine-sources-of-uncertainty-by-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="combine-sources-of-uncertainty-by-calculations">Combine sources of uncertainty by calculations</h4>
 <p>Evaluate the combined impact of the characterised uncertainty in PoD and HE on the risk ratio by Monte Carlo simulation.</p>
@@ -585,11 +586,12 @@ Warning
 <p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(HE&lt;PoD)=P(\frac{HE}{PoD}&lt;1) = 90 \%\]</span></p>
+<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(HE&lt;PoD)=P(\frac{HE}{PoD}&lt;1) = 89 \%\]</span></p>
 <p>This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio &lt; 1.</p>
 </section>
-<section id="visualisation" class="level4">
-<h4 class="anchored" data-anchor-id="visualisation">Visualisation</h4>
+</section>
+<section id="visualisation" class="level3">
+<h3 class="anchored" data-anchor-id="visualisation">Visualisation</h3>
 <p>Depending on what is the more probable outcome, there are alternatives to visualise uncertainty in the risk ratio: Framing as no health concern and Framing as a health concern. We recommend to choose the framing that corresponds to the more probable outcome.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -598,14 +600,13 @@ Warning
 </div>
 <p>In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.</p>
 <p>Another way is to visualise the resulting distribution for uncertainty in the risk ratio by outcome that there is a health concern.</p>
-<p>The calculated probability that the risk ratio is above 1 is <span class="math display">\[P(HE&gt;PoD)=P(\frac{HE}{PoD}&gt;1) = 10 \%\]</span></p>
+<p>The calculated probability that the risk ratio is above 1 is <span class="math display">\[P(HE&gt;PoD)=P(\frac{HE}{PoD}&gt;1) = 11 \%\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>In this visualisation, the red area corresponds to a High Exposure greater than the Point of Departure.</p>
-</section>
 </section>
 <section id="consider-additional-sources-of-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="consider-additional-sources-of-uncertainty">Consider additional sources of uncertainty</h3>
