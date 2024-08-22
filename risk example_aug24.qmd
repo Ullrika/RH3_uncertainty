@@ -83,6 +83,10 @@ heu = round(qlnorm(pr_heu,(log((bmdl)+log(bmd))/2),0.8),2)
 
 ## risk threshold
 th = 1
+
+## uncertainty factors
+f_he = 1/2
+f_pod = 1
 ```
 
 ```{r}
@@ -99,29 +103,28 @@ fit_he = SHELF::fitdist(vals = log(c(hel,hem,heu)),probs = c(pr_hel, pr_hem, pr_
 ```
 
 ```{r}
-# probability first (is done with respect to what we believe to be the more probable option)
-#1-pc_no
+# probability first (is done with respect to what we believe to be the more probable option, which is NO)
+#1-pc_no = 10% - divide both to 5 and 5
 p_lost_PoD = 5 #calculated
 y_pfirst =   bmdl#fit_pod$limits$lower + (fit_pod$limits$upper-fit_pod$limits$lower) * rbeta(n = niter, shape1 = fit_pod$Beta$shape1, shape2 = fit_pod $Beta$shape2) # elicited y given prob
-p_lost_HE = 100-100*pc_no-p_lost_PoD # calculated
+p_lost_HE = 100-100*pc_no-p_lost_PoD # calculated to be 
 ## PROVIDE INPUT
 x_pfirst = round(qlnorm(1-p_lost_HE/100,fit_he$Normal$mean,fit_he$Normal$sd),2) # elicited Pr(HE>x)=p_lost_HE
 ```
 
+
 ```{r}
 # numbers first
 y_nfirst = bmdl
-p_PoD = 100-pr_bmdl*100 # probability for y 
+p_PoD = pr_bmdl*100 # probability for Pr(PoD>y) 
 x_nfirst = y_nfirst*th
 ```
 
 
 ```{r}
 # elicit probability
-p_HE <- 100*plnorm(x_nfirst,fit_he$Normal$mean,fit_he$Normal$sd)
+p_HE = 100-round(100*plnorm(x_nfirst,fit_he$Normal$mean,fit_he$Normal$sd),1) #Pr(HE>x)
 ```
-
-
 
 
 ## Hazard assessment
@@ -208,7 +211,7 @@ This can be done by reaching a consensus judgement, following procedures for exp
 
 This judgement is more easy when the conservative estimate for the Highest Exposure is far below (a conservative value for) the Point of Departure. Here
 
-$\frac{HE}{PoD} = \frac{`r heu`}{`r bmdl`} = `r heu/bmdl`$ which is above the threshold.
+$\frac{HE}{PoD} = \frac{`r heu`}{`r bmdl`} = `r round(heu/bmdl,1)`$ which is above the threshold.
 
 Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors as they will result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.
 
@@ -244,23 +247,17 @@ $$100\% - `r 100*pc_no`\% = `r 100-100*pc_no`\%$$
 
 Divide the resulting probability into two parts, one for the hazard, here $`r p_lost_PoD`\%$, and one for the exposure, what remains $100-`r 100*pc_no` - `r p_lost_PoD` = `r p_lost_HE`\%$.
 
-Subtract the lost probability for the hazard from 100 to set the probability associated with a conservative estimate of the Point of Departure.
-
-$$100\% - `r p_lost_PoD`\% = `r 100-p_lost_PoD`\%$$
 
 Elicit the conservative estimate of the Point of Departure from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile $y$
 
-$$P(PoD > y) = `r 100-p_lost_PoD`\%$$
+$$P(PoD < y) = `r p_lost_PoD`\%$$
 
-Here the expert set $y = `r y_pfirst`$.
+Here the expert set $y = `r y_pfirst`$, which is the BMDL. Experts can adjust this downward or upward considering additional sources of uncertainty.
 
-Subtract the lost probability for exposure from 100, to set the probability associated with the conservative estimate of a High Exposure.
 
-$$100\% - `r p_lost_HE`\% = `r 100-p_lost_HE`\%$$
+Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment, alternatively any additional sources of uncertainty not accounted for in a model based conservative estimate). Define the conservative estimate as the quantile $x$
 
-Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment). Define the conservative estimate as the quantile $x$
-
-$$P(HE < x) = `r 100-p_lost_HE`\%$$
+$$P(HE > x) = `r p_lost_HE`\%$$
 
 In this example, the expert elicit the value $x = `r x_pfirst`$.
 
@@ -268,9 +265,9 @@ Divide the conservative estimate for the exposure with the conservative estimate
 
 Practical certainty is obtained if $\frac{x}{y} < 1$.
 
-In this example, this ratio is $\frac{`r x_pfirst`}{`r y_pfirst`} = `r round(x_pfirst/y_pfirst,2)`$
+In this example, this ratio is $\frac{`r x_pfirst`}{`r y_pfirst`} = `r round(x_pfirst/y_pfirst,1)`$
 
-Practical certainty is not reached with the probability bounds analaysis using probabilities first, proceed with a refined approach.
+Practical certainty is not reached with the probability bounds analysis using probabilities first, proceed with a refined approach.
 
 <!-- Hence, practical certainty is reached. Proceed to the decision. -->
 
@@ -280,13 +277,13 @@ Use a conservative estimate for PoD as starting point and use experts judgement 
 
 Ask experts to judge their probability expressing their uncertainty about a conservative estimate of hazard, e.g. the BMDL,
 
-The experts judge that they are `r p_PoD`% certain that the Point of Departure is above `r y_nfirst` μg $X$/kg bw per day.
+The experts judge that they are `r p_PoD`% certain that the Point of Departure is below `r y_nfirst` μg $X$/kg bw per day.
 
-$$P(PoD > y) = `r p_PoD`\%$$ That implies that the conservative estimate for the hazard is $y = `r y_nfirst`$
+$$P(PoD < y) = `r p_PoD`\%$$ That implies that the conservative estimate for the hazard is $y = `r y_nfirst`$, which is the BMDL. Experts can adjust this downward or upward considering additional sources of uncertainty.
 
-| P below        | value | P above    |
-|----------------|-------|------------|
-| `r 100-p_PoD`% | y     | `r p_PoD`% |
+| P below        | value | P above        |
+|----------------|-------|----------------|
+| `r p_PoD`%     | y     | `r 100-p_PoD`% |
 
 <!-- In some situations, the PoD is the BMDL and then it is difficult to talk about uncertainty about the PoD. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on PoD/UF instead of PoD. -->
 
@@ -296,23 +293,27 @@ $$\frac{x}{y} = `r th`$$
 
 This value is $x = `r th` \cdot y = `r th*y_nfirst`$
 
-Ask the experts to judge their probability that a High Exposure is below `r th*y_nfirst` μg $X$/kg bw per day. The experts' elicited probability is `r p_HE`%.
+Ask the experts to judge their probability that a High Exposure is above `r th*y_nfirst` μg $X$/kg bw per day. The experts' elicited probability is `r p_HE`%.
 
-$$P( HE < x) = `r p_HE`\%$$
+$$P( HE > x) = `r p_HE`\%$$
 
-| P below   | value | P above       |
-|-----------|-------|---------------|
-| `r p_HE`% | x     | `r 100-p_HE`% |
+| P below       | value | P above       |
+|---------------|-------|---------------|
+| `r 100-p_HE`% | x     | `r p_HE`%     |
 
-Practical certainty is obtained if $$100 - P(HE < x) - P(PoD > y) \geq `r 100*pc_no`$$ In this example, the left hand side is $100-[`r p_HE`+`r 100-p_PoD`]=100-`r p_HE` - `r 100-p_PoD`= `r 100-(p_HE + 100-p_PoD)`$
+Practical certainty is obtained if $$100 - P(HE > x) - P(PoD < y) \geq `r 100*pc_no`$$ In this example, the left hand side is $100-[`r p_HE`+`r p_PoD`]=100-`r p_HE` - `r p_PoD`= `r 100-(p_HE + p_PoD)`$. 
 
-Hence, practical certainty is reached with the probability bounds analysis using numbers first.
+::: callout-note
+Note that probabilities cannot be negative. Here, the negative value is a result from using a simplified probabilistic where probabilities are added up. 
+:::
+
+Hence, practical certainty is not reached with the probability bounds analysis using numbers first.
 
 
 If it is not possible to conclude with high enough certainty, we move on to a refined option for uncertainty analysis with probability distributions or consider reducing uncertainty by collecting more data.
 
 ::: callout-note
-A humble note from Ullrika and Dawei: The numbers and probabilities are chosen for demonstration. There might be inconsistencies in the judgements between the "probability-first" and "numbers-first" approaches in this example. In reality, only one of the options are chosen.
+The numbers and probabilities are chosen for demonstration. There might be inconsistencies in the judgements between the "probability-first" and "numbers-first" approaches in this example. In reality, only one of the options are chosen.
 :::
 
 # Tier 3. Refined option with probability distributions
@@ -333,10 +334,10 @@ A probability distribution representing uncertainty in the **Point of Departure*
 
 We (the assessors) let the BMDL, the BMD, and the BMDU define a lower percentile (`r pr_bmdl`), the median (`r pr_bmd`), and a higher percentile (`r pr_bmdu`) of the probability distribution for uncertainty in the **PoD**.
 
-| BMDL        | BMD        | BMDU        |
-|-------------|------------|-------------|
-| `r pr_bmdl` | `r pr_bmd` | `r pr_bmdu` |
-| `r bmdl`    | `r bmd`    | `r bmdu`    |
+|      | BMDL            | BMD            | BMDU            |
+|------|-----------------|----------------|-----------------|
+| P    | `r 100*pr_bmdl` | `r 100*pr_bmd` | `r 100*pr_bmdu` |
+| Value| `r bmdl`        | `r bmd`        | `r bmdu`        |
 
 The lower bound is zero. The distribution for a BMD is usually skewed to the right, and therefore the experts set an upper plausible bound. Here we fit a distribution to these quantiles using a quantile matching method and draw samples from this distribution.
 
@@ -366,25 +367,25 @@ This approach ignores additional sources of uncertainty than those considered in
 
 ### High Exposure
 
-A probability distribution representing uncertainty in the estimates of High Exposure is informed by a Monte Carlo simulation sample of the 95th percentile of the Cmax in the target population. Here we have the quartiles from such a sample.
+A probability distribution representing uncertainty in the estimates of High Exposure is informed by a Monte Carlo simulation sample of the 95th percentile of the Cmax in the target population. Here we have at the quartiles from such a sample. Since we have a sample, we can have more quantiles.
 
-| min HE       | median HE    | max HE       |
-|--------------|--------------|--------------|
-| P5           | P50          | P95          |
-| `r hel`      | `r hem`      | `r heu`      |
-| `r log(hel)` | `r log(hem)` | `r log(heu)` |
+|         | min HE       | median HE    | max HE       |
+|---------|--------------|--------------|--------------|
+|P        |`r 100*pr_hel`|`r 100*pr_hem`|`r 100*pr_heu`|
+|value    | `r hel`      | `r hem`      | `r heu`      |
+|log value| `r log(hel)` | `r log(hem)` | `r log(heu)` |
 
 One choice could be to use a lognormal distribution to represent uncertainty in a High Exposure. A lognormal distribution has two parameters, the mean ($\mu$) and the standard deviation ($\sigma$) on the log scale. Note that quantiles are preserved across monotonic transformations.
 
 $$logHE \sim N(\mu,\sigma)$$
 
-The standard deviation is specified by considering the formula for a 90% quantile in the normal distributions as a function of the parameters:
+Here is a simple way to do it. One can also fit a distribution by quantile matching. The standard deviation is specified by considering the formula for a 90% quantile in the normal distributions as a function of the parameters:
 
 $$ P95 = \mu + `r round(qnorm(0.95),2)`\cdot \sigma$$
 
 and rearranging it to be a function of $\sigma$
 
-$$ \sigma = \frac{P95 - \mu}{`r round(qnorm(0.95),2)`} =  \frac{`r log(heu)`-`r log(hem)`}{`r round(qnorm(0.95),2)`}=`r round((log(heu) - log(hem))/qnorm(0.95),2)`$$
+$$ \sigma = \frac{P95 - \mu}{`r round(qnorm(0.95),2)`} =  \frac{`r round(log(heu),2)`-`r round(log(hem),2)`}{`r round(qnorm(0.95),2)`}=`r round((log(heu) - log(hem))/qnorm(0.95),2)`$$
 
 Specification of the parameters and draw of random numbers from the normal distribution.
 
@@ -431,7 +432,7 @@ pp1
 #ggsave("img/uncertaintyhepod.png",height = 3)
 ```
 
-The calculated probability that the risk ratio is below 1 is $$P(\frac{HE}{PoD}<1) = `r round(mean(he/pod<1)*100)` \%$$
+The calculated probability that the risk ratio is below 1 is $$P(HE<PoD)=P(\frac{HE}{PoD}<1) = `r round(mean(he/pod<1)*100)` \%$$
 
 This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio \< 1.
 
@@ -442,13 +443,11 @@ rr = pod/he
 mean(rr<1)
 ```
 
-### Visualisation of uncertainty in the risk ratio
+#### Visualisation
 
-Depending on what is the more probable outcome, there are alternatives to visualise uncertainty in the risk ratio.
+Depending on what is the more probable outcome, there are alternatives to visualise uncertainty in the risk ratio: Framing as no health concern and Framing as a health concern. We recommend to choose the framing that corresponds to the more probable outcome.
 
-#### Framing as no health concern
 
-This is the preferred option when no health concern is the more probable outcome.
 
 ```{r}
 df <- density(he/pod, from=0)
@@ -467,9 +466,9 @@ pp
 
 In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.
 
-#### Framing as a health concern
-
 Another way is to visualise the resulting distribution for uncertainty in the risk ratio by outcome that there is a health concern.
+
+The calculated probability that the risk ratio is above 1 is $$P(HE>PoD)=P(\frac{HE}{PoD}>1) = `r round(mean(he/pod>1)*100)` \%$$
 
 ```{r}
 df <- density(he/pod, from=0)
@@ -492,45 +491,40 @@ As a final step, the experts are invited to adjust this probability upwards or d
 
 An additional sources of uncertainty could e.g. be the choice of distributions used in the Monte Carlo simulation and any limitations in the quality of the exposure and toxicity data that are not taken into account in those distributions.
 
-Experts might judge that any additional sources of uncertainty will have little influence and that there is no need to adjust the calculated % probability that the risk ratio is less than 1.
+Experts might judge that any additional sources of uncertainty will have little influence and that there is no need to adjust the calculated % probability that the risk ratio is less (or greater) than 1.
 
-If not, experts can choose to consider any additional uncertainties by adjusting the PoD or HE by an uncertainty factor f. This factor can be described as a probability distribution or have a single number. Here the experts argue that the exposure is overly conservative, and can be adjusted down by a factor, i.e. $f = 1/2$.
+If not, experts can choose to consider any additional uncertainties by adjusting the PoD or HE by an uncertainty factor. This factor can be described as a probability distribution or have a single number. It could be factor for exposure and a factor for hazard.
 
-```{r}
+$$P(HE\cdot f_{HE} < PoD \cdot f_{PoD})$$ 
 
-niter = 10^4
-pod <- sample_PoD(niter)
-he <- sample_HE(niter)
-f <- 1/2
-```
+Here the experts argue that the exposure is overly conservative, and can be adjusted down by a factor, i.e. $f_{HE} = `r f_he`$. They also reason that there is no impact from additional sources of uncertainty on the Point of Departure $f_{PoD} = `r f_pod`$  
 
-The distributions for High Exposure and the Point of Departure when considering the impact of additional sources of uncertainty overlap.
 
 ```{r}
-pp11 <- ggplot(data.frame(dose = c(pod,he*f), quantity = rep(c("Point of Departure", "High Exposure/f"),each = niter)),aes(x=dose, fill = quantity)) +
+pp11 <- ggplot(data.frame(dose = c(pod*f_pod,he*f_he), quantity = rep(c("Point of Departure*fPoD", "High Exposure*fHE"),each = niter)),aes(x=dose, fill = quantity)) +
   geom_density(alpha=0.2) +
 xlim(0,20) +
 scale_x_continuous(trans='log') +
-  ggtitle("Uncertainty in High Exposure*f \n and the Point of Departure")
+  ggtitle("Uncertainty in High Exposure*fHE \n and Point of Departure*fPoD")
 
 pp11 
 
 #ggsave("img/uncertaintyhepod.png",height = 3)
 ```
 
-Here the expert judge that their % certainty for no health concern is `r round(mean(pod/(he*f)>1)*100)`%. 
+Here the expert judge that their % certainty for no health concern is `r round(mean((pod*f_pod)>(he*f_he))*100)`%. 
 
 ```{r}
-df <- density(he*f/pod, from=0)
+df <- density(he*f_he/pod/f_pod, from=0)
 df <- data.frame(x=df$x,y=df$y)
 pp <- ggplot(data.frame(x=df$x,y=df$y),aes(x=x, y=y)) +
   geom_line() +
   geom_ribbon(data=subset(df,x<1),  aes(x=x,ymax=y),ymin=0,fill="red", alpha=0.5) +
-  xlab("HE*f/PoD") +
+  xlab("HE*fHE/(PoD*fpod)") +
   ylab("density") +
 #scale_x_continuous(trans='log') +
 xlim(0,4) +
-  ggtitle("Uncertainty in HE*f/PoD", subtitle=paste0("P(HE*f/PoD<1)=",round(mean(he*f/pod<1)*100),"%"))
+  ggtitle("Uncertainty in HE*fHE/(PoD*fPoD)", subtitle=paste0("P(HE*fHE/(PoD*fPoD)<1)=",round(mean(he*f_he/(pod*f_pod)<1)*100),"%"))
 pp
 #ggsave("img/uncertaintyriskratio.png",height = 3)
 ```
@@ -547,6 +541,4 @@ The basic option requires one expert judgement.
 
 The probability bound analysis option requires two expert judgements.
 
-The precise probabilistic option can use information from the probability bound analysis and complement it with at least two more expert judgements.
-
-The probability distributions representing uncertainty in PoD and a High Exposure can be more or less derived from quantitative modelling in which uncertainty within the model is characterised.
+The precise probabilistic option can use information from the probability bound analysis and complement it with at least two more expert judgements. Usually more quantiles are provided from modelling, which in turn is based in multiple expert judgements (for the parameter uncertainty). The probability distributions representing uncertainty in PoD and a High Exposure can be more or less derived from quantitative modelling in which uncertainty within the model is characterised, but consideration of additional sources of uncertainty e.g. as factors are always needed.
