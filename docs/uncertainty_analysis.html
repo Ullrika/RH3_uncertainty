@@ -447,8 +447,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.23</span> <span class="sc">*</span> <span class="fu">rbeta</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">shape1 =</span> <span class="fl">3.15</span>, <span class="at">shape2 =</span> <span class="fl">1.92</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.2067521 0.1487257 0.1803260 0.1418194 0.1580965 0.1172920 0.1512975
- [8] 0.1508633 0.1487519 0.1414083</code></pre>
+<pre><code> [1] 0.0807124 0.1585632 0.1978072 0.1338886 0.1073433 0.1449463 0.2020038
+ [8] 0.1657097 0.1096997 0.1536997</code></pre>
 </div>
 </div>
 <p>This beta-distribution is defined as</p>
@@ -521,7 +521,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="uncertainty_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The calculated probability that the MOE is above 1 is 31 %.</p>
+<p>The calculated probability that the MOE is above 1 is 30 %.</p>
 <ol start="8" class="example" type="1">
 <li>Calculate the proportion of random samples in your Monte Carlo simulation that corresponds to a MOE &gt; 1.</li>
 </ol>
@@ -565,7 +565,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="uncertainty-in-the-conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="uncertainty-in-the-conclusion">Uncertainty in the conclusion</h2>
-<p>In my analysis, the attempts to arrive at a high certainty that the MOE is acceptable (i.e.&nbsp;above 1) has failed. This is because the level of certainty for the outcome of interest is 31% which is not in the region of practical certainty (i.e.&nbsp;&lt;10% or &gt;90%).</p>
+<p>In my analysis, the attempts to arrive at a high certainty that the MOE is acceptable (i.e.&nbsp;above 1) has failed. This is because the level of certainty for the outcome of interest is 30% which is not in the region of practical certainty (i.e.&nbsp;&lt;10% or &gt;90%).</p>
 <table class="table">
 <thead>
 <tr class="header">

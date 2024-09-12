@@ -8,7 +8,7 @@
 
 <meta name="author" content="Ullrika Sahlin and Dawei Tang">
 
-<title>RH3_uncertainty - Tiered approaches to characterise uncertainty in NGRA exemplified with a risk assessment</title>
+<title>RH3_uncertainty - The (un)certainty calculator</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -150,8 +150,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tiered approaches to characterise uncertainty in NGRA exemplified with a risk assessment</h1>
-<p class="subtitle lead">RiskHunt3R meeting Aug 2024</p>
+<h1 class="title">The (un)certainty calculator</h1>
+<p class="subtitle lead">Demonstration of a tiered approach to refine the characterisation of uncertainty in NGRA exemplified with a risk assessment</p>
 </div>
 
 
@@ -214,6 +214,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="assessment" class="level1">
 <h1>Assessment</h1>
 <p>Consider a human health risk assessment of chemical <span class="math inline">\(X\)</span>.</p>
+<div class="{callout-warning}">
+<p>This page is under construction. We are currently working on making a user interface where you can enter your own values on conservative estimates or quantiles representing yours or the experts uncertainty about the quantities.</p>
+</div>
 <section id="hazard-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="hazard-assessment">Hazard assessment</h2>
 <p>The quantity of interest for the hazard assessment is the Point of Departure, <strong>PoD</strong>.</p>
@@ -289,8 +292,8 @@ Note
 <p>It can be sufficient to conclude if uncertainty the conclusion is in the range of practical certainty.</p>
 <table class="table">
 <colgroup>
-<col style="width: 28%">
-<col style="width: 45%">
+<col style="width: 29%">
+<col style="width: 44%">
 <col style="width: 26%">
 </colgroup>
 <thead>
@@ -311,9 +314,9 @@ Note
 <p>or</p>
 <table class="table">
 <colgroup>
-<col style="width: 29%">
-<col style="width: 45%">
-<col style="width: 25%">
+<col style="width: 30%">
+<col style="width: 43%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -586,7 +589,7 @@ Warning
 <p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(HE&lt;PoD)=P(\frac{HE}{PoD}&lt;1) = 89 \%\]</span></p>
+<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(HE&lt;PoD)=P(\frac{HE}{PoD}&lt;1) = 90 \%\]</span></p>
 <p>This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio &lt; 1.</p>
 </section>
 </section>
@@ -600,7 +603,7 @@ Warning
 </div>
 <p>In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.</p>
 <p>Another way is to visualise the resulting distribution for uncertainty in the risk ratio by outcome that there is a health concern.</p>
-<p>The calculated probability that the risk ratio is above 1 is <span class="math display">\[P(HE&gt;PoD)=P(\frac{HE}{PoD}&gt;1) = 11 \%\]</span></p>
+<p>The calculated probability that the risk ratio is above 1 is <span class="math display">\[P(HE&gt;PoD)=P(\frac{HE}{PoD}&gt;1) = 10 \%\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
