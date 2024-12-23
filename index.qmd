@@ -2,11 +2,11 @@
 title: "Uncertainty characteriation framework"
 ---
 
-We use this page to share demonstrations of the uncertainty characterisation framework 
+We use this page to share demonstrations of the uncertainty characterisation framework
 
 This is an example for a meeting on August 22, 2024
 
-[Tiered approaches to refine uncertainty in a risk assessment](risk%20example_aug24.qmd) 
+[Tiered approaches to refine uncertainty in a risk assessment](risk_example_aug24.qmd)
 
 <!-- Examples for the poster at Egmond February 2024 -->
 

@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ullrika Sahlin and Dawei Tang">
 
-<title>RH3_uncertainty - Tiered approaches to characterise uncertainty in NGRA exemplified with a risk assessment</title>
+<title>Tiered approaches to characterise uncertainty in NGRA exemplified with a risk assessment – RH3_uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -80,7 +80,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -89,14 +95,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -105,31 +139,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">RH3_uncertainty</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./risk example_aug24.html" rel="" target="">
- <span class="menu-text">Risk</span></a>
+    <a class="nav-link" href="./risk example_aug24.qmd"> 
+<span class="menu-text">Risk</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
           </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -204,7 +238,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
@@ -258,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The quantity of interest for the hazard assessment is the Point of Departure, <strong>PoD</strong>.</p>
 <p>As an example, a PoD of 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.</p>
 <p>Model Averaged BMD model</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>BMDL</th>
@@ -305,17 +341,17 @@ Note
 <section id="sources-of-uncertainty" class="level2">
 <h2 class="anchored" data-anchor-id="sources-of-uncertainty">Sources of uncertainty</h2>
 <p>The first step in an uncertainty analysis is to identify sources of uncertainty related to inputs and methods.</p>
-<p>Sources of uncertainty can be summarised as tables with explanations and indications on their influence on the overall uncertainty (qualitative expressions).</p>
+<p>Sources of uncertainty can be summarised as tables with explanations and (but this is optional) indications on their influence on the overall uncertainty (using qualitative expressions such as — or ++).</p>
 </section>
 </section>
 <section id="practical-certainty" class="level1">
 <h1>Practical certainty</h1>
 <p>The practical certainty is by risk managers set to be 80% probability to conclude that compound <span class="math inline">\(X\)</span> is a health concern and 85% probability to conclude that compound <span class="math inline">\(X\)</span> is not a health concern. The assessment is <em>inconclusive</em> for any uncertainty in between the limits.</p>
 <p>It can be sufficient to conclude if uncertainty the conclusion is in the range of practical certainty.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
-<col style="width: 28%">
-<col style="width: 45%">
+<col style="width: 29%">
+<col style="width: 44%">
 <col style="width: 26%">
 </colgroup>
 <thead>
@@ -334,7 +370,7 @@ Note
 </tbody>
 </table>
 <p>or</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 29%">
 <col style="width: 45%">
@@ -373,9 +409,9 @@ Note
 <h1>Tier 1. Basic option</h1>
 <p>The basic option is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that <span class="math inline">\(\frac{HE}{PoD} &lt; 1\)</span>, considering all evidence and all identified (non-standard or standard) sources of uncertainty.</p>
 <p>This can be done by reaching a consensus judgement, following procedures for expert knowledge elicitation (using behavioural aggregation to allow for discussions). This judgement requires expertise on both toxicity and exposure assessment.</p>
-<p>This judgement is more easy when the conservative estimate for the Highest Exposure (here 4.5) is far below (a conservative value for) the Point of Departure (here 5.2).</p>
-<p>Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors as they will result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.</p>
-<p>In our example, the expert agree that their uncertainty lies in the inconclusive range. Some of them even said that they could not make this judgement, which would also leed to an inconclusive assessment.</p>
+<p>This judgement is relatively easy when the conservative estimate for the Highest Exposure (here 4.5) is far below (a conservative value for) the Point of Departure (here 5.2).</p>
+<p>Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors to emsure that they result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.</p>
+<p>In our hypothetical example, the expert agree that their uncertainty lies in the inconclusive range. Some of them even said that they could not make this judgement, which would also lead to an inconclusive assessment.</p>
 <p>Is practical certainty obtained? No.</p>
 <p>We proceed by <strong>refining</strong> uncertainty</p>
 </section>
@@ -417,7 +453,7 @@ Note
 <p>Ask experts to judge their probability expressing their uncertainty about a conservative estimate of hazard, e.g.&nbsp;the BMDL,</p>
 <p>The experts judge that they are 90% certain that the Point of Departure is above 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day.</p>
 <p><span class="math display">\[P(PoD &gt; y) = 90\%\]</span> That implies that the conservative estimate for the hazard is <span class="math inline">\(y = 5.2\)</span></p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>P below</th>
@@ -439,7 +475,7 @@ Note
 <p>This value is <span class="math inline">\(x = 1 \cdot y = 5.2\)</span></p>
 <p>Ask the experts to judge their probability that a High Exposure is below 5.2 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 90%.</p>
 <p><span class="math display">\[P( HE &lt; x) = 90\%\]</span></p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>P below</th>
@@ -476,7 +512,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A humble note from Ullrika and Dawei: The numbers and probabilities are chosen for demonstration. There are inconsistencies in the judgements between probability and numbers first in this example. In reality, only one of the options are chosen. Due to this inconsistency, the next tier will not be consistent with this one.</p>
+<p>A humble note from Ullrika and Dawei: The numbers and probabilities are chosen for demonstration. There are inconsistencies in the judgements between probability and numbers first in this example. In reality, only one of the options are chosen. Due to this inconsistency, the next tier will not be consistent with previous ones.</p>
 </div>
 </div>
 </section>
@@ -501,9 +537,22 @@ Note
 </div>
 <section id="point-of-departure" class="level3">
 <h3 class="anchored" data-anchor-id="point-of-departure">Point of Departure</h3>
-<p>A probability distribution representing uncertainty in the <strong>Point of Departure</strong> can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling. There are plenty of BMD software available to do this.</p>
+<p>A probability distribution representing uncertainty in the <strong>Point of Departure</strong> can be taken from the BMD uncertainty distribution for the most sensititive endpoint generated by bootstrapping or Bayesian modelling. There are plenty of BMD software available to do this.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the estimate is coming from the most sensitive endpoint for which there is enough data to perform a reliable BMD modelling. The utlimate goal of uncertainty analysis is to consider the combined impact of all sources of uncertainty, it includes taking into account thoese endpoints where there is no BMD modelling. This can be done in the last step in the assessment of overall uncertainty.</p>
+</div>
+</div>
 <p>We (the assessors) let the BMDL, the BMD, and the BMDU define a lower percentile (10), the median (50), and a higher percentile (90) of the probability distribution for uncertainty in the <strong>PoD</strong>.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>BMDL</th>
@@ -524,12 +573,17 @@ Note
 </tr>
 </tbody>
 </table>
-<p>The lower bound is zero. Since the distribution is skewed to the right, the experts set an upper plausible bound. Here we fit a generalised beta distribution to these quantiles using the SHELF R-package.</p>
+<p>The lower bound for the BMD is zero. Since the distribution is skewed to the right, the experts set an upper plausible bound. Here we fit a generalised beta distribution to these quantiles using the SHELF R-package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#fit &lt;- SHELF::fitdist(vals = c(bmdl,bmd,bmdu),probs = c(0.05, 0.5, 0.95), lower = 0, upper= bmdu*1.2)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SHELF<span class="sc">::</span><span class="fu">plotfit</span>(fit,<span class="at">d=</span><span class="st">"beta"</span>,<span class="at">xlab=</span><span class="st">"PoD"</span>,<span class="at">ylab=</span><span class="st">"probability density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this distribution was fitted earlier in the code</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>SHELF<span class="sc">::</span><span class="fu">plotfit</span>(fit,<span class="at">d=</span><span class="st">"beta"</span>,<span class="at">xlab=</span><span class="st">"PoD"</span>,<span class="at">ylab=</span><span class="st">"probability density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -576,14 +630,14 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This approach ignores additional sources of uncertainty than those considered in the model, hence we need to draft how to consider those as well. e.g.&nbsp;by adjusting the specification of the quantiles.</p>
+<p>This approach ignores additional sources of uncertainty than those considered in the model, hence we need to consider those as well. e.g.&nbsp;by adjusting the specification of the quantiles.</p>
 </div>
 </div>
 </section>
 <section id="high-exposure" class="level3">
 <h3 class="anchored" data-anchor-id="high-exposure">High Exposure</h3>
 <p>A probability distribution representing uncertainty in the estimates of High Exposure over different surveys can be approximated by using the range of the dietary exposure estimates under the high scenario as bounds of an 80% probability interval. A better option is to use expert knowledge of the probability bounds.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>min HE</th>
@@ -648,7 +702,11 @@ Warning
 <p>The distributions for High Exposure and the Point of Departure overlap.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(\frac{HE}{PoD}&lt;1) = 94 \%\]</span></p>
@@ -667,7 +725,11 @@ Warning
 <p>This is the preferred option when no health concern is the more probable outcome.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.</p>
@@ -677,7 +739,11 @@ Warning
 <p>Another way is to visualise the resulting distribution for uncertainty in the risk ratio by outcome that there is a health concern.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>In this visualisation, the red area corresponds to a High Exposure greater than the Point of Departure.</p>
@@ -700,6 +766,7 @@ Warning
 <p>The probability bound analysis option requires two expert judgements.</p>
 <p>The precise probabilistic option can use information from the probability bound analysis and complement it with at least two more expert judgements.</p>
 <p>The probability distributions representing uncertainty in PoD and a High Exposure can be more or less derived from quantitative modelling in which uncertainty within the model is characterised.</p>
+<p>The final step is always a judgement made by experts of the influence of any additional sources of uncertainty.</p>
 
 
 </section>
@@ -740,18 +807,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -783,11 +839,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -797,8 +892,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -810,7 +914,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -854,6 +1081,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -879,6 +1107,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -939,6 +1193,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

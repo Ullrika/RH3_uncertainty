@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ullrika Sahlin and Dawei Tang">
 
-<title>RH3_uncertainty - The (un)certainty calculator</title>
+<title>The (un)certainty calculator – RH3_uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -46,7 +46,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -55,14 +61,42 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -71,31 +105,31 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">RH3_uncertainty</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./risk example_aug24.html" rel="" target="" aria-current="page">
- <span class="menu-text">Risk</span></a>
+    <a class="nav-link" href="./risk example_aug24.qmd"> 
+<span class="menu-text">Risk</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
           </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -135,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#tier-3.-refined-option-with-probability-distributions" id="toc-tier-3.-refined-option-with-probability-distributions" class="nav-link" data-scroll-target="#tier-3.-refined-option-with-probability-distributions">Tier 3. Refined option with probability distributions</a>
   <ul class="collapse">
-  <li><a href="#point-of-departure" id="toc-point-of-departure" class="nav-link" data-scroll-target="#point-of-departure">Point of Departure</a></li>
+  <li><a href="#human-dose" id="toc-human-dose" class="nav-link" data-scroll-target="#human-dose">Human Dose</a></li>
   <li><a href="#high-exposure" id="toc-high-exposure" class="nav-link" data-scroll-target="#high-exposure">High Exposure</a></li>
   <li><a href="#risk-evaluation" id="toc-risk-evaluation" class="nav-link" data-scroll-target="#risk-evaluation">Risk evaluation</a></li>
   <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation">Visualisation</a></li>
@@ -170,7 +204,9 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
+
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
@@ -214,15 +250,46 @@ ul.task-list li input[type="checkbox"] {
 <section id="assessment" class="level1">
 <h1>Assessment</h1>
 <p>Consider a human health risk assessment of chemical <span class="math inline">\(X\)</span>.</p>
-<div class="{callout-warning}">
-<p>This page is under construction. We are currently working on making a user interface where you can enter your own values on conservative estimates or quantiles representing yours or the experts uncertainty about the quantities.</p>
+<p>uncertainty in a “target human dose” <span class="math inline">\(HD_M^I\)</span></p>
+<p>defined as the human dose at which a fraction I of the population experiences an effect of magnitude (or severity) M or greater</p>
+<p><a href="https://www.who.int/publications/i/item/9789241513548">WHO guidance</a></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This page is under construction. We are currently working on making a user interface where you can enter your own values on conservative estimates or quantiles representing experts uncertainty about the quantities.</p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <section id="hazard-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="hazard-assessment">Hazard assessment</h2>
-<p>The quantity of interest for the hazard assessment is the Point of Departure, <strong>PoD</strong>.</p>
-<p>As an example, a PoD of 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.</p>
+<p>The quantity of interest for the hazard assessment is the Point of Departure, <strong>HD</strong>.</p>
+<p>As an example, a HD of 70 μg <span class="math inline">\(X\)</span>/kg bw per day was identified by the experts as the BMDL from a model average of BMD modelling for a relevant human effect.</p>
 <p>Model Averaged BMD model</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>BMDL</th>
@@ -232,9 +299,9 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>0.07</td>
-<td>1.06</td>
-<td>1.3</td>
+<td>70</td>
+<td>106</td>
+<td>130</td>
 </tr>
 </tbody>
 </table>
@@ -243,7 +310,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="exposure-assessment">Exposure assessment</h2>
 <p>The quantity of interest for the exposure assessment is a High Exposure in the target population, <strong>HE</strong>.</p>
 <p>Estimate of high exposure μg/kg bw per day for compound <span class="math inline">\(X\)</span> is</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>HEL</th>
@@ -253,9 +320,9 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>0.1</td>
-<td>0.36</td>
-<td>1.34</td>
+<td>70</td>
+<td>100</td>
+<td>120</td>
 </tr>
 </tbody>
 </table>
@@ -264,8 +331,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="risk-characterisation" class="level2">
 <h2 class="anchored" data-anchor-id="risk-characterisation">Risk characterisation</h2>
 <p>The question for the risk assessment is if the High Exposure is below the Point of Departure, i.e.</p>
-<p><span class="math display">\[HE &lt; PoD\]</span></p>
-<p>The answer to the assessment question is <strong>NO HEALTH CONCERN</strong> if the ratio <span class="math inline">\(\frac{\hat{HE}}{\hat{PoD}} &lt; 1\)</span>.</p>
+<p><span class="math display">\[HE &lt; HD\]</span></p>
+<p>The answer to the assessment question is <strong>NO HEALTH CONCERN</strong> if the ratio <span class="math inline">\(\frac{HE}{HD} &lt; 1\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -276,7 +343,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When the PoD is derived from BMD modelling, a ratio greater than 1 implies that the exposure can be associated with a 5% increase relative to the background incidence for the effect. Note that the value 5% comes from the BMD modelling.</p>
+<p>When the HD is derived from BMD modelling, a ratio greater than 1 implies that the exposure can be associated with a 5% increase relative to the background incidence for the effect. Note that the value 5% comes from the definition of HD implemented into the BMD modelling.</p>
 </div>
 </div>
 </section>
@@ -290,7 +357,7 @@ Note
 <h1>Practical certainty</h1>
 <p>The practical certainty is by risk managers set to be 80% probability to conclude that compound <span class="math inline">\(X\)</span> is a health concern and 90% probability to conclude that compound <span class="math inline">\(X\)</span> is not a health concern. The assessment is <em>inconclusive</em> for any (un)certainty in between the limits.</p>
 <p>It can be sufficient to conclude if uncertainty the conclusion is in the range of practical certainty.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 29%">
 <col style="width: 44%">
@@ -300,7 +367,7 @@ Note
 <tr class="header">
 <th>No health concern</th>
 <th>Inconclusive</th>
-<th>Yes health concern</th>
+<th>Health concern</th>
 </tr>
 </thead>
 <tbody>
@@ -312,11 +379,11 @@ Note
 </tbody>
 </table>
 <p>or</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 43%">
-<col style="width: 26%">
+<col style="width: 29%">
+<col style="width: 45%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -337,7 +404,7 @@ Note
 </section>
 <section id="a-tiered-approach-to-evaluate-the-combined-impact-of-sources-of-uncertainty-on-the-conclusion" class="level1">
 <h1>A tiered approach to evaluate the combined impact of sources of uncertainty on the conclusion</h1>
-<p>There are several options to evaluate the combined impact of all these sources of uncertainty on the conclusion whether the risk ratio is greater than 1.</p>
+<p>There are several options to evaluate the combined impact of all these sources of uncertainty on the conclusion whether the risk ratio is greater than 10.</p>
 <p>A tiered uncertainty analysis can be done in the following steps</p>
 <ol type="1">
 <li><p>Basic option</p></li>
@@ -349,10 +416,10 @@ Note
 </section>
 <section id="tier-1.-basic-option" class="level1">
 <h1>Tier 1. Basic option</h1>
-<p>The basic option is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that <span class="math inline">\(\frac{HE}{PoD} &lt; 1\)</span>, considering all evidence and all identified (non-standard or standard) sources of uncertainty.</p>
+<p>The basic option is to assess the combined impact in a single step using expert judgement. This is done by asking the experts to agree how certain they are as a group that <span class="math inline">\(\frac{HE}{HD} &lt; 10\)</span>, considering all evidence and all identified (non-standard or standard) sources of uncertainty.</p>
 <p>This can be done by reaching a consensus judgement, following procedures for expert knowledge elicitation (using behavioural aggregation to allow for discussions). This judgement requires expertise on both toxicity and exposure assessment.</p>
-<p>This judgement is more easy when the conservative estimate for the Highest Exposure is far below (a conservative value for) the Point of Departure. Here</p>
-<p><span class="math inline">\(\frac{HE}{PoD} = \frac{1.34}{0.07} = 19.1\)</span> which is above the threshold.</p>
+<p>This judgement is more easy when the conservative estimate for the Highest Exposure is far below (a conservative value for) the Point of Departure (Human Dose). Here</p>
+<p><span class="math inline">\(\frac{HE}{HD} = \frac{120}{70} = 1.7\)</span> which is above the threshold.</p>
 <p>Conservative values can be obtained by uncertainty factors. It is preferable to have well-calibrated uncertainty factors as they will result in estimates with known level of conservatism. If not, it is difficult for the experts to judge their uncertainty in the conclusion.</p>
 <p>In our example, the expert agree that their (un)certainty lies in the inconclusive range. Some of them say that they can not make this judgement, which would also lead to an inconclusive assessment.</p>
 <p>Is practical certainty obtained? No.</p>
@@ -360,8 +427,8 @@ Note
 </section>
 <section id="tier-2.-refined-option-with-probability-bounds" class="level1">
 <h1>Tier 2. Refined option with probability bounds</h1>
-<p>A refined approach is useful when there is a small difference between the Point of Departure and the Highest Exposure, when the experts cannot conclude and collecting more data is not possible within the limits of the assessment.</p>
-<p>A refined option is to assess uncertainties separately for the <strong>PoD</strong> and <strong>HE</strong>, combine them by calculations into a risk ratio and assess uncertainty in the conclusion.</p>
+<p>A refined approach is useful when there is a small difference between the Point of Departure (Human Dose) and the Highest Exposure, when the experts cannot conclude and collecting more data is not possible within the limits of the assessment.</p>
+<p>A refined option is to assess uncertainties separately for the <strong>HD</strong> and <strong>HE</strong>, combine them by calculations into a risk ratio and assess uncertainty in the conclusion.</p>
 <p>We explore how to do this with <strong>probability bound analysis</strong> where we offer two approaches:</p>
 <ul>
 <li><p>probabilities first: to elicit quantiles for given probabilities, where the probabilities are chosen to obtain practical certainty</p></li>
@@ -370,30 +437,30 @@ Note
 <!-- Also know as the *glorious formulas* -->
 <section id="probabilities-first" class="level2">
 <h2 class="anchored" data-anchor-id="probabilities-first">Probabilities first</h2>
-<p>The refined option with probability bounds can be modified to consider practical certainty in the following way. In this example, the risk managers and the experts have agreed that experts must be at least 90% certain that a High Exposure <strong>HE</strong> is below the <strong>PoD</strong> in order for risk managers to make a decision.</p>
+<p>The refined option with probability bounds can be modified to consider practical certainty in the following way. In this example, the risk managers and the experts have agreed that experts must be at least 90% certain that a High Exposure <strong>HE</strong> is below the <strong>HD</strong> in order for risk managers to make a decision.</p>
 <p>This means that the assessment is conclusive when the experts are at least 90% certain that the risk ratio is less than one (<em>no health concern</em>).</p>
 <p>Subtract the probability threshold for practical certainty from 100% to set an upper bound for the the sum of the lost probabilities.</p>
 <p><span class="math display">\[100\% - 90\% = 10\%\]</span></p>
 <p>Divide the resulting probability into two parts, one for the hazard, here <span class="math inline">\(5\%\)</span>, and one for the exposure, what remains <span class="math inline">\(100-90 - 5 = 5\%\)</span>.</p>
-<p>Elicit the conservative estimate of the Point of Departure from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile <span class="math inline">\(y\)</span></p>
-<p><span class="math display">\[P(PoD &lt; y) = 5\%\]</span></p>
-<p>Here the expert set <span class="math inline">\(y = 0.07\)</span>, which is the BMDL. Experts can adjust this downward or upward considering additional sources of uncertainty.</p>
+<p>Elicit the conservative estimate of the Point of Departure (Human Dose) from the toxicology experts (asking them to consider the identified sources of uncertainty for the hazard assessment). Define the conservative estimate as the quantile <span class="math inline">\(y\)</span></p>
+<p><span class="math display">\[P(HD &lt; y) = 5\%\]</span></p>
+<p>Here the expert set <span class="math inline">\(y = 70\)</span>, which is the BMDL. Experts can adjust this downward or upward considering additional sources of uncertainty.</p>
 <p>Elicit a conservative estimate of a High Exposure from the exposure experts (asking them to consider the identified sources of uncertainty for the exposure assessment, alternatively any additional sources of uncertainty not accounted for in a model based conservative estimate). Define the conservative estimate as the quantile <span class="math inline">\(x\)</span></p>
 <p><span class="math display">\[P(HE &gt; x) = 5\%\]</span></p>
-<p>In this example, the expert elicit the value <span class="math inline">\(x = 1.32\)</span>.</p>
+<p>In this example, the expert elicit the value <span class="math inline">\(x = 7.2430797\times 10^{52}\)</span>.</p>
 <p>Divide the conservative estimate for the exposure with the conservative estimate for the hazard <span class="math inline">\(\frac{x}{y}\)</span>.</p>
 <p>Practical certainty is obtained if <span class="math inline">\(\frac{x}{y} &lt; 1\)</span>.</p>
-<p>In this example, this ratio is <span class="math inline">\(\frac{1.32}{0.07} = 18.9\)</span></p>
+<p>In this example, this ratio is <span class="math inline">\(\frac{7.2430797\times 10^{52}}{70} = 1.0347257\times 10^{51}\)</span></p>
 <p>Practical certainty is not reached with the probability bounds analysis using probabilities first, proceed with a refined approach.</p>
 <!-- Hence, practical certainty is reached. Proceed to the decision. -->
 </section>
 <section id="numbers-first" class="level2">
 <h2 class="anchored" data-anchor-id="numbers-first">Numbers first</h2>
-<p>Use a conservative estimate for PoD as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.</p>
+<p>Use a conservative estimate for HD as starting point and use experts judgement on their uncertainty for that to guide what value to consider for the exposure part.</p>
 <p>Ask experts to judge their probability expressing their uncertainty about a conservative estimate of hazard, e.g.&nbsp;the BMDL,</p>
-<p>The experts judge that they are 5% certain that the Point of Departure is below 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day.</p>
-<p><span class="math display">\[P(PoD &lt; y) = 5\%\]</span> That implies that the conservative estimate for the hazard is <span class="math inline">\(y = 0.07\)</span>, which is the BMDL. Experts can adjust this downward or upward considering additional sources of uncertainty.</p>
-<table class="table">
+<p>The experts judge that they are 5% certain that the Point of Departure (Human Dose) is below 70 μg <span class="math inline">\(X\)</span>/kg bw per day.</p>
+<p><span class="math display">\[P(HD &lt; y) = 5\%\]</span> That implies that the conservative estimate for the hazard is <span class="math inline">\(y = 70\)</span>, which is the BMDL. Experts can adjust this downward or upward considering additional sources of uncertainty.</p>
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>P below</th>
@@ -409,13 +476,13 @@ Note
 </tr>
 </tbody>
 </table>
-<!-- In some situations, the PoD is the BMDL and then it is difficult to talk about uncertainty about the PoD. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on PoD/UF instead of PoD. -->
+<!-- In some situations, the HD is the BMDL and then it is difficult to talk about uncertainty about the HD. If so, one can introduce an uncertainty factor (UF) that considers uncertainty associated with the hazard assessment. The focus is then on HD/UF instead of HD. -->
 <p>Derive the value on the High Exposure where the risk ratio is at the critical threshold</p>
-<p><span class="math display">\[\frac{x}{y} = 1\]</span></p>
-<p>This value is <span class="math inline">\(x = 1 \cdot y = 0.07\)</span></p>
-<p>Ask the experts to judge their probability that a High Exposure is above 0.07 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 98.1%.</p>
-<p><span class="math display">\[P( HE &gt; x) = 98.1\%\]</span></p>
-<table class="table">
+<p><span class="math display">\[\frac{x}{y} = 10\]</span></p>
+<p>This value is <span class="math inline">\(x = 10 \cdot y = 700\)</span></p>
+<p>Ask the experts to judge their probability that a High Exposure is above 700 μg <span class="math inline">\(X\)</span>/kg bw per day. The experts’ elicited probability is 100%.</p>
+<p><span class="math display">\[P( HE &gt; x) = 100\%\]</span></p>
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>P below</th>
@@ -425,13 +492,13 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td>1.9%</td>
+<td>0%</td>
 <td>x</td>
-<td>98.1%</td>
+<td>100%</td>
 </tr>
 </tbody>
 </table>
-<p>Practical certainty is obtained if <span class="math display">\[100 - P(HE &gt; x) - P(PoD &lt; y) \geq 90\]</span> In this example, the left hand side is <span class="math inline">\(100-[98.1+5]=100-98.1 - 5= -3.1\)</span>.</p>
+<p>Practical certainty is obtained if <span class="math display">\[100 - P(HE &gt; x) - P(HD &lt; y) \geq 90\]</span> In this example, the left hand side is <span class="math inline">\(100-[100+5]=100-100 - 5= -5\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -480,11 +547,11 @@ Note
 <p>Note that an explicit elicitation of the outcome of interest following a Monte Carlo simulation is a condition for this approach to result in a characterisation of the experts uncertainty considering the combined impact of <strong>all</strong> sources of uncertainty in the assessment.</p>
 </div>
 </div>
-<section id="point-of-departure" class="level3">
-<h3 class="anchored" data-anchor-id="point-of-departure">Point of Departure</h3>
-<p>A probability distribution representing uncertainty in the <strong>Point of Departure</strong> can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling. There are plenty of BMD software available to do this.</p>
-<p>We (the assessors) let the BMDL, the BMD, and the BMDU define a lower percentile (0.05), the median (0.5), and a higher percentile (0.95) of the probability distribution for uncertainty in the <strong>PoD</strong>.</p>
-<table class="table">
+<section id="human-dose" class="level3">
+<h3 class="anchored" data-anchor-id="human-dose">Human Dose</h3>
+<p>A probability distribution representing uncertainty in the <strong>Human Dose</strong> can be taken from the BMD uncertainty distribution generated by bootstrapping or Bayesian modelling. There are plenty of BMD software available to do this.</p>
+<p>We (the assessors) let the BMDL, the BMD, and the BMDU define a lower percentile (0.05), the median (0.5), and a higher percentile (0.95) of the probability distribution for uncertainty in the <strong>HD</strong>.</p>
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th></th>
@@ -502,16 +569,20 @@ Note
 </tr>
 <tr class="even">
 <td>Value</td>
-<td>0.07</td>
-<td>1.06</td>
-<td>1.3</td>
+<td>70</td>
+<td>106</td>
+<td>130</td>
 </tr>
 </tbody>
 </table>
 <p>The lower bound is zero. The distribution for a BMD is usually skewed to the right, and therefore the experts set an upper plausible bound. Here we fit a distribution to these quantiles using a quantile matching method and draw samples from this distribution.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <!-- ::: callout-tip -->
@@ -535,7 +606,7 @@ Warning
 <section id="high-exposure" class="level3">
 <h3 class="anchored" data-anchor-id="high-exposure">High Exposure</h3>
 <p>A probability distribution representing uncertainty in the estimates of High Exposure is informed by a Monte Carlo simulation sample of the 95th percentile of the Cmax in the target population. Here we have at the quartiles from such a sample. Since we have a sample, we can have more quantiles.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th></th>
@@ -553,15 +624,15 @@ Warning
 </tr>
 <tr class="even">
 <td>value</td>
-<td>0.1</td>
-<td>0.36</td>
-<td>1.34</td>
+<td>70</td>
+<td>100</td>
+<td>120</td>
 </tr>
 <tr class="odd">
 <td>log value</td>
-<td>-2.3025851</td>
-<td>-1.0216512</td>
-<td>0.2926696</td>
+<td>4.2484952</td>
+<td>4.6051702</td>
+<td>4.7874917</td>
 </tr>
 </tbody>
 </table>
@@ -570,11 +641,15 @@ Warning
 <p>Here is a simple way to do it. One can also fit a distribution by quantile matching. The standard deviation is specified by considering the formula for a 90% quantile in the normal distributions as a function of the parameters:</p>
 <p><span class="math display">\[ P95 = \mu + 1.64\cdot \sigma\]</span></p>
 <p>and rearranging it to be a function of <span class="math inline">\(\sigma\)</span></p>
-<p><span class="math display">\[ \sigma = \frac{P95 - \mu}{1.64} =  \frac{0.29--1.02}{1.64}=0.8\]</span></p>
+<p><span class="math display">\[ \sigma = \frac{P95 - \mu}{1.64} =  \frac{4.79-4.61}{1.64}=0.11\]</span></p>
 <p>Specification of the parameters and draw of random numbers from the normal distribution.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -582,14 +657,18 @@ Warning
 <h3 class="anchored" data-anchor-id="risk-evaluation">Risk evaluation</h3>
 <section id="combine-sources-of-uncertainty-by-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="combine-sources-of-uncertainty-by-calculations">Combine sources of uncertainty by calculations</h4>
-<p>Evaluate the combined impact of the characterised uncertainty in PoD and HE on the risk ratio by Monte Carlo simulation.</p>
-<p>The distributions for High Exposure and the Point of Departure overlap.</p>
+<p>Evaluate the combined impact of the characterised uncertainty in HD and HE on the risk ratio by Monte Carlo simulation.</p>
+<p>The distributions for High Exposure and the Human Dose overlap.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(HE&lt;PoD)=P(\frac{HE}{PoD}&lt;1) = 90 \%\]</span></p>
+</div>
+<p>The calculated probability that the risk ratio is below 1 is <span class="math display">\[P(HE&lt;HD)=P(\frac{HE}{HD}&lt;1) = 58 \%\]</span></p>
 <p>This value was derived by calculating the proportion of random samples in your Monte Carlo simulation that corresponds to a ratio &lt; 1.</p>
 </section>
 </section>
@@ -598,36 +677,52 @@ Warning
 <p>Depending on what is the more probable outcome, there are alternatives to visualise uncertainty in the risk ratio: Framing as no health concern and Framing as a health concern. We recommend to choose the framing that corresponds to the more probable outcome.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>In this visualisation, the red area corresponds to a High Exposure less than the Point of Departure.</p>
+</div>
+<p>In this visualisation, the red area corresponds to a High Exposure less than the Human Dose.</p>
 <p>Another way is to visualise the resulting distribution for uncertainty in the risk ratio by outcome that there is a health concern.</p>
-<p>The calculated probability that the risk ratio is above 1 is <span class="math display">\[P(HE&gt;PoD)=P(\frac{HE}{PoD}&gt;1) = 10 \%\]</span></p>
+<p>The calculated probability that the risk ratio is above 1 is <span class="math display">\[P(HE&gt;HD)=P(\frac{HE}{HD}&gt;1) = 42 \%\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>In this visualisation, the red area corresponds to a High Exposure greater than the Point of Departure.</p>
+</div>
+<p>In this visualisation, the red area corresponds to a High Exposure greater than the Human Dose.</p>
 </section>
 <section id="consider-additional-sources-of-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="consider-additional-sources-of-uncertainty">Consider additional sources of uncertainty</h3>
 <p>As a final step, the experts are invited to adjust this probability upwards or downwards considering <strong>additional sources of uncertainty</strong>, not previously taken into account in the analysis.</p>
 <p>An additional sources of uncertainty could e.g.&nbsp;be the choice of distributions used in the Monte Carlo simulation and any limitations in the quality of the exposure and toxicity data that are not taken into account in those distributions.</p>
 <p>Experts might judge that any additional sources of uncertainty will have little influence and that there is no need to adjust the calculated % probability that the risk ratio is less (or greater) than 1.</p>
-<p>If not, experts can choose to consider any additional uncertainties by adjusting the PoD or HE by an uncertainty factor. This factor can be described as a probability distribution or have a single number. It could be factor for exposure and a factor for hazard.</p>
-<p><span class="math display">\[P(HE\cdot f_{HE} &lt; PoD \cdot f_{PoD})\]</span></p>
-<p>Here the experts argue that the exposure is overly conservative, and can be adjusted down by a factor, i.e.&nbsp;<span class="math inline">\(f_{HE} = 0.5\)</span>. They also reason that there is no impact from additional sources of uncertainty on the Point of Departure <span class="math inline">\(f_{PoD} = 1\)</span></p>
+<p>If not, experts can choose to consider any additional uncertainties by adjusting the HD or HE by an uncertainty factor. This factor can be described as a probability distribution or have a single number. It could be factor for exposure and a factor for hazard.</p>
+<p><span class="math display">\[P(HE\cdot f_{HE} &lt; HD \cdot f_{HD})\]</span></p>
+<p>Here the experts argue that the exposure is overly conservative, and can be adjusted down by a factor, i.e.&nbsp;<span class="math inline">\(f_{HE} = 1.2\)</span>. They also reason that there is no impact from additional sources of uncertainty on the Point of Departure <span class="math inline">\(f_{HD} = 0.8\)</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Here the expert judge that their % certainty for no health concern is 98%.</p>
+</div>
+<p>Here the expert judge that their % certainty for no health concern is 2%.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="risk-example_aug24_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="risk_example_aug24_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This value is in the region of practical certainty (i.e.&nbsp;&gt;90%) and therefore the uncertainty characterisation is completed and one can proceed with decision making.</p>
@@ -636,10 +731,10 @@ Warning
 <section id="comments-on-the-uncertainty-framework" class="level1">
 <h1>Comments on the uncertainty framework</h1>
 <p>Bayesian reasoning combined with Probability bounds analysis can be used for categorical as well as continuous quantities.</p>
-<p>Probability bounds can be specified by bounded probability, e.g.&nbsp;<span class="math inline">\(P(PoD &gt; y) &lt; 90\%\)</span> instead of <span class="math inline">\(P(PoD &gt; y) = 90\%\)</span>.</p>
+<p>Probability bounds can be specified by bounded probability, e.g.&nbsp;<span class="math inline">\(P(HD &gt; y) &lt; 90\%\)</span> instead of <span class="math inline">\(P(HD &gt; y) = 90\%\)</span>.</p>
 <p>The basic option requires one expert judgement.</p>
 <p>The probability bound analysis option requires two expert judgements.</p>
-<p>The precise probabilistic option can use information from the probability bound analysis and complement it with at least two more expert judgements. Usually more quantiles are provided from modelling, which in turn is based in multiple expert judgements (for the parameter uncertainty). The probability distributions representing uncertainty in PoD and a High Exposure can be more or less derived from quantitative modelling in which uncertainty within the model is characterised, but consideration of additional sources of uncertainty e.g.&nbsp;as factors are always needed.</p>
+<p>The precise probabilistic option can use information from the probability bound analysis and complement it with at least two more expert judgements. Usually more quantiles are provided from modelling, which in turn is based in multiple expert judgements (for the parameter uncertainty). The probability distributions representing uncertainty in HD and a High Exposure can be more or less derived from quantitative modelling in which uncertainty within the model is characterised, but consideration of additional sources of uncertainty e.g.&nbsp;as multiplication factors is always needed.</p>
 
 
 </section>
@@ -680,18 +775,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -723,11 +807,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -737,8 +860,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -750,7 +882,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -794,6 +1049,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -819,6 +1075,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -879,6 +1161,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
